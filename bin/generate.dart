@@ -9,7 +9,7 @@ Future<void> main() async {
   final pubspecYaml = loadYaml(pubspecContent);
   final packageName = pubspecYaml['name'];
 
-  var registration = 'void regiterFactories(){\n';
+  var registration = 'void registerFactories(){\n';
   var needImports = <String>[];
 
   for (var item in dir.listSync(recursive: true)) {

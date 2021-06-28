@@ -38,7 +38,7 @@ extension JsonExt on JsonCodec {
 
 extension JsonMap on Map<String, dynamic> {
   String? string(String key, {String? defaultValue}) {
-    if (this.containsKey(key) && this[key] is String) {
+    if (containsKey(key) && this[key] is String) {
       return this[key];
     }
 
@@ -46,7 +46,7 @@ extension JsonMap on Map<String, dynamic> {
   }
 
   num number(String key, {num defaultValue = 0}) {
-    if (this.containsKey(key)) {
+    if (containsKey(key)) {
       if (this[key] is num) {
         return this[key];
       }
@@ -60,7 +60,7 @@ extension JsonMap on Map<String, dynamic> {
   }
 
   bool boolean(String key, {bool defaultValue = false}) {
-    if (this.containsKey(key)) {
+    if (containsKey(key)) {
       if (this[key] is bool) {
         return this[key];
       }
@@ -78,9 +78,9 @@ extension JsonMap on Map<String, dynamic> {
   }
 
   DateTime? dateTime(String key) {
-    if (this.containsKey(key) && this[key] is String) {
+    if (containsKey(key) && this[key] is String) {
       String str = this[key];
-      if (str.length > 10 && !str.contains('Z')) {
+      if (str.length > 10 && !str.contains('Z') && !str.contains('+')) {
         str += 'Z';
       }
 
@@ -91,7 +91,7 @@ extension JsonMap on Map<String, dynamic> {
   }
 
   List<T> array<T>(String key, T f(e)) {
-    if (this.containsKey(key) && this[key] is List) {
+    if (containsKey(key) && this[key] is List) {
       return (this[key] as List).map<T>(f).toList();
     }
 
@@ -156,7 +156,7 @@ extension JsonMap on Map<String, dynamic> {
 
   E? convert<E>() {
     if (_factories.containsKey(E)) {
-      return _factories[E](this.cast<String, dynamic>());
+      return _factories[E](cast<String, dynamic>());
     }
 
     return null;
