@@ -21,7 +21,7 @@ Future<void> main() async {
 
       var found = false;
       for (var line in lines) {
-        final r = RegExp(r'class (.+) {');
+        final r = RegExp(r'class ([^ ]+).+{');
         final m = r.firstMatch(line.trim());
         if (m == null) continue;
 
