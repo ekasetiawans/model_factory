@@ -73,8 +73,5 @@ class ModelFactoryGenerator extends Builder {
   static final _outputs = [codeFile];
 
   @override
-  final buildExtensions = {
-    r'$lib$': _outputs,
-    r'$test$': _outputs,
-  };
+  final buildExtensions = {r'$lib$': _outputs};
 }
