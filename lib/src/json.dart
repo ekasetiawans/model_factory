@@ -90,7 +90,7 @@ extension JsonMap on Map<String, dynamic> {
     return null;
   }
 
-  List<T> array<T>(String key, T f(e)) {
+  List<T> array<T>(String key, T Function(dynamic) f) {
     if (containsKey(key) && this[key] is List) {
       return (this[key] as List).map<T>(f).toList();
     }
@@ -175,7 +175,7 @@ extension JsonArray on List {
 }
 
 Type _typeOf<T>() => T;
-typedef E JsonFactory<E>(Map<String, dynamic> value);
+typedef JsonFactory<E> = E Function(Map<String, dynamic> value);
 
 final _factories = <Type, dynamic>{};
 void registerJsonFactory<E>(JsonFactory<E> builder) {

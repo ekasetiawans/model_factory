@@ -1,0 +1,25 @@
+targets:
+  $default:
+    builders:
+      model_factory|resolver:
+        enabled: true
+      model_factory|generator:
+        enabled: true
+
+builders:
+  resolver:
+    import: "package:model_factory/builder.dart"
+    builder_factories: ["codeGeneratorResolver"]
+    build_extensions: { ".dart": [".model_factory.info"] }
+    auto_apply: dependents
+    build_to: cache
+
+  generator:
+    import: "package:model_factory/builder.dart"
+    builder_factories: ["codeGeneratorFactory"]
+    build_extensions:
+      "$lib$": ["models_factories.dart"]
+      "$test": ["models_factories.dart"]
+    required_inputs: [".model_factory.info"]
+    auto_apply: dependents
+    build_to: source

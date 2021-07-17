@@ -1,9 +1,3 @@
-import 'package:model_factory/model_factory.dart';
-
-void main() {
-  registerJsonFactory((json) => MyModel.fromJson(json));
-}
-
 class MyModel {
   final String name;
   MyModel({required this.name});
