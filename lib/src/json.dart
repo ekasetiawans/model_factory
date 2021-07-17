@@ -98,7 +98,7 @@ extension JsonMap on Map<String, dynamic> {
     return <T>[];
   }
 
-  E value<E>(String key) {
+  E value<E>(String key, {E? defaultValue}) {
     if (_factories.containsKey(E)) {
       return _factories[E](this[key]);
     }
@@ -151,12 +151,20 @@ extension JsonMap on Map<String, dynamic> {
       return boolean(key) as E;
     }
 
+    if (E == _typeOf<List>()) {
+      return (this[key] as List).convert();
+    }
+
     if (this[key] is List) {
       return (this[key] as List).convert();
     }
 
     if (this[key] is Map<String, dynamic>) {
       return (this[key] as Map<String, dynamic>).convert();
+    }
+
+    if (this[key] == null && defaultValue != null) {
+      return defaultValue;
     }
 
     return this[key] as E;
@@ -188,7 +196,10 @@ typedef JsonFactory<E> = E Function(Map<String, dynamic> value);
 final _factories = <Type, dynamic>{};
 void registerJsonFactory<E>(JsonFactory<E> builder) {
   _factories[E] = builder;
+  _factories[_typeOf<E?>()] = builder;
   _factories[_typeOf<List<E>>()] =
+      (List list) => list.map((e) => builder(e)).toList();
+  _factories[_typeOf<List<E>?>()] =
       (List list) => list.map((e) => builder(e)).toList();
   _factories[_typeOf<FutureOr<List<E>>>()] =
       (List list) => list.map((e) => builder(e)).toList();
