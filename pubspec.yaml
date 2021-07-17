@@ -11,6 +11,8 @@ dependencies:
   build: ^2.0.3
   path: ^1.8.0
   source_gen: ^1.0.3
+  dart_style: ^2.0.2
+  glob: ^2.0.1
 
 dev_dependencies:
   pedantic: ^1.11.1
