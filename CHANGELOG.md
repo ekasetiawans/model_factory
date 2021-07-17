@@ -1,3 +1,6 @@
+## 1.1.2
+
+- fix auto convert list
 ## 1.1.1
 
 - auto convert list and map
