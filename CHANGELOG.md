@@ -1,3 +1,6 @@
+## 1.1.1
+
+- auto convert list and map
 ## 1.1.0
 
 - Using build_runner instead of bin

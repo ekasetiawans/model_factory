@@ -151,6 +151,14 @@ extension JsonMap on Map<String, dynamic> {
       return boolean(key) as E;
     }
 
+    if (this[key] is List) {
+      return (this[key] as List).convert();
+    }
+
+    if (this[key] is Map<String, dynamic>) {
+      return (this[key] as Map<String, dynamic>).convert();
+    }
+
     return this[key] as E;
   }
 
