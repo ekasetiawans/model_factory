@@ -100,8 +100,7 @@ extension JsonMap on Map<String, dynamic> {
 
   E value<E>(String key, {E? defaultValue}) {
     if (!containsKey(key)) {
-      if (defaultValue != null) return defaultValue;
-      throw Exception('Key $key not found');
+      return null as E;
     }
 
     if (_factories.containsKey(E)) {

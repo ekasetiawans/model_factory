@@ -1,3 +1,6 @@
+## 1.1.5
+
+- return null if key not exists
 ## 1.1.4
 
 - added List<String>
