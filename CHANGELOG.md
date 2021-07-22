@@ -1,3 +1,9 @@
+## 1.1.7
+
+- improve deserialization
+## 1.1.6
+
+- return null if value is null
 ## 1.1.5
 
 - return null if key not exists

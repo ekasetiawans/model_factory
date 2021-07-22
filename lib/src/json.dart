@@ -100,11 +100,18 @@ extension JsonMap on Map<String, dynamic> {
 
   E value<E>(String key, {E? defaultValue}) {
     if (!containsKey(key)) {
+      if (defaultValue != null) return defaultValue;
       return null as E;
     }
 
-    if (_factories.containsKey(E)) {
-      return _factories[E](this[key]);
+    if (this[key] == null) {
+      if (defaultValue != null) return defaultValue;
+      return null as E;
+    }
+
+    if (this[key] is Map && (this[key] as Map).isEmpty) {
+      if (defaultValue != null) return defaultValue;
+      return null as E;
     }
 
     if (E == String) {
@@ -171,12 +178,12 @@ extension JsonMap on Map<String, dynamic> {
       return (this[key] as List).convert();
     }
 
-    if (this[key] is Map<String, dynamic>) {
-      return (this[key] as Map<String, dynamic>).convert();
+    if (_factories.containsKey(E)) {
+      return _factories[E](this[key]);
     }
 
-    if (this[key] == null && defaultValue != null) {
-      return defaultValue;
+    if (this[key] is Map<String, dynamic>) {
+      return (this[key] as Map<String, dynamic>).convert();
     }
 
     return this[key] as E;
