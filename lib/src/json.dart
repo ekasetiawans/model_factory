@@ -114,6 +114,10 @@ extension JsonMap on Map<String, dynamic> {
       return null as E;
     }
 
+    if (_factories.containsKey(E)) {
+      return _factories[E](this[key]);
+    }
+
     if (E == String) {
       return string(key) as E;
     }
@@ -162,24 +166,12 @@ extension JsonMap on Map<String, dynamic> {
       return boolean(key) as E;
     }
 
-    if (E == _typeOf<List<String>>()) {
-      return (this[key] as List).map((e) => e.toString()).toList() as E;
-    }
-
-    if (E == _typeOf<List<String?>>()) {
-      return (this[key] as List).map((e) => e?.toString()).toList() as E;
-    }
-
     if (E == _typeOf<List>()) {
       return (this[key] as List).convert();
     }
 
     if (this[key] is List) {
       return (this[key] as List).convert();
-    }
-
-    if (_factories.containsKey(E)) {
-      return _factories[E](this[key]);
     }
 
     if (this[key] is Map<String, dynamic>) {
@@ -210,9 +202,18 @@ extension JsonArray on List {
 }
 
 Type _typeOf<T>() => T;
-typedef JsonFactory<E> = E Function(Map<String, dynamic> value);
+typedef JsonFactory<E> = E Function(dynamic value);
 
-final _factories = <Type, dynamic>{};
+final _factories = <Type, dynamic>{
+  _typeOf<List<String>>(): (data) {
+    if (data is List) {
+      return data.map((e) => e.toString()).toList();
+    }
+
+    return [];
+  },
+};
+
 void registerJsonFactory<E>(JsonFactory<E> builder) {
   _factories[E] = builder;
   _factories[_typeOf<E?>()] = builder;
