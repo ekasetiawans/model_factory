@@ -99,6 +99,11 @@ extension JsonMap on Map<String, dynamic> {
   }
 
   E value<E>(String key, {E? defaultValue}) {
+    if (!containsKey(key)) {
+      if (defaultValue != null) return defaultValue;
+      throw Exception('Key $key not found');
+    }
+
     if (_factories.containsKey(E)) {
       return _factories[E](this[key]);
     }
@@ -149,6 +154,14 @@ extension JsonMap on Map<String, dynamic> {
 
     if (E == _typeOf<bool?>()) {
       return boolean(key) as E;
+    }
+
+    if (E == _typeOf<List<String>>()) {
+      return (this[key] as List).map((e) => e.toString()).toList() as E;
+    }
+
+    if (E == _typeOf<List<String?>>()) {
+      return (this[key] as List).map((e) => e?.toString()).toList() as E;
     }
 
     if (E == _typeOf<List>()) {

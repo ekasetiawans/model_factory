@@ -1,3 +1,6 @@
+## 1.1.4
+
+- added List<String>
 ## 1.1.3
 
 - fix output
