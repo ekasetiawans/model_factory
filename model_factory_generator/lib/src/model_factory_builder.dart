@@ -72,8 +72,6 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
         'Map<String, dynamic> _\$${className}ToJson($className instance) => {');
     for (var f in cl.fields) {
-      if (f.setter == null) continue;
-
       var name = f.name;
       var isNullable = f.type.nullabilitySuffix == NullabilitySuffix.question;
 
