@@ -1,3 +1,6 @@
+## 1.2.0
+
+- added fromJson and toJson generator using @JsonSerializable and @JsonKey
 ## 1.1.8
 
 - improve deserialization

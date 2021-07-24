@@ -1,15 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-class JsonKey {
-  final String name;
-  const JsonKey({this.name = ''});
-}
-
-class JsonSerializable {
-  const JsonSerializable();
-}
-
 extension JsonExt on JsonCodec {
   E? decodeAs<E>(String source) {
     if (source.startsWith('[')) {
@@ -118,6 +109,10 @@ extension JsonMap on Map<String, dynamic> {
       return _factories[E](this[key]);
     }
 
+    if (_factories.containsKey(_typeOf<E>())) {
+      return _factories[_typeOf<E>()](this[key]);
+    }
+
     if (E == String) {
       return string(key) as E;
     }
@@ -206,6 +201,13 @@ typedef JsonFactory<E> = E Function(dynamic value);
 
 final _factories = <Type, dynamic>{
   _typeOf<List<String>>(): (data) {
+    if (data is List) {
+      return data.map((e) => e.toString()).toList();
+    }
+
+    return [];
+  },
+  _typeOf<List<String>?>(): (data) {
     if (data is List) {
       return data.map((e) => e.toString()).toList();
     }

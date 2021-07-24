@@ -1,15 +1,34 @@
+import 'package:model_factory/model_factory.dart';
+
+part 'model_lain.g.dart';
+
+@JsonSerializable()
 class ModelLain {
-  final String name;
-  ModelLain({required this.name});
+  @JsonKey('nama_lengkap')
+  late String name;
+
+  @JsonKey('address')
+  late String address;
+
+  @JsonKey('test')
+  ModelYangLain? coba;
+  ModelLain();
 
   factory ModelLain.fromJson(Map<String, dynamic> json) =>
-      ModelLain(name: json['name']);
+      _$ModelLainFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ModelLainToJson(this);
 }
 
+@JsonSerializable()
 class ModelYangLain {
-  final String name;
-  ModelYangLain({required this.name});
+  @JsonKey('nama')
+  late String name;
+
+  ModelYangLain();
 
   factory ModelYangLain.fromJson(Map<String, dynamic> json) =>
-      ModelYangLain(name: json['name']);
+      _$ModelYangLainFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ModelYangLainToJson(this);
 }

@@ -1,12 +1,24 @@
 targets:
   $default:
     builders:
+      model_factory|builder:
+        enabled: true
+
       model_factory|resolver:
         enabled: true
+
       model_factory|generator:
         enabled: true
 
 builders:
+  builder:
+    import: "package:model_factory/builder.dart"
+    builder_factories: ["codeGeneratorBuilder"]
+    build_extensions:
+      ".dart": [".model.dart"]
+    auto_apply: dependents
+    build_to: source
+
   resolver:
     import: "package:model_factory/builder.dart"
     builder_factories: ["codeGeneratorResolver"]
