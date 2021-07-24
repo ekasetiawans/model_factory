@@ -5,14 +5,19 @@ part 'model_lain.g.dart';
 @JsonSerializable()
 class ModelLain {
   @JsonKey('nama_lengkap')
-  late String name;
+  String name;
 
   @JsonKey('address')
-  late String address;
+  String address;
 
   @JsonKey('test')
   ModelYangLain? coba;
-  ModelLain();
+
+  ModelLain({
+    this.name = '',
+    required this.address,
+    this.coba,
+  });
 
   factory ModelLain.fromJson(Map<String, dynamic> json) =>
       _$ModelLainFromJson(json);
@@ -23,9 +28,11 @@ class ModelLain {
 @JsonSerializable()
 class ModelYangLain {
   @JsonKey('nama')
-  late String name;
+  String name;
 
-  ModelYangLain();
+  ModelYangLain({
+    required this.name,
+  });
 
   factory ModelYangLain.fromJson(Map<String, dynamic> json) =>
       _$ModelYangLainFromJson(json);

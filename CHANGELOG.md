@@ -1,3 +1,6 @@
+## 1.3.3
+
+- add ignore, ignoreFromJson, ignoreToJson
 ## 1.3.1
 
 - clean up
