@@ -1,11 +1,15 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:build/build.dart';
+import 'package:dart_style/dart_style.dart';
+import 'package:meta/meta.dart';
 import 'package:model_factory/model_factory.dart';
 import 'package:source_gen/source_gen.dart';
 
 class ModelFactoryBuilder extends Generator {
+  @required
   final _typeChecker = TypeChecker.fromRuntime(JsonSerializable);
+
   final _fieldChecker = const TypeChecker.fromRuntime(JsonKey);
 
   @override
@@ -23,6 +27,8 @@ class ModelFactoryBuilder extends Generator {
         buffer.writeln(
             '$name _\$${name}FromJson(Map<String, dynamic> json) => $name()');
         for (var f in cl.fields) {
+          if (f.setter == null) continue;
+
           var name = f.name;
           var isNullable =
               f.type.nullabilitySuffix == NullabilitySuffix.question;
@@ -42,6 +48,8 @@ class ModelFactoryBuilder extends Generator {
         buffer.writeln(
             'Map<String, dynamic> _\$${name}ToJson($name instance) => {');
         for (var f in cl.fields) {
+          if (f.setter == null) continue;
+
           var name = f.name;
           var isNullable =
               f.type.nullabilitySuffix == NullabilitySuffix.question;
@@ -66,6 +74,14 @@ class ModelFactoryBuilder extends Generator {
             suffix = '${isNullable ? '?' : ''}.toJson()';
           }
 
+          if (f.type.getDisplayString(withNullability: false) == 'DateTime') {
+            suffix = '${isNullable ? '?' : ''}.toUtc().toIso8601String()';
+          }
+
+          if (f.type.isDartCoreList) {
+            suffix = '${isNullable ? '?' : ''}.map((e) => e.toJson()).toList()';
+          }
+
           buffer.writeln("'$name' : instance.${f.name}$suffix,");
         }
 
@@ -73,6 +89,6 @@ class ModelFactoryBuilder extends Generator {
       }
     }
 
-    return buffer.toString();
+    return DartFormatter().format(buffer.toString());
   }
 }

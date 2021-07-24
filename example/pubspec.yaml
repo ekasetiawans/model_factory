@@ -7,9 +7,11 @@ publish_to: "none"
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
-dependencies:
-  model_factory:
-    path: ../
+# dependencies:
+#   model_factory:
+#     path: ../
 
 dev_dependencies:
   build_runner: ^2.0.6
+  model_factory_generator:
+    path: ../model_factory_generator/

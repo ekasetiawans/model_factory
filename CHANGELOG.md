@@ -1,3 +1,21 @@
+## 1.3.0+2
+
+- clean up
+## 1.3.0+1
+
+- clean up
+## 1.3.0
+
+- clean up
+## 1.2.2+1
+
+- fix conflicting deps version
+## 1.2.2
+
+- fix conflicting deps version
+## 1.2.1
+
+- fix deps version
 ## 1.2.0
 
 - added fromJson and toJson generator using @JsonSerializable and @JsonKey

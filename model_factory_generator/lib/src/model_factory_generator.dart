@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:build/build.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:glob/glob.dart';
-import 'package:model_factory/src/model_factory_resolver.dart';
+import 'package:model_factory_generator/src/model_factory_resolver.dart';
 import 'package:path/path.dart';
 
 const String templateHeader = '''
