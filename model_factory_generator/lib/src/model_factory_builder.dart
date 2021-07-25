@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:build/build.dart';
-import 'package:dart_style/dart_style.dart';
 import 'package:model_factory/model_factory.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -42,7 +41,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
         '$className _\$${className}FromJson(Map<String, dynamic> json) => $className(');
     for (var f in cl.fields) {
-      if (f.setter == null) continue;
+      if (f.setter == null && !f.isFinal) continue;
 
       var name = f.name;
       if (!ctrs.contains(name)) continue;
@@ -71,7 +70,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
         'Map<String, dynamic> _\$${className}ToJson($className instance) => {');
     for (var f in cl.fields) {
-      if (f.setter == null) continue;
+      if (f.setter == null && !f.isFinal) continue;
 
       var name = f.name;
       var isNullable = f.type.nullabilitySuffix == NullabilitySuffix.question;
@@ -114,6 +113,6 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     buffer.writeln('};\n');
-    return DartFormatter().format(buffer.toString());
+    return buffer.toString();
   }
 }
