@@ -35,7 +35,6 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     if (cl.constructors.isNotEmpty) {
       final ctr = cl.constructors.first;
       for (var par in ctr.parameters) {
-        log.info(par.declaration.name);
         ctrs.add(par.declaration.name);
       }
     }
@@ -72,10 +71,12 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
         'Map<String, dynamic> _\$${className}ToJson($className instance) => {');
     for (var f in cl.fields) {
+      if (f.setter == null) continue;
+
       var name = f.name;
       var isNullable = f.type.nullabilitySuffix == NullabilitySuffix.question;
 
-      if (_jsonIgnoreChecker.hasAnnotationOfExact(f)) {
+      if (_jsonIgnoreChecker.hasAnnotationOf(f)) {
         final ann = _jsonIgnoreChecker.firstAnnotationOfExact(f)!;
         var ignore = ann.getField('ignore')?.toBoolValue() ?? false;
         var ignoreToJson = ann.getField('ignoreToJson')?.toBoolValue() ?? false;
@@ -83,7 +84,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         if (ignore || ignoreToJson) continue;
       }
 
-      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
+      if (_jsonKeyChecker.hasAnnotationOf(f)) {
         final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
         name = ann.getField('name')!.toStringValue()!;
       }
