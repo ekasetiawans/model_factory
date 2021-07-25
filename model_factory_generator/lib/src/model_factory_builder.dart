@@ -27,7 +27,14 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     final buffer = StringBuffer();
-    final cl = element;
+    buffer.writeln(buildFromJson(element));
+    buffer.writeln(buildToJson(element));
+    buffer.writeln(buildExtension(element));
+    return buffer.toString();
+  }
+
+  String buildFromJson(ClassElement cl) {
+    final buffer = StringBuffer();
     final className = cl.displayName;
 
     var ctrs = <String>[];
@@ -66,7 +73,12 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       buffer.writeln("${f.name} : json.value<$type>('$name'),");
     }
     buffer.writeln(');\n');
+    return buffer.toString();
+  }
 
+  String buildToJson(ClassElement cl) {
+    final className = cl.displayName;
+    final buffer = StringBuffer();
     buffer.writeln(
         'Map<String, dynamic> _\$${className}ToJson($className instance) => {');
     for (var f in cl.fields) {
@@ -122,6 +134,18 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     buffer.writeln('};\n');
+    return buffer.toString();
+  }
+
+  String buildExtension(ClassElement cl) {
+    final className = cl.displayName;
+    final buffer = StringBuffer();
+
+    buffer.writeln('extension ${className}JsonExtension on $className {');
+    buffer.writeln(
+        'Map<String, dynamic> toJson() => _\$${className}ToJson(this);');
+    buffer.writeln('}');
+
     return buffer.toString();
   }
 }
