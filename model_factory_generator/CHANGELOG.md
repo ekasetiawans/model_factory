@@ -1,4 +1,7 @@
-## 1.0.5
+## 1.0.6
+
+- fix List encode
+## 1.0.6
 
 - allow final field.
 ## 1.0.4

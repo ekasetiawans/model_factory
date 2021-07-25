@@ -105,7 +105,16 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         suffix = '${isNullable ? '?' : ''}.toUtc().toIso8601String()';
       }
 
-      if (f.type.isDartCoreList) {
+      final coreList = <String>[
+        'List<String>',
+        'List<int>',
+        'List<double>',
+        'List<num>',
+        'List<bool>',
+      ];
+
+      if (f.type.isDartCoreList &&
+          !coreList.contains(f.type.getDisplayString(withNullability: false))) {
         suffix = '${isNullable ? '?' : ''}.map((e) => e.toJson()).toList()';
       }
 
