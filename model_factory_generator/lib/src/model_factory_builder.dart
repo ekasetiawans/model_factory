@@ -144,7 +144,34 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln('extension ${className}JsonExtension on $className {');
     buffer.writeln(
         'Map<String, dynamic> toJson() => _\$${className}ToJson(this);');
+    buffer.writeln(buildApply(cl));
+    buffer.writeln(buildClone(cl));
     buffer.writeln('}');
+
+    return buffer.toString();
+  }
+
+  String buildApply(ClassElement cl) {
+    final className = cl.displayName;
+    final buffer = StringBuffer();
+
+    buffer.writeln('void apply($className other){');
+    for (var f in cl.fields) {
+      if (f.setter == null || f.isFinal) continue;
+      var name = f.name;
+      buffer.writeln('$name = other.$name;');
+    }
+    buffer.writeln('}');
+
+    return buffer.toString();
+  }
+
+  String buildClone(ClassElement cl) {
+    final className = cl.displayName;
+    final buffer = StringBuffer();
+
+    buffer.writeln('$className clone() => ');
+    buffer.writeln('_\$${className}FromJson(toJson());');
 
     return buffer.toString();
   }

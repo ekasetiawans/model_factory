@@ -1,3 +1,6 @@
+## 1.0.9
+
+- generate apply() and clone()
 ## 1.0.8
 
 - auto generate extension
