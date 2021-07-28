@@ -1,3 +1,6 @@
+## 1.0.10
+
+- encode getter when has `@JsonKey` annotation
 ## 1.0.9
 
 - generate apply() and clone()
