@@ -18,6 +18,7 @@ builders:
       ".dart": [".model.dart"]
     auto_apply: dependents
     build_to: source
+    runs_before: ["resolver", "generator"]
 
   resolver:
     import: "package:model_factory_generator/builder.dart"
@@ -25,6 +26,7 @@ builders:
     build_extensions: { ".dart": [".model_factory.info"] }
     auto_apply: dependents
     build_to: cache
+    runs_before: ["generator"]
 
   generator:
     import: "package:model_factory_generator/builder.dart"

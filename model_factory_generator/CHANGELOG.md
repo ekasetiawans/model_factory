@@ -1,3 +1,6 @@
+## 1.0.10+2
+
+- register only @JsonSerializable
 ## 1.0.10
 
 - encode getter when has `@JsonKey` annotation
