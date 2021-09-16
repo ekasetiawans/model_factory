@@ -1,3 +1,6 @@
+## 1.0.13
+
+- fix metadata
 ## 1.0.12
 
 - skip overridable method in metadata class.
