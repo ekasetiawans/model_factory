@@ -30,6 +30,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(buildFromJson(element));
     buffer.writeln(buildToJson(element));
     buffer.writeln(buildExtension(element));
+    buffer.writeln(buildClassFields(element));
     return buffer.toString();
   }
 
@@ -65,12 +66,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         if (ignore || ignoreFromJson) continue;
       }
 
-      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
-        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
-        name = ann.getField('name')!.toStringValue()!;
-      }
-
-      buffer.writeln("${f.name} : json.value<$type>('$name'),");
+      final meta = '${className}Metadata.instance';
+      buffer.writeln('${f.name} : json.value<$type>($meta.$name),');
     }
     buffer.writeln(');\n');
     return buffer.toString();
@@ -134,7 +131,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         suffix = '${isNullable ? '?' : ''}.map((e) => e.toJson()).toList()';
       }
 
-      buffer.writeln("'$name' : instance.${f.name}$suffix,");
+      final meta = '${className}Metadata.instance';
+      buffer.writeln('$meta.${f.name} : instance.${f.name}$suffix,');
     }
 
     buffer.writeln('};\n');
@@ -150,7 +148,39 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         'Map<String, dynamic> toJson() => _\$${className}ToJson(this);');
     buffer.writeln(buildApply(cl));
     buffer.writeln(buildClone(cl));
+    buffer.writeln(
+        '${className}Metadata get metadata => ${className}Metadata.instance;');
     buffer.writeln('}');
+
+    return buffer.toString();
+  }
+
+  String buildClassFields(ClassElement cl) {
+    final className = cl.displayName;
+    final buffer = StringBuffer();
+
+    buffer.writeln('class ${className}Metadata {');
+    buffer.writeln(
+        'static final ${className}Metadata instance = ${className}Metadata._();');
+    buffer.writeln('${className}Metadata._();');
+    buffer.writeln(buildFields(cl));
+    buffer.writeln('}');
+
+    return buffer.toString();
+  }
+
+  String buildFields(ClassElement cl) {
+    final buffer = StringBuffer();
+
+    for (var f in cl.fields) {
+      var name = f.name;
+      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
+        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
+        name = ann.getField('name')!.toStringValue()!;
+      }
+
+      buffer.writeln('final String ${f.name} = \'$name\';');
+    }
 
     return buffer.toString();
   }

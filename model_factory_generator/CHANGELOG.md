@@ -1,3 +1,6 @@
+## 1.0.11
+
+- build metadata
 ## 1.0.10+2
 
 - register only @JsonSerializable
