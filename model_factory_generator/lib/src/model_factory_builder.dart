@@ -86,6 +86,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       }
 
       var name = f.name;
+      if (['hashCode'].contains(name)) continue;
+
       var isNullable = f.type.nullabilitySuffix == NullabilitySuffix.question;
 
       if (_jsonIgnoreChecker.hasAnnotationOf(f)) {
@@ -174,8 +176,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     for (var f in cl.fields) {
       var name = f.name;
-      if (f.hasOverride) continue;
-      
+      if (['hashCode'].contains(name)) continue;
+
       if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
         final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
         name = ann.getField('name')!.toStringValue()!;
