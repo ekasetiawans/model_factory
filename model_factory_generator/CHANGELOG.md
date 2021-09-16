@@ -1,3 +1,6 @@
+## 1.0.12
+
+- skip overridable method in metadata class.
 ## 1.0.11
 
 - build metadata

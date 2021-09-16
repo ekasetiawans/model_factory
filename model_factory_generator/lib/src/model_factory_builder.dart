@@ -174,6 +174,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     for (var f in cl.fields) {
       var name = f.name;
+      if (f.hasOverride) continue;
+      
       if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
         final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
         name = ann.getField('name')!.toStringValue()!;
