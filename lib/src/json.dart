@@ -226,3 +226,15 @@ void registerJsonFactory<E>(JsonFactory<E> builder) {
   _factories[_typeOf<FutureOr<List<E>>>()] =
       (List list) => list.map((e) => builder(e)).toList();
 }
+
+T modelDecode<T>(dynamic data) {
+  if (data is List) {
+    return data.convert<T>();
+  }
+
+  if (_factories.containsKey(T)) {
+    return _factories[T](data);
+  }
+
+  throw UnsupportedError('unsupported type');
+}

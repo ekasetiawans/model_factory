@@ -1,3 +1,6 @@
+## 1.3.4
+
+- add modelDecode
 ## 1.3.3
 
 - add ignore, ignoreFromJson, ignoreToJson
