@@ -1,3 +1,6 @@
+## 1.0.15
+
+- support inheritance
 ## 1.0.14+1
 
 - update dependencies

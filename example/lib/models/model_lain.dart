@@ -3,39 +3,28 @@ import 'package:model_factory/model_factory.dart';
 part 'model_lain.g.dart';
 
 @JsonSerializable()
-class ModelLain {
-  @JsonKey('nama_lengkap')
-  String name;
+class ModelA {
+  @JsonKey('nama')
+  final String nama;
 
-  @JsonKey('address')
-  String address;
-
-  @JsonKey('test')
-  ModelYangLain? coba;
-
-  ModelLain({
-    this.name = '',
-    required this.address,
-    this.coba,
+  ModelA({
+    required this.nama,
   });
 
-  factory ModelLain.fromJson(Map<String, dynamic> json) =>
-      _$ModelLainFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ModelLainToJson(this);
+  factory ModelA.fromJson(Map<String, dynamic> map) => _$ModelAFromJson(map);
 }
 
 @JsonSerializable()
-class ModelYangLain {
-  @JsonKey('nama')
-  String name;
+class ModelB extends ModelA {
+  @JsonKey('alamat_lengkap')
+  final String alamat;
 
-  ModelYangLain({
-    required this.name,
-  });
+  ModelB({
+    required this.alamat,
+    required String nama,
+  }) : super(
+          nama: nama,
+        );
 
-  factory ModelYangLain.fromJson(Map<String, dynamic> json) =>
-      _$ModelYangLainFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ModelYangLainToJson(this);
+  factory ModelB.fromJson(Map<String, dynamic> map) => _$ModelBFromJson(map);
 }

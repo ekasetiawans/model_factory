@@ -22,7 +22,8 @@ class ModelFactoryGenerator extends Builder {
 
     final files = <String, List<dynamic>>{};
     final glob = Glob(
-        dirname(buildStep.inputId.path) + '/**' + ModelFactoryResolver.suffix);
+      dirname(buildStep.inputId.path) + '/**' + ModelFactoryResolver.suffix,
+    );
 
     await for (final input in buildStep.findAssets(glob)) {
       files[input.path] = json.decode(await buildStep.readAsString(input))!;
@@ -30,8 +31,8 @@ class ModelFactoryGenerator extends Builder {
     if (files.isEmpty) return;
 
     final uris = <String, List<String>>{};
-    for (var file in files.values) {
-      for (var c in file) {
+    for (final file in files.values) {
+      for (final c in file) {
         final uri = c['uri'];
         final className = c['class'];
         if (uris.containsKey(uri)) {
@@ -47,7 +48,7 @@ class ModelFactoryGenerator extends Builder {
     contentBuffer.writeln(templateHeader);
     contentBuffer.writeln("import 'package:model_factory/model_factory.dart';");
     final imp = uris.keys.toList();
-    for (var uri in imp) {
+    for (final uri in imp) {
       final classes = uris[uri];
       if (classes!.isEmpty) continue;
 
@@ -56,12 +57,12 @@ class ModelFactoryGenerator extends Builder {
 
     contentBuffer.writeln();
     contentBuffer.writeln('void registerFactories(){');
-    for (var uri in imp) {
+    for (final uri in imp) {
       final m = imp.indexOf(uri);
       final classes = uris[uri];
       if (classes!.isEmpty) continue;
 
-      for (var c in classes) {
+      for (final c in classes) {
         contentBuffer
             .writeln('registerJsonFactory((json) => m$m.$c.fromJson(json));');
       }
@@ -77,7 +78,7 @@ class ModelFactoryGenerator extends Builder {
     await buildStep.writeAsString(codeId, code);
   }
 
-  static final codeFile = 'model_factories.g.dart';
+  static const codeFile = 'model_factories.g.dart';
   static final _outputs = [codeFile];
 
   @override

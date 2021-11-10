@@ -16,7 +16,7 @@ class ModelFactoryResolver extends Builder {
 
     final elements = libReader.annotatedWith(_jsonKeyChecker);
     final entities = <Map<String, dynamic>>[];
-    for (var c in elements) {
+    for (final c in elements) {
       entities.add({
         'uri': buildStep.inputId.uri.toString(),
         'class': c.element.displayName,
@@ -24,7 +24,9 @@ class ModelFactoryResolver extends Builder {
     }
 
     await buildStep.writeAsString(
-        buildStep.inputId.changeExtension(suffix), json.encode(entities));
+      buildStep.inputId.changeExtension(suffix),
+      json.encode(entities),
+    );
   }
 
   static const suffix = '.model_factory.info';

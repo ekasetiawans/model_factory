@@ -5,12 +5,17 @@ import 'package:model_factory/model_factory.dart';
 import 'package:source_gen/source_gen.dart';
 
 class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
+  final _jsonSerializableChecker =
+      const TypeChecker.fromRuntime(JsonSerializable);
   final _jsonKeyChecker = const TypeChecker.fromRuntime(JsonKey);
   final _jsonIgnoreChecker = const TypeChecker.fromRuntime(JsonIgnore);
 
   @override
   Future<String?> generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) async {
+    Element element,
+    ConstantReader annotation,
+    BuildStep buildStep,
+  ) async {
     if (!element.library!.isNonNullableByDefault) {
       throw InvalidGenerationSourceError(
         'Generator cannot target libraries that have not been migrated to '
@@ -34,89 +39,126 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     return buffer.toString();
   }
 
-  String buildFromJson(ClassElement cl) {
+  String buildFromJson(ClassElement classElement) {
     final buffer = StringBuffer();
-    final className = cl.displayName;
+    final className = classElement.displayName;
+    buffer.writeln(
+      '$className _\$${className}FromJson(Map<String, dynamic> json) => $className(',
+    );
 
-    var ctrs = <String>[];
-    if (cl.constructors.isNotEmpty) {
-      final ctr = cl.constructors.first;
-      for (var par in ctr.parameters) {
-        ctrs.add(par.declaration.name);
+    final supers = classElement.allSupertypes;
+    for (final sup in supers) {
+      buildFromJsonFields(sup.element, buffer);
+    }
+
+    buildFromJsonFields(classElement, buffer);
+    buffer.writeln(');\n');
+    return buffer.toString();
+  }
+
+  void buildFromJsonFields(ClassElement classElement, StringBuffer buffer) {
+    if (!_jsonSerializableChecker.hasAnnotationOfExact(classElement)) {
+      return;
+    }
+
+    final className = classElement.displayName;
+    final constructorFields = <String>[];
+
+    if (classElement.constructors.isNotEmpty) {
+      final constructor = classElement.constructors.first;
+      for (final parameter in constructor.parameters) {
+        constructorFields.add(parameter.declaration.name);
       }
     }
 
-    buffer.writeln(
-        '$className _\$${className}FromJson(Map<String, dynamic> json) => $className(');
-    for (var f in cl.fields) {
-      if (f.setter == null && !f.isFinal) continue;
+    for (final field in classElement.fields) {
+      if (field.setter == null && !field.isFinal) continue;
 
-      var name = f.name;
-      if (!ctrs.contains(name)) continue;
+      final fieldName = field.name;
+      if (!constructorFields.contains(fieldName)) continue;
 
-      var isNullable = f.type.nullabilitySuffix == NullabilitySuffix.question;
-      var type = f.type.getDisplayString(withNullability: isNullable);
+      final isNullable =
+          field.type.nullabilitySuffix == NullabilitySuffix.question;
+      final type = field.type.getDisplayString(withNullability: isNullable);
 
-      if (_jsonIgnoreChecker.hasAnnotationOfExact(f)) {
-        final ann = _jsonIgnoreChecker.firstAnnotationOfExact(f)!;
-        var ignore = ann.getField('ignore')?.toBoolValue() ?? false;
-        var ignoreFromJson =
+      if (_jsonIgnoreChecker.hasAnnotationOfExact(field)) {
+        final ann = _jsonIgnoreChecker.firstAnnotationOfExact(field)!;
+        final ignore = ann.getField('ignore')?.toBoolValue() ?? false;
+        final ignoreFromJson =
             ann.getField('ignoreFromJson')?.toBoolValue() ?? false;
 
         if (ignore || ignoreFromJson) continue;
       }
 
       final meta = '${className}Metadata.instance';
-      buffer.writeln('${f.name} : json.value<$type>($meta.$name),');
+      buffer.writeln('${field.name} : json.value<$type>($meta.$fieldName),');
     }
-    buffer.writeln(');\n');
+  }
+
+  String buildToJson(ClassElement classElement) {
+    final className = classElement.displayName;
+    final buffer = StringBuffer();
+    buffer.writeln(
+      'Map<String, dynamic> _\$${className}ToJson($className instance) => {',
+    );
+
+    final supers = classElement.allSupertypes;
+    for (final sup in supers) {
+      buildToJsonFields(sup.element, buffer);
+    }
+
+    buildToJsonFields(classElement, buffer);
+    buffer.writeln('};\n');
     return buffer.toString();
   }
 
-  String buildToJson(ClassElement cl) {
-    final className = cl.displayName;
-    final buffer = StringBuffer();
-    buffer.writeln(
-        'Map<String, dynamic> _\$${className}ToJson($className instance) => {');
-    for (var f in cl.fields) {
-      if (f.setter == null &&
-          !f.isFinal &&
-          !_jsonKeyChecker.hasAnnotationOf(f)) {
+  void buildToJsonFields(ClassElement classElement, StringBuffer buffer) {
+    if (!_jsonSerializableChecker.hasAnnotationOfExact(classElement)) {
+      return;
+    }
+
+    final className = classElement.displayName;
+    for (final field in classElement.fields) {
+      if (field.setter == null &&
+          !field.isFinal &&
+          !_jsonKeyChecker.hasAnnotationOf(field)) {
         continue;
       }
 
-      var name = f.name;
-      if (['hashCode'].contains(name)) continue;
+      var fieldName = field.name;
+      if (['hashCode'].contains(fieldName)) continue;
 
-      var isNullable = f.type.nullabilitySuffix == NullabilitySuffix.question;
+      final isNullable =
+          field.type.nullabilitySuffix == NullabilitySuffix.question;
 
-      if (_jsonIgnoreChecker.hasAnnotationOf(f)) {
-        final ann = _jsonIgnoreChecker.firstAnnotationOfExact(f)!;
-        var ignore = ann.getField('ignore')?.toBoolValue() ?? false;
-        var ignoreToJson = ann.getField('ignoreToJson')?.toBoolValue() ?? false;
+      if (_jsonIgnoreChecker.hasAnnotationOf(field)) {
+        final ann = _jsonIgnoreChecker.firstAnnotationOfExact(field)!;
+        final ignore = ann.getField('ignore')?.toBoolValue() ?? false;
+        final ignoreToJson =
+            ann.getField('ignoreToJson')?.toBoolValue() ?? false;
 
         if (ignore || ignoreToJson) continue;
       }
 
-      if (_jsonKeyChecker.hasAnnotationOf(f)) {
-        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
-        name = ann.getField('name')!.toStringValue()!;
+      if (_jsonKeyChecker.hasAnnotationOf(field)) {
+        final ann = _jsonKeyChecker.firstAnnotationOfExact(field)!;
+        fieldName = ann.getField('name')!.toStringValue()!;
       }
 
       var suffix = '';
-      if (!f.type.isDartCoreBool &&
-          !f.type.isDartCoreDouble &&
-          !f.type.isDartCoreInt &&
-          !f.type.isDartCoreIterable &&
-          !f.type.isDartCoreList &&
-          !f.type.isDartCoreMap &&
-          !f.type.isDartCoreNum &&
-          !f.type.isDartCoreSet &&
-          !f.type.isDartCoreString) {
+      if (!field.type.isDartCoreBool &&
+          !field.type.isDartCoreDouble &&
+          !field.type.isDartCoreInt &&
+          !field.type.isDartCoreIterable &&
+          !field.type.isDartCoreList &&
+          !field.type.isDartCoreMap &&
+          !field.type.isDartCoreNum &&
+          !field.type.isDartCoreSet &&
+          !field.type.isDartCoreString) {
         suffix = '${isNullable ? '?' : ''}.toJson()';
       }
 
-      if (f.type.getDisplayString(withNullability: false) == 'DateTime') {
+      if (field.type.getDisplayString(withNullability: false) == 'DateTime') {
         suffix = '${isNullable ? '?' : ''}.toUtc().toIso8601String()';
       }
 
@@ -128,17 +170,15 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         'List<bool>',
       ];
 
-      if (f.type.isDartCoreList &&
-          !coreList.contains(f.type.getDisplayString(withNullability: false))) {
+      if (field.type.isDartCoreList &&
+          !coreList
+              .contains(field.type.getDisplayString(withNullability: false))) {
         suffix = '${isNullable ? '?' : ''}.map((e) => e.toJson()).toList()';
       }
 
       final meta = '${className}Metadata.instance';
-      buffer.writeln('$meta.${f.name} : instance.${f.name}$suffix,');
+      buffer.writeln('$meta.${field.name} : instance.${field.name}$suffix,');
     }
-
-    buffer.writeln('};\n');
-    return buffer.toString();
   }
 
   String buildExtension(ClassElement cl) {
@@ -147,11 +187,13 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     buffer.writeln('extension ${className}JsonExtension on $className {');
     buffer.writeln(
-        'Map<String, dynamic> toJson() => _\$${className}ToJson(this);');
+      'Map<String, dynamic> toJson() => _\$${className}ToJson(this);',
+    );
     buffer.writeln(buildApply(cl));
     buffer.writeln(buildClone(cl));
     buffer.writeln(
-        '${className}Metadata get metadata => ${className}Metadata.instance;');
+      '${className}Metadata get metadata => ${className}Metadata.instance;',
+    );
     buffer.writeln('}');
 
     return buffer.toString();
@@ -163,7 +205,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     buffer.writeln('class ${className}Metadata {');
     buffer.writeln(
-        'static final ${className}Metadata instance = ${className}Metadata._();');
+      'static final ${className}Metadata instance = ${className}Metadata._();',
+    );
     buffer.writeln('${className}Metadata._();');
     buffer.writeln(buildFields(cl));
     buffer.writeln('}');
@@ -174,7 +217,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
   String buildFields(ClassElement cl) {
     final buffer = StringBuffer();
 
-    for (var f in cl.fields) {
+    for (final f in cl.fields) {
       var name = f.name;
       if (['hashCode'].contains(name)) continue;
 
@@ -194,9 +237,9 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final buffer = StringBuffer();
 
     buffer.writeln('void apply($className other){');
-    for (var f in cl.fields) {
+    for (final f in cl.fields) {
       if (f.setter == null || f.isFinal) continue;
-      var name = f.name;
+      final name = f.name;
       buffer.writeln('$name = other.$name;');
     }
     buffer.writeln('}');
