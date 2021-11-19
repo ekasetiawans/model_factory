@@ -1,3 +1,6 @@
+## 1.0.16
+
+- added copyWith
 ## 1.0.15
 
 - support inheritance
