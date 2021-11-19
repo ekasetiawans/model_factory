@@ -289,22 +289,14 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     buffer.write(')');
-    if (fields.isEmpty) {
-      buffer.writeln(';');
-    }
-
     for (final f in fields) {
       if (f.setter == null || f.isFinal) continue;
 
       final name = f.name;
-      buffer.write('..$name = $name ?? this.$name');
-      if (fields.indexOf(f) == fields.length - 1) {
-        buffer.writeln(';');
-      } else {
-        buffer.writeln(' ');
-      }
+      buffer.writeln('..$name = $name ?? this.$name');
     }
 
+    buffer.writeln(';');
     return buffer.toString();
   }
 
