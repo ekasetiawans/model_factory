@@ -189,6 +189,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
       'Map<String, dynamic> toJson() => _\$${className}ToJson(this);',
     );
+    buffer.writeln(buildCopyWith(cl));
     buffer.writeln(buildApply(cl));
     buffer.writeln(buildClone(cl));
     buffer.writeln(
@@ -243,6 +244,61 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       buffer.writeln('$name = other.$name;');
     }
     buffer.writeln('}');
+
+    return buffer.toString();
+  }
+
+  String buildCopyWith(ClassElement cl) {
+    final className = cl.displayName;
+
+    if (cl.constructors.isEmpty) {
+      return '';
+    }
+
+    final constructor = cl.constructors.first;
+    final buffer = StringBuffer();
+
+    buffer.write('$className copyWith({');
+    for (final f in constructor.parameters) {
+      final name = f.name;
+      final type = f.type.getDisplayString(withNullability: true);
+      buffer.writeln('$type? $name,');
+    }
+
+    final fields = cl.fields
+        .where((a) => !constructor.parameters.any((b) => b.name == a.name))
+        .toList();
+
+    for (final f in fields) {
+      if (f.setter == null || f.isFinal) continue;
+
+      final name = f.name;
+      final type = f.type.getDisplayString(withNullability: true);
+      buffer.writeln('$type $name,');
+    }
+
+    buffer.writeln('}) => $className(');
+    for (final f in constructor.parameters) {
+      final name = f.name;
+      buffer.writeln('$name: $name ?? this.$name,');
+    }
+
+    buffer.write(')');
+    if (fields.isEmpty) {
+      buffer.writeln(';');
+    }
+
+    for (final f in fields) {
+      if (f.setter == null || f.isFinal) continue;
+
+      final name = f.name;
+      buffer.write('..$name = $name ?? this.$name');
+      if (fields.indexOf(f) == fields.length - 1) {
+        buffer.writeln(';');
+      } else {
+        buffer.writeln(' ');
+      }
+    }
 
     return buffer.toString();
   }
