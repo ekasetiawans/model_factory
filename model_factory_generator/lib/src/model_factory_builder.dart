@@ -43,7 +43,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final buffer = StringBuffer();
     final className = classElement.displayName;
     buffer.writeln(
-      '$className _\$${className}FromJson(Map<String, dynamic> json) => $className(',
+      '$className _\$${className}FromJson(Map<String, dynamic> json,) => $className(',
     );
 
     final supers = classElement.allSupertypes;
@@ -91,7 +91,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       }
 
       final meta = '${className}Metadata.instance';
-      buffer.writeln('${field.name} : json.value<$type>($meta.$fieldName),');
+      buffer.writeln('${field.name} : json.value<$type>($meta.$fieldName,),');
     }
   }
 
@@ -99,7 +99,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final className = classElement.displayName;
     final buffer = StringBuffer();
     buffer.writeln(
-      'Map<String, dynamic> _\$${className}ToJson($className instance) => {',
+      'Map<String, dynamic> _\$${className}ToJson($className instance,) => {',
     );
 
     final supers = classElement.allSupertypes;
@@ -278,8 +278,13 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       if (f.setter == null || f.isFinal) continue;
 
       final name = f.name;
-      final type = f.type.getDisplayString(withNullability: true);
-      buffer.writeln('$type $name,');
+      String type = f.type.getDisplayString(withNullability: true);
+      final isNullable = type.contains('?');
+      if (isNullable) {
+        type = type.replaceAll('?', '');
+      }
+
+      buffer.writeln('$type? $name,');
     }
 
     buffer.writeln('}) => $className(');
