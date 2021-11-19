@@ -261,7 +261,12 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.write('$className copyWith({');
     for (final f in constructor.parameters) {
       final name = f.name;
-      final type = f.type.getDisplayString(withNullability: true);
+      String type = f.type.getDisplayString(withNullability: true);
+      final isNullable = type.contains('?');
+      if (isNullable) {
+        type = type.replaceAll('?', '');
+      }
+
       buffer.writeln('$type? $name,');
     }
 

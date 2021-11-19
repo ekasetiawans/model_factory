@@ -1,3 +1,6 @@
+## 1.0.17
+
+- fix copyWith
 ## 1.0.16
 
 - added copyWith

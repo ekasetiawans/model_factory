@@ -50,6 +50,7 @@ class ModelAMetadata {
 ModelB _$ModelBFromJson(Map<String, dynamic> json) => ModelB(
       nama: json.value<String>(ModelAMetadata.instance.nama),
       alamat: json.value<String>(ModelBMetadata.instance.alamat),
+      telepon: json.value<String?>(ModelBMetadata.instance.telepon),
       modelA: json.value<ModelA>(ModelBMetadata.instance.modelA),
     );
 
@@ -58,6 +59,7 @@ Map<String, dynamic> _$ModelBToJson(ModelB instance) => {
       ModelAMetadata.instance.percobaan: instance.percobaan,
       ModelAMetadata.instance.alamatLengkap: instance.alamatLengkap,
       ModelBMetadata.instance.alamat: instance.alamat,
+      ModelBMetadata.instance.telepon: instance.telepon,
       ModelBMetadata.instance.modelA: instance.modelA.toJson(),
     };
 
@@ -66,11 +68,13 @@ extension ModelBJsonExtension on ModelB {
   ModelB copyWith({
     String? nama,
     String? alamat,
+    String? telepon,
     ModelA? modelA,
   }) =>
       ModelB(
         nama: nama ?? this.nama,
         alamat: alamat ?? this.alamat,
+        telepon: telepon ?? this.telepon,
         modelA: modelA ?? this.modelA,
       );
 
@@ -85,5 +89,6 @@ class ModelBMetadata {
   static final ModelBMetadata instance = ModelBMetadata._();
   ModelBMetadata._();
   final String alamat = 'alamat_lengkap';
+  final String telepon = 'telepon';
   final String modelA = 'model_a';
 }

@@ -22,16 +22,20 @@ class ModelB extends ModelA {
   @JsonKey('alamat_lengkap')
   final String alamat;
 
+  @JsonKey('telepon')
+  final String? telepon;
+
   @JsonKey('model_a')
   final ModelA modelA;
 
   ModelB({
     required String nama,
     required this.alamat,
+    this.telepon,
     required this.modelA,
   }) : super(
-            nama: nama,
-          );
+              nama: nama,
+            );
 
   factory ModelB.fromJson(Map<String, dynamic> map) => _$ModelBFromJson(map);
 }
