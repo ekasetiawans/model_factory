@@ -43,8 +43,20 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final buffer = StringBuffer();
     final className = classElement.displayName;
     buffer.writeln(
-      '$className _\$${className}FromJson(Map<String, dynamic> json,) => $className(',
+      '$className _\$${className}FromJson(Map<String, dynamic> json,) {',
     );
+
+    for (final field in classElement.fields) {
+      final ce = field.type.element;
+      if (ce is ClassElement) {
+        if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {
+          final className = ce.displayName;
+          buffer.writeln('${className}Metadata._registerFactory();');
+        }
+      }
+    }
+
+    buffer.write(' return $className(');
 
     final supers = classElement.allSupertypes;
     for (final sup in supers) {
@@ -52,7 +64,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     buildFromJsonFields(classElement, buffer);
-    buffer.writeln(');\n');
+    buffer.writeln(');\n}\n');
     return buffer.toString();
   }
 
@@ -99,16 +111,27 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final className = classElement.displayName;
     final buffer = StringBuffer();
     buffer.writeln(
-      'Map<String, dynamic> _\$${className}ToJson($className instance,) => {',
+      'Map<String, dynamic> _\$${className}ToJson($className instance,){',
     );
 
+    for (final field in classElement.fields) {
+      final ce = field.type.element;
+      if (ce is ClassElement) {
+        if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {
+          final className = ce.displayName;
+          buffer.writeln('${className}Metadata._registerFactory();');
+        }
+      }
+    }
+
+    buffer.writeln('return {');
     final supers = classElement.allSupertypes;
     for (final sup in supers) {
       buildToJsonFields(sup.element, buffer);
     }
 
     buildToJsonFields(classElement, buffer);
-    buffer.writeln('};\n');
+    buffer.writeln('};\n}\n');
     return buffer.toString();
   }
 
@@ -208,6 +231,18 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
       'static final ${className}Metadata instance = ${className}Metadata._();',
     );
+
+    buffer.writeln(
+      '''
+      static bool _isRegistered = false;
+      static void _registerFactory(){
+        if (_isRegistered) return;
+        _isRegistered = true;
+        registerJsonFactory((json) => $className.fromJson(json));
+      }
+      ''',
+    );
+
     buffer.writeln('${className}Metadata._();');
     buffer.writeln(buildFields(cl));
     buffer.writeln('}');

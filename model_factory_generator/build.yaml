@@ -4,11 +4,11 @@ targets:
       model_factory_generator|builder:
         enabled: true
 
-      model_factory_generator|resolver:
-        enabled: true
+      # model_factory_generator|resolver:
+      #   enabled: true
 
-      model_factory_generator|generator:
-        enabled: true
+      # model_factory_generator|generator:
+      #   enabled: true
 
 builders:
   builder:
@@ -20,20 +20,20 @@ builders:
     build_to: source
     runs_before: ["resolver", "generator"]
 
-  resolver:
-    import: "package:model_factory_generator/builder.dart"
-    builder_factories: ["codeGeneratorResolver"]
-    build_extensions: { ".dart": [".model_factory.info"] }
-    auto_apply: dependents
-    build_to: cache
-    runs_before: ["generator"]
+  # resolver:
+  #   import: "package:model_factory_generator/builder.dart"
+  #   builder_factories: ["codeGeneratorResolver"]
+  #   build_extensions: { ".dart": [".model_factory.info"] }
+  #   auto_apply: dependents
+  #   build_to: cache
+  #   runs_before: ["generator"]
 
-  generator:
-    import: "package:model_factory_generator/builder.dart"
-    builder_factories: ["codeGeneratorFactory"]
-    build_extensions:
-      "$lib$": ["models_factories.dart"]
-      "$test": ["models_factories.dart"]
-    required_inputs: [".model_factory.info"]
-    auto_apply: dependents
-    build_to: source
+  # generator:
+  #   import: "package:model_factory_generator/builder.dart"
+  #   builder_factories: ["codeGeneratorFactory"]
+  #   build_extensions:
+  #     "$lib$": ["models_factories.dart"]
+  #     "$test": ["models_factories.dart"]
+  #   required_inputs: [".model_factory.info"]
+  #   auto_apply: dependents
+  #   build_to: source
