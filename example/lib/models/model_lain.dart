@@ -28,14 +28,18 @@ class ModelB extends ModelA {
   @JsonKey('model_a')
   final ModelA modelA;
 
+  @JsonKey('modelsss')
+  final List<ModelA> models;
+
   ModelB({
     required String nama,
     required this.alamat,
     this.telepon,
     required this.modelA,
+    required this.models,
   }) : super(
-              nama: nama,
-            );
+                nama: nama,
+              );
 
   factory ModelB.fromJson(Map<String, dynamic> map) => _$ModelBFromJson(map);
 }

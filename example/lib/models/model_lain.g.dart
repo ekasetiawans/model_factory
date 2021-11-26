@@ -52,7 +52,7 @@ extension ModelAJsonExtension on ModelA {
 class ModelAMetadata {
   static final ModelAMetadata instance = ModelAMetadata._();
   static bool _isRegistered = false;
-  static void _registerFactory() {
+  static void registerFactory() {
     if (_isRegistered) return;
     _isRegistered = true;
     registerJsonFactory((json) => ModelA.fromJson(json));
@@ -67,7 +67,7 @@ class ModelAMetadata {
 ModelB _$ModelBFromJson(
   Map<String, dynamic> json,
 ) {
-  ModelAMetadata._registerFactory();
+  ModelAMetadata.registerFactory();
   return ModelB(
     nama: json.value<String>(
       ModelAMetadata.instance.nama,
@@ -81,13 +81,16 @@ ModelB _$ModelBFromJson(
     modelA: json.value<ModelA>(
       ModelBMetadata.instance.modelA,
     ),
+    models: json.value<List<ModelA>>(
+      ModelBMetadata.instance.models,
+    ),
   );
 }
 
 Map<String, dynamic> _$ModelBToJson(
   ModelB instance,
 ) {
-  ModelAMetadata._registerFactory();
+  ModelAMetadata.registerFactory();
   return {
     ModelAMetadata.instance.nama: instance.nama,
     ModelAMetadata.instance.percobaan: instance.percobaan,
@@ -95,6 +98,8 @@ Map<String, dynamic> _$ModelBToJson(
     ModelBMetadata.instance.alamat: instance.alamat,
     ModelBMetadata.instance.telepon: instance.telepon,
     ModelBMetadata.instance.modelA: instance.modelA.toJson(),
+    ModelBMetadata.instance.models:
+        instance.models.map((e) => e.toJson()).toList(),
   };
 }
 
@@ -105,12 +110,14 @@ extension ModelBJsonExtension on ModelB {
     String? alamat,
     String? telepon,
     ModelA? modelA,
+    List<ModelA>? models,
   }) =>
       ModelB(
         nama: nama ?? this.nama,
         alamat: alamat ?? this.alamat,
         telepon: telepon ?? this.telepon,
         modelA: modelA ?? this.modelA,
+        models: models ?? this.models,
       );
 
   void apply(ModelB other) {}
@@ -123,7 +130,7 @@ extension ModelBJsonExtension on ModelB {
 class ModelBMetadata {
   static final ModelBMetadata instance = ModelBMetadata._();
   static bool _isRegistered = false;
-  static void _registerFactory() {
+  static void registerFactory() {
     if (_isRegistered) return;
     _isRegistered = true;
     registerJsonFactory((json) => ModelB.fromJson(json));
@@ -133,4 +140,5 @@ class ModelBMetadata {
   final String alamat = 'alamat_lengkap';
   final String telepon = 'telepon';
   final String modelA = 'model_a';
+  final String models = 'modelsss';
 }

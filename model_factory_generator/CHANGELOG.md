@@ -1,4 +1,4 @@
-## 1.1.0
+## 1.1.0+2
 
 - BREAKING CHANGES: remove registerFactories for tree shake optimization
 ## 1.0.17+4

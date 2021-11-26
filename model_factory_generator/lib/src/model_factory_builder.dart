@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:model_factory/model_factory.dart';
 import 'package:source_gen/source_gen.dart';
@@ -39,6 +40,22 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     return buffer.toString();
   }
 
+  Iterable<Element> findGenericElements(DartType type) sync* {
+    if (type is ParameterizedType) {
+      if (type.typeArguments.isNotEmpty) {
+        for (final i in type.typeArguments) {
+          final el = i.element;
+          if (el is ClassElement &&
+              _jsonSerializableChecker.hasAnnotationOfExact(el)) {
+            yield el;
+
+            yield* findGenericElements(el.thisType);
+          }
+        }
+      }
+    }
+  }
+
   String buildFromJson(ClassElement classElement) {
     final buffer = StringBuffer();
     final className = classElement.displayName;
@@ -46,12 +63,24 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       '$className _\$${className}FromJson(Map<String, dynamic> json,) {',
     );
 
+    final List<String> _added = [];
     for (final field in classElement.fields) {
       final ce = field.type.element;
+
+      final els = findGenericElements(field.type);
+      for (final el in els) {
+        if (_added.contains(el.displayName)) continue;
+        _added.add(el.displayName);
+        buffer.writeln('${el.displayName}Metadata.registerFactory();');
+      }
+
       if (ce is ClassElement) {
+        if (_added.contains(ce.displayName)) continue;
+        _added.add(ce.displayName);
+
         if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {
           final className = ce.displayName;
-          buffer.writeln('${className}Metadata._registerFactory();');
+          buffer.writeln('${className}Metadata.registerFactory();');
         }
       }
     }
@@ -114,12 +143,24 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       'Map<String, dynamic> _\$${className}ToJson($className instance,){',
     );
 
+    final List<String> _added = [];
     for (final field in classElement.fields) {
       final ce = field.type.element;
+
+      final els = findGenericElements(field.type);
+      for (final el in els) {
+        if (_added.contains(el.displayName)) continue;
+        _added.add(el.displayName);
+        buffer.writeln('${el.displayName}Metadata.registerFactory();');
+      }
+
       if (ce is ClassElement) {
+        if (_added.contains(ce.displayName)) continue;
+        _added.add(ce.displayName);
+
         if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {
           final className = ce.displayName;
-          buffer.writeln('${className}Metadata._registerFactory();');
+          buffer.writeln('${className}Metadata.registerFactory();');
         }
       }
     }
@@ -235,7 +276,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
       '''
       static bool _isRegistered = false;
-      static void _registerFactory(){
+      static void registerFactory(){
         if (_isRegistered) return;
         _isRegistered = true;
         registerJsonFactory((json) => $className.fromJson(json));
