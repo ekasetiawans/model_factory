@@ -63,6 +63,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       '$className _\$${className}FromJson(Map<String, dynamic> json,) {',
     );
 
+    buffer.writeln('try {');
+
     final List<String> _added = [];
     for (final field in classElement.fields) {
       final ce = field.type.element;
@@ -93,7 +95,11 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     buildFromJsonFields(classElement, buffer);
-    buffer.writeln(');\n}\n');
+    buffer.writeln(');');
+
+    buffer.writeln('} catch (e) {');
+    buffer.writeln('throw ModelParseException(innerException: e);');
+    buffer.writeln('}');
     return buffer.toString();
   }
 

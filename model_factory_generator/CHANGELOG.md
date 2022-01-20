@@ -1,3 +1,6 @@
+## 1.1.3
+- throw ModelParseException on FromJson fails
+
 ## 1.1.1
 - revert registerFactories for generic
 ## 1.1.0+2
