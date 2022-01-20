@@ -1,3 +1,7 @@
+
+## 1.3.5
+
+- add ModelParseException
 ## 1.3.4
 
 - add modelDecode
