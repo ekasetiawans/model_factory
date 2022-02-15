@@ -1,4 +1,7 @@
 
+## 1.3.6
+
+- added fromJson and toJson in JsonKey
 ## 1.3.5
 
 - add ModelParseException

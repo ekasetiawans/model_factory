@@ -142,6 +142,28 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       }
 
       final meta = '${className}Metadata.instance';
+      if (_jsonKeyChecker.hasAnnotationOfExact(field)) {
+        final jsonKey = _jsonKeyChecker.firstAnnotationOfExact(field)!;
+        final fromJson = jsonKey.getField('fromJson');
+        if (fromJson != null) {
+          final fn = fromJson.toFunctionValue();
+          if (fn != null) {
+            final functionName = fn.name;
+
+            final deserializationInfo = '''DeserializationInfo(
+              key: $meta.$fieldName,
+              map: json,
+              current: json[$meta.$fieldName],
+            )''';
+
+            buffer.writeln(
+              '${field.name} : $functionName($deserializationInfo,),',
+            );
+            continue;
+          }
+        }
+      }
+
       buffer.writeln('${field.name} : json.value<$type>($meta.$fieldName,),');
     }
   }
@@ -214,9 +236,27 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         if (ignore || ignoreToJson) continue;
       }
 
+      final meta = '${className}Metadata.instance';
       if (_jsonKeyChecker.hasAnnotationOf(field)) {
         final ann = _jsonKeyChecker.firstAnnotationOfExact(field)!;
         fieldName = ann.getField('name')!.toStringValue()!;
+
+        final toJson = ann.getField('toJson');
+        if (toJson != null) {
+          final fn = toJson.toFunctionValue();
+          if (fn != null) {
+            final functionName = fn.name;
+            final String serializationInfo = '''SerializationInfo(
+              key: $meta.${field.name},
+              data: instance.${field.name},
+            )''';
+
+            buffer.writeln(
+              '$meta.${field.name} : $functionName($serializationInfo,),',
+            );
+            continue;
+          }
+        }
       }
 
       var suffix = '';
@@ -250,7 +290,6 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         suffix = '${isNullable ? '?' : ''}.map((e) => e.toJson()).toList()';
       }
 
-      final meta = '${className}Metadata.instance';
       buffer.writeln('$meta.${field.name} : instance.${field.name}$suffix,');
     }
   }
