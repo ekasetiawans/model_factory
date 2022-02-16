@@ -32,8 +32,12 @@ ModelWithCustom _$ModelWithCustomFromJson(
         ),
       ),
     );
-  } catch (e) {
-    throw ModelParseException(innerException: e);
+  } on FieldParseException catch (e) {
+    throw ModelParseException(
+      innerException: e.innerException,
+      key: e.key,
+      className: 'ModelWithCustom',
+    );
   }
 }
 

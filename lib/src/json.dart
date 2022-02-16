@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:model_factory/model_factory.dart';
+
 extension JsonExt on JsonCodec {
   E? decodeAs<E>(String source) {
     if (source.startsWith('[')) {
@@ -92,87 +94,94 @@ extension JsonMap on Map<String, dynamic> {
   }
 
   E value<E>(String key, {E? defaultValue}) {
-    if (!containsKey(key)) {
-      if (defaultValue != null) return defaultValue;
-      return null as E;
-    }
+    try {
+      if (!containsKey(key)) {
+        if (defaultValue != null) return defaultValue;
+        return null as E;
+      }
 
-    if (this[key] == null) {
-      if (defaultValue != null) return defaultValue;
-      return null as E;
-    }
+      if (this[key] == null) {
+        if (defaultValue != null) return defaultValue;
+        return null as E;
+      }
 
-    if (this[key] is Map && (this[key] as Map).isEmpty) {
-      if (defaultValue != null) return defaultValue;
-      return null as E;
-    }
+      if (this[key] is Map && (this[key] as Map).isEmpty) {
+        if (defaultValue != null) return defaultValue;
+        return null as E;
+      }
 
-    if (_factories.containsKey(E)) {
-      return _factories[E](this[key]);
-    }
+      if (_factories.containsKey(E)) {
+        return _factories[E](this[key]);
+      }
 
-    if (_factories.containsKey(_typeOf<E>())) {
-      return _factories[_typeOf<E>()](this[key]);
-    }
+      if (_factories.containsKey(_typeOf<E>())) {
+        return _factories[_typeOf<E>()](this[key]);
+      }
 
-    if (E == String) {
-      return string(key) as E;
-    }
+      if (E == String) {
+        return string(key) as E;
+      }
 
-    if (E == int) {
-      return number(key).toInt() as E;
-    }
+      if (E == int) {
+        return number(key).toInt() as E;
+      }
 
-    if (E == double) {
-      return number(key).toDouble() as E;
-    }
+      if (E == double) {
+        return number(key).toDouble() as E;
+      }
 
-    if (E == num) {
-      return number(key) as E;
-    }
+      if (E == num) {
+        return number(key) as E;
+      }
 
-    if (E == DateTime) {
-      return dateTime(key) as E;
-    }
+      if (E == DateTime) {
+        return dateTime(key) as E;
+      }
 
-    if (E == bool) {
-      return boolean(key) as E;
-    }
+      if (E == bool) {
+        return boolean(key) as E;
+      }
 
-    if (E == _typeOf<String?>()) {
-      return string(key) as E;
-    }
+      if (E == _typeOf<String?>()) {
+        return string(key) as E;
+      }
 
-    if (E == _typeOf<int?>()) {
-      return number(key).toInt() as E;
-    }
+      if (E == _typeOf<int?>()) {
+        return number(key).toInt() as E;
+      }
 
-    if (E == _typeOf<double?>()) {
-      return number(key).toDouble() as E;
-    }
+      if (E == _typeOf<double?>()) {
+        return number(key).toDouble() as E;
+      }
 
-    if (E == _typeOf<num?>()) {
-      return number(key) as E;
-    }
+      if (E == _typeOf<num?>()) {
+        return number(key) as E;
+      }
 
-    if (E == _typeOf<DateTime?>()) {
-      return dateTime(key) as E;
-    }
+      if (E == _typeOf<DateTime?>()) {
+        return dateTime(key) as E;
+      }
 
-    if (E == _typeOf<bool?>()) {
-      return boolean(key) as E;
-    }
+      if (E == _typeOf<bool?>()) {
+        return boolean(key) as E;
+      }
 
-    if (E == _typeOf<List>()) {
-      return (this[key] as List).convert();
-    }
+      if (E == _typeOf<List>()) {
+        return (this[key] as List).convert();
+      }
 
-    if (this[key] is List) {
-      return (this[key] as List).convert();
-    }
+      if (this[key] is List) {
+        return (this[key] as List).convert();
+      }
 
-    if (this[key] is Map<String, dynamic>) {
-      return (this[key] as Map<String, dynamic>).convert();
+      if (this[key] is Map<String, dynamic>) {
+        return (this[key] as Map<String, dynamic>).convert();
+      }
+    } catch (e) {
+      throw FieldParseException(
+        key: key,
+        innerException: e,
+      );
     }
 
     return this[key] as E;

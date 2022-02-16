@@ -1,4 +1,6 @@
+## 1.3.8
 
+- FieldParseException
 ## 1.3.7
 
 - ModelParseException.toString()
