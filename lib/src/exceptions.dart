@@ -4,4 +4,13 @@ class ModelParseException implements Exception {
   const ModelParseException({
     this.innerException,
   });
+
+  @override
+  String toString() {
+    if (innerException != null) {
+      return 'ModelParseException.innerException: ${innerException.toString()}';
+    }
+
+    return super.toString();
+  }
 }

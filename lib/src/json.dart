@@ -24,6 +24,8 @@ extension JsonExt on JsonCodec {
       final List list = decode(source);
       return list.convert<E>();
     }
+
+    return null;
   }
 }
 

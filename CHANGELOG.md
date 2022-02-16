@@ -1,4 +1,7 @@
 
+## 1.3.7
+
+- ModelParseException.toString()
 ## 1.3.6
 
 - added fromJson and toJson in JsonKey
