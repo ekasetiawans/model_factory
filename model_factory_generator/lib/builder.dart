@@ -9,4 +9,5 @@ Builder codeGeneratorFactory(BuilderOptions options) => ModelFactoryGenerator();
 Builder codeGeneratorBuilder(BuilderOptions options) => PartBuilder(
       [ModelFactoryBuilder()],
       '.g.dart',
+      header: templateHeader,
     );
