@@ -1,3 +1,5 @@
+## 1.1.7
+- sort imports
 ## 1.1.4
 - generate fromJson and toJson in JsonKey
 ## 1.1.3

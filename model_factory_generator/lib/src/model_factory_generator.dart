@@ -49,7 +49,7 @@ class ModelFactoryGenerator extends Builder {
     final contentBuffer = StringBuffer();
     contentBuffer.writeln(templateHeader);
     contentBuffer.writeln("import 'package:model_factory/model_factory.dart';");
-    final imp = uris.keys.toList();
+    final imp = uris.keys.toList()..sort((a, b) => a.compareTo(b));
     for (final uri in imp) {
       final classes = uris[uri];
       if (classes!.isEmpty) continue;
