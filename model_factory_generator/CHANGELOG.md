@@ -1,3 +1,5 @@
+## 1.2.0
+- update dependencies to the latest version
 ## 1.1.7
 - sort imports
 ## 1.1.4

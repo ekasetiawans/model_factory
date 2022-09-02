@@ -65,20 +65,20 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     buffer.writeln('try {');
 
-    final List<String> _added = [];
+    final List<String> added = [];
     for (final field in classElement.fields) {
       final ce = field.type.element;
 
       final els = findGenericElements(field.type);
       for (final el in els) {
-        if (_added.contains(el.displayName)) continue;
-        _added.add(el.displayName);
+        if (added.contains(el.displayName)) continue;
+        added.add(el.displayName);
         buffer.writeln('${el.displayName}Metadata.registerFactory();');
       }
 
       if (ce is ClassElement) {
-        if (_added.contains(ce.displayName)) continue;
-        _added.add(ce.displayName);
+        if (added.contains(ce.displayName)) continue;
+        added.add(ce.displayName);
 
         if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {
           final className = ce.displayName;
@@ -177,20 +177,20 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       'Map<String, dynamic> _\$${className}ToJson($className instance,){',
     );
 
-    final List<String> _added = [];
+    final List<String> added = [];
     for (final field in classElement.fields) {
       final ce = field.type.element;
 
       final els = findGenericElements(field.type);
       for (final el in els) {
-        if (_added.contains(el.displayName)) continue;
-        _added.add(el.displayName);
+        if (added.contains(el.displayName)) continue;
+        added.add(el.displayName);
         buffer.writeln('${el.displayName}Metadata.registerFactory();');
       }
 
       if (ce is ClassElement) {
-        if (_added.contains(ce.displayName)) continue;
-        _added.add(ce.displayName);
+        if (added.contains(ce.displayName)) continue;
+        added.add(ce.displayName);
 
         if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {
           final className = ce.displayName;

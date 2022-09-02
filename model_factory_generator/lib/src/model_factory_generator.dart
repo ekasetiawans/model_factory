@@ -24,7 +24,7 @@ class ModelFactoryGenerator extends Builder {
 
     final files = <String, List<dynamic>>{};
     final glob = Glob(
-      dirname(buildStep.inputId.path) + '/**' + ModelFactoryResolver.suffix,
+      '${dirname(buildStep.inputId.path)}/**${ModelFactoryResolver.suffix}',
     );
 
     await for (final input in buildStep.findAssets(glob)) {
@@ -74,7 +74,7 @@ class ModelFactoryGenerator extends Builder {
     final code = DartFormatter().format(contentBuffer.toString());
     final codeId = AssetId(
       buildStep.inputId.package,
-      dirname(buildStep.inputId.path) + '/' + codeFile,
+      '${dirname(buildStep.inputId.path)}/$codeFile',
     );
 
     await buildStep.writeAsString(codeId, code);
