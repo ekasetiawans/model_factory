@@ -1,0 +1,5 @@
+name: model_factory
+
+packages:
+  - .
+  - model_factory_generator

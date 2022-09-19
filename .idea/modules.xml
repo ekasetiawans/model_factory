@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/./melos_model_factory.iml" filepath="$PROJECT_DIR$/./melos_model_factory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model_factory_generator/melos_model_factory_generator.iml" filepath="$PROJECT_DIR$/model_factory_generator/melos_model_factory_generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/melos_model_factory.iml" filepath="$PROJECT_DIR$/melos_model_factory.iml" />
+    </modules>
+  </component>
+</project>

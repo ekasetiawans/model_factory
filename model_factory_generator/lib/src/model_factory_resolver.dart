@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:model_factory/model_factory.dart';
 import 'package:source_gen/source_gen.dart';
@@ -17,10 +18,22 @@ class ModelFactoryResolver extends Builder {
     final elements = libReader.annotatedWith(_jsonKeyChecker);
     final entities = <Map<String, dynamic>>[];
     for (final c in elements) {
-      entities.add({
-        'uri': buildStep.inputId.uri.toString(),
-        'class': c.element.displayName,
-      });
+      if (c.element is ClassElement) {
+        final classElement = c.element as ClassElement;
+
+        final serializable =
+            _jsonKeyChecker.firstAnnotationOfExact(classElement)!;
+        final isWithConverter =
+            serializable.getField('withConverter')?.toTypeValue() != null;
+        if (isWithConverter) {
+          continue;
+        }
+
+        entities.add({
+          'uri': buildStep.inputId.uri.toString(),
+          'class': classElement.displayName,
+        });
+      }
     }
 
     await buildStep.writeAsString(

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:model_factory/model_factory.dart';
 
 part 'model_custom.g.dart';
@@ -18,13 +19,18 @@ class ModelWithCustom {
     fromJson: _paymentFromJson,
     toJson: _toJson,
   )
+  @JsonIgnore()
   final String customAll;
+
+  @JsonKey('converted', withConverter: MyConverterModel)
+  final MyConvertedModel converted;
 
   const ModelWithCustom({
     required this.payment,
     required this.shipment,
     required this.customTo,
-    required this.customAll,
+    this.customAll = 'Test',
+    required this.converted,
   });
 
   factory ModelWithCustom.fromJson(Map<String, dynamic> map) =>
@@ -39,4 +45,24 @@ Map<String, dynamic> _toJson(SerializationInfo info) {
   return {
     'hello': 'world',
   };
+}
+
+class MyConvertedModel {
+  final String nama;
+
+  MyConvertedModel({
+    required this.nama,
+  });
+}
+
+class MyConverterModel extends JsonConverter<MyConvertedModel> {
+  @override
+  MyConvertedModel fromJson(dynamic) {
+    return MyConvertedModel(nama: dynamic['nama']);
+  }
+
+  @override
+  toJson(MyConvertedModel model) {
+    return {};
+  }
 }

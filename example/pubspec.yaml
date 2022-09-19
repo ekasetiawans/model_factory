@@ -12,6 +12,6 @@ dependency_overrides:
     path: ../
 
 dev_dependencies:
-  build_runner: ^2.0.6
+  build_runner: ^2.2.0
   model_factory_generator:
     path: ../model_factory_generator/

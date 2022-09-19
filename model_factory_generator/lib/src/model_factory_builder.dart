@@ -60,7 +60,11 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final buffer = StringBuffer();
     final className = classElement.displayName;
     buffer.writeln(
-      '$className _\$${className}FromJson(Map<String, dynamic> json,) {',
+      'typedef ${className}JsonDeserializer = $className Function(Map<String, dynamic> json);',
+    );
+
+    buffer.writeln(
+      'final _\$${className}FromJson = (Map<String, dynamic> json,) {',
     );
 
     buffer.writeln('try {');
@@ -73,7 +77,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       for (final el in els) {
         if (added.contains(el.displayName)) continue;
         added.add(el.displayName);
-        buffer.writeln('${el.displayName}Metadata.registerFactory();');
+        //buffer.writeln('${el.displayName}Metadata.registerFactory();');
       }
 
       if (ce is ClassElement) {
@@ -81,8 +85,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         added.add(ce.displayName);
 
         if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {
-          final className = ce.displayName;
-          buffer.writeln('${className}Metadata.registerFactory();');
+          //final className = ce.displayName;
+          //buffer.writeln('${className}Metadata.registerFactory();');
         }
       }
     }
@@ -102,7 +106,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       "throw ModelParseException(innerException: e.innerException, key: e.key, className: '${classElement.name}',);",
     );
     buffer.writeln('}');
-    buffer.writeln('}');
+    buffer.writeln('};');
     buffer.writeln();
     buffer.writeln();
 
@@ -136,16 +140,17 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
       if (_jsonIgnoreChecker.hasAnnotationOfExact(field)) {
         final ann = _jsonIgnoreChecker.firstAnnotationOfExact(field)!;
-        final ignore = ann.getField('ignore')?.toBoolValue() ?? false;
         final ignoreFromJson =
-            ann.getField('ignoreFromJson')?.toBoolValue() ?? false;
+            ann.getField('ignoreFromJson')?.toBoolValue() ?? true;
 
-        if (ignore || ignoreFromJson) continue;
+        if (ignoreFromJson) continue;
       }
 
       final meta = '${className}Metadata.instance';
+
       if (_jsonKeyChecker.hasAnnotationOfExact(field)) {
         final jsonKey = _jsonKeyChecker.firstAnnotationOfExact(field)!;
+
         final fromJson = jsonKey.getField('fromJson');
         if (fromJson != null) {
           final fn = fromJson.toFunctionValue();
@@ -163,6 +168,30 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
             );
             continue;
           }
+        }
+
+        final converter = jsonKey.getField('withConverter')?.toTypeValue();
+        if (converter != null) {
+          buffer.writeln(
+            '${field.name} : ${converter.element!.name}().fromJson(json[$meta.$fieldName]),',
+          );
+          continue;
+        }
+      }
+
+      final fieldTypeElement = field.type.element;
+      if (fieldTypeElement is ClassElement &&
+          _jsonSerializableChecker.hasAnnotationOfExact(fieldTypeElement)) {
+        final an =
+            _jsonSerializableChecker.firstAnnotationOfExact(fieldTypeElement)!;
+
+        final t = an.getField('withConverter')!;
+        final ty = t.toTypeValue();
+        if (ty != null) {
+          buffer.writeln(
+            '${field.name} : ${ty.element!.name}().fromJson(json[$meta.$fieldName]),',
+          );
+          continue;
         }
       }
 
@@ -185,7 +214,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       for (final el in els) {
         if (added.contains(el.displayName)) continue;
         added.add(el.displayName);
-        buffer.writeln('${el.displayName}Metadata.registerFactory();');
+        //buffer.writeln('${el.displayName}Metadata.registerFactory();');
       }
 
       if (ce is ClassElement) {
@@ -193,8 +222,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         added.add(ce.displayName);
 
         if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {
-          final className = ce.displayName;
-          buffer.writeln('${className}Metadata.registerFactory();');
+          //final className = ce.displayName;
+          //buffer.writeln('${className}Metadata.registerFactory();');
         }
       }
     }
@@ -231,14 +260,14 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
       if (_jsonIgnoreChecker.hasAnnotationOf(field)) {
         final ann = _jsonIgnoreChecker.firstAnnotationOfExact(field)!;
-        final ignore = ann.getField('ignore')?.toBoolValue() ?? false;
         final ignoreToJson =
-            ann.getField('ignoreToJson')?.toBoolValue() ?? false;
+            ann.getField('ignoreToJson')?.toBoolValue() ?? true;
 
-        if (ignore || ignoreToJson) continue;
+        if (ignoreToJson) continue;
       }
 
       final meta = '${className}Metadata.instance';
+
       if (_jsonKeyChecker.hasAnnotationOf(field)) {
         final ann = _jsonKeyChecker.firstAnnotationOfExact(field)!;
         fieldName = ann.getField('name')!.toStringValue()!;
@@ -258,6 +287,30 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
             );
             continue;
           }
+        }
+
+        final converter = ann.getField('withConverter')?.toTypeValue();
+        if (converter != null) {
+          buffer.writeln(
+            '$meta.${field.name} : ${converter.element!.name}().toJson(instance.${field.name}),',
+          );
+          continue;
+        }
+      }
+
+      final fieldTypeElement = field.type.element;
+      if (fieldTypeElement is ClassElement &&
+          _jsonSerializableChecker.hasAnnotationOfExact(fieldTypeElement)) {
+        final an =
+            _jsonSerializableChecker.firstAnnotationOfExact(fieldTypeElement)!;
+
+        final t = an.getField('withConverter')!;
+        final ty = t.toTypeValue();
+        if (ty != null) {
+          buffer.writeln(
+            '$meta.${field.name} : ${ty.element!.name}().toJson(instance.${field.name}),',
+          );
+          continue;
         }
       }
 
@@ -322,17 +375,6 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln('class ${className}Metadata {');
     buffer.writeln(
       'static final ${className}Metadata instance = ${className}Metadata._();',
-    );
-
-    buffer.writeln(
-      '''
-      static bool _isRegistered = false;
-      static void registerFactory(){
-        if (_isRegistered) return;
-        _isRegistered = true;
-        registerJsonFactory((json) => $className.fromJson(json));
-      }
-      ''',
     );
 
     buffer.writeln('${className}Metadata._();');

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class DeserializationInfo {
   final String key;
   final Map<String, dynamic> map;
@@ -25,26 +26,32 @@ class JsonKey<T> {
 
   final T Function(DeserializationInfo info)? fromJson;
   final Object? Function(SerializationInfo info)? toJson;
+  final Type? withConverter;
 
   const JsonKey(
     this.name, {
     this.fromJson,
     this.toJson,
+    this.withConverter,
   });
 }
 
 class JsonIgnore {
-  final bool ignore;
   final bool ignoreToJson;
   final bool ignoreFromJson;
 
   const JsonIgnore({
-    this.ignore = false,
-    this.ignoreFromJson = false,
-    this.ignoreToJson = false,
+    this.ignoreFromJson = true,
+    this.ignoreToJson = true,
   });
 }
 
 class JsonSerializable {
-  const JsonSerializable();
+  final Type? withConverter;
+  const JsonSerializable({this.withConverter});
+}
+
+abstract class JsonConverter<T> {
+  T fromJson(dynamic);
+  dynamic toJson(T model);
 }
