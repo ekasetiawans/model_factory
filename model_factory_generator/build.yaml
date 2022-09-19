@@ -12,7 +12,7 @@ targets:
 
 builders:
   builder:
-    import: "package:model_factory_generator/builder.dart"
+    import: "package:model_factory_generator/model_factory_generator.dart"
     builder_factories: ["codeGeneratorBuilder"]
     build_extensions:
       ".dart": [".model.dart"]
@@ -21,7 +21,7 @@ builders:
     runs_before: ["resolver", "generator"]
 
   resolver:
-    import: "package:model_factory_generator/builder.dart"
+    import: "package:model_factory_generator/model_factory_generator.dart"
     builder_factories: ["codeGeneratorResolver"]
     build_extensions: { ".dart": [".model_factory.info"] }
     auto_apply: dependents
@@ -29,7 +29,7 @@ builders:
     runs_before: ["generator"]
 
   generator:
-    import: "package:model_factory_generator/builder.dart"
+    import: "package:model_factory_generator/model_factory_generator.dart"
     builder_factories: ["codeGeneratorFactory"]
     build_extensions:
       "$lib$": ["models_factories.dart"]
