@@ -45,8 +45,8 @@ final ModelWithCustomJsonDeserializer defaultModelWithCustomDeserializer = (
     );
   }
 };
-final ModelWithCustomJsonDeserializer _$ModelWithCustomFromJson =
-    defaultModelWithCustomDeserializer;
+ModelWithCustom _$ModelWithCustomFromJson(Map<String, dynamic> json) =>
+    defaultModelWithCustomDeserializer(json);
 
 typedef ModelWithCustomJsonSerializer = Map<String, dynamic> Function(
     ModelWithCustom instance);
@@ -68,8 +68,8 @@ final ModelWithCustomJsonSerializer defaultModelWithCustomSerializer =
   };
 };
 
-final ModelWithCustomJsonSerializer _$ModelWithCustomToJson =
-    defaultModelWithCustomSerializer;
+Map<String, dynamic> _$ModelWithCustomToJson(ModelWithCustom instance) =>
+    defaultModelWithCustomSerializer(instance);
 
 extension ModelWithCustomJsonExtension on ModelWithCustom {
   Map<String, dynamic> toJson() => _$ModelWithCustomToJson(this);

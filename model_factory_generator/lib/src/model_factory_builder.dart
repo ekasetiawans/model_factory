@@ -109,7 +109,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln('};');
 
     buffer.writeln(
-      'final ${className}JsonDeserializer _\$${className}FromJson = default${className}Deserializer;',
+      '$className _\$${className}FromJson(Map<String, dynamic> json) => default${className}Deserializer(json);',
     );
 
     buffer.writeln();
@@ -247,7 +247,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buildToJsonFields(classElement, buffer);
     buffer.writeln('};\n};\n');
     buffer.writeln(
-      'final ${className}JsonSerializer _\$${className}ToJson  = default${className}Serializer;',
+      'Map<String, dynamic> _\$${className}ToJson($className instance)  => default${className}Serializer(instance);',
     );
     return buffer.toString();
   }

@@ -9,5 +9,6 @@ import 'package:model_factory/model_factory.dart';
 import 'package:model_factory_example/models/model_custom.dart' as m0;
 
 void registerFactories() {
-  registerJsonFactory((json) => m0.ModelWithCustom.fromJson(json));
+  registerJsonFactory<m0.ModelWithCustom>(
+      (json) => m0.ModelWithCustom.fromJson(json));
 }
