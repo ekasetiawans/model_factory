@@ -1,3 +1,7 @@
+## 1.3.1
+
+ - **FIX**: update pubspec.
+
 ## 1.3.0
 
  - **FIX**: update pubspec description.
