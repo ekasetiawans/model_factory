@@ -1,3 +1,11 @@
+## 1.3.0
+
+ - **FIX**: update pubspec description.
+ - **FIX**: update template header.
+ - **FEAT**: update generator.
+ - **FEAT**: :.
+ - **FEAT**: sort imports.
+
 ## 1.2.0
 - update dependencies to the latest version
 ## 1.1.7

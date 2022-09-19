@@ -1,3 +1,11 @@
+## 1.4.0
+
+ - **FIX**: update pubspec description.
+ - **FIX**: update template header.
+ - **FEAT**: update generator.
+ - **FEAT**: :.
+ - **FEAT**: sort imports.
+
 ## 1.3.8
 
 - FieldParseException
