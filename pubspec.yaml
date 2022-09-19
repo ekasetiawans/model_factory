@@ -1,5 +1,5 @@
 name: model_factory
-description: A starting point for Dart libraries or applications.
+description: Generate model boiler plate
 version: 1.4.1
 repository: https://github.com/ekasetiawans/model_factory
 
