@@ -1,3 +1,8 @@
+## 1.4.5
+
+ - **FIX**: generator.
+ - **FIX**: register factories type.
+
 ## 1.4.4
 
  - **PERF**: improve generated code.
