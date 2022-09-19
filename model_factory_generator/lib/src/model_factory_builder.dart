@@ -64,7 +64,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     );
 
     buffer.writeln(
-      'final _\$${className}FromJson = (Map<String, dynamic> json,) {',
+      'final ${className}JsonDeserializer default${className}Deserializer = (Map<String, dynamic> json,) {',
     );
 
     buffer.writeln('try {');
@@ -107,6 +107,11 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     );
     buffer.writeln('}');
     buffer.writeln('};');
+
+    buffer.writeln(
+      'final ${className}JsonDeserializer _\$${className}FromJson = default${className}Deserializer;',
+    );
+
     buffer.writeln();
     buffer.writeln();
 
@@ -202,8 +207,13 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
   String buildToJson(ClassElement classElement) {
     final className = classElement.displayName;
     final buffer = StringBuffer();
+
     buffer.writeln(
-      'Map<String, dynamic> _\$${className}ToJson($className instance,){',
+      'typedef ${className}JsonSerializer = Map<String, dynamic> Function($className instance);',
+    );
+
+    buffer.writeln(
+      'final ${className}JsonSerializer default${className}Serializer = ($className instance){',
     );
 
     final List<String> added = [];
@@ -235,7 +245,10 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     buildToJsonFields(classElement, buffer);
-    buffer.writeln('};\n}\n');
+    buffer.writeln('};\n};\n');
+    buffer.writeln(
+      'final ${className}JsonSerializer _\$${className}ToJson  = default${className}Serializer;',
+    );
     return buffer.toString();
   }
 

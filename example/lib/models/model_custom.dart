@@ -14,6 +14,9 @@ class ModelWithCustom {
   @JsonKey<String>('customTo', toJson: _toJson)
   final String customTo;
 
+  @JsonKey('tanggal')
+  final DateTime tanggal;
+
   @JsonKey<String>(
     'customAll',
     fromJson: _paymentFromJson,
@@ -29,6 +32,7 @@ class ModelWithCustom {
     required this.payment,
     required this.shipment,
     required this.customTo,
+    required this.tanggal,
     this.customAll = 'Test',
     required this.converted,
   });

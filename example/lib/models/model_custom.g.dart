@@ -13,7 +13,7 @@ part of 'model_custom.dart';
 
 typedef ModelWithCustomJsonDeserializer = ModelWithCustom Function(
     Map<String, dynamic> json);
-final _$ModelWithCustomFromJson = (
+final ModelWithCustomJsonDeserializer defaultModelWithCustomDeserializer = (
   Map<String, dynamic> json,
 ) {
   try {
@@ -31,6 +31,9 @@ final _$ModelWithCustomFromJson = (
       customTo: json.value<String>(
         ModelWithCustomMetadata.instance.customTo,
       ),
+      tanggal: json.value<DateTime>(
+        ModelWithCustomMetadata.instance.tanggal,
+      ),
       converted: MyConverterModel()
           .fromJson(json[ModelWithCustomMetadata.instance.converted]),
     );
@@ -42,10 +45,13 @@ final _$ModelWithCustomFromJson = (
     );
   }
 };
+final ModelWithCustomJsonDeserializer _$ModelWithCustomFromJson =
+    defaultModelWithCustomDeserializer;
 
-Map<String, dynamic> _$ModelWithCustomToJson(
-  ModelWithCustom instance,
-) {
+typedef ModelWithCustomJsonSerializer = Map<String, dynamic> Function(
+    ModelWithCustom instance);
+final ModelWithCustomJsonSerializer defaultModelWithCustomSerializer =
+    (ModelWithCustom instance) {
   return {
     ModelWithCustomMetadata.instance.payment: instance.payment,
     ModelWithCustomMetadata.instance.shipment: instance.shipment,
@@ -55,10 +61,15 @@ Map<String, dynamic> _$ModelWithCustomToJson(
         data: instance.customTo,
       ),
     ),
+    ModelWithCustomMetadata.instance.tanggal:
+        instance.tanggal.toUtc().toIso8601String(),
     ModelWithCustomMetadata.instance.converted:
         MyConverterModel().toJson(instance.converted),
   };
-}
+};
+
+final ModelWithCustomJsonSerializer _$ModelWithCustomToJson =
+    defaultModelWithCustomSerializer;
 
 extension ModelWithCustomJsonExtension on ModelWithCustom {
   Map<String, dynamic> toJson() => _$ModelWithCustomToJson(this);
@@ -66,6 +77,7 @@ extension ModelWithCustomJsonExtension on ModelWithCustom {
     String? payment,
     String? shipment,
     String? customTo,
+    DateTime? tanggal,
     String? customAll,
     MyConvertedModel? converted,
   }) =>
@@ -73,6 +85,7 @@ extension ModelWithCustomJsonExtension on ModelWithCustom {
         payment: payment ?? this.payment,
         shipment: shipment ?? this.shipment,
         customTo: customTo ?? this.customTo,
+        tanggal: tanggal ?? this.tanggal,
         customAll: customAll ?? this.customAll,
         converted: converted ?? this.converted,
       );
@@ -90,6 +103,7 @@ class ModelWithCustomMetadata {
   final String payment = 'payment';
   final String shipment = 'shipment';
   final String customTo = 'customTo';
+  final String tanggal = 'tanggal';
   final String customAll = 'customAll';
   final String converted = 'converted';
 }
