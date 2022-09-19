@@ -1,3 +1,7 @@
+## 1.4.4
+
+ - **PERF**: improve generated code.
+
 ## 1.4.3
 
  - **FIX**: file name.
