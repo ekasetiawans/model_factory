@@ -1,3 +1,7 @@
+## 1.4.6
+
+ - **FIX**: JsonConverter.fromJson arg name.
+
 ## 1.4.5
 
  - **FIX**: generator.
