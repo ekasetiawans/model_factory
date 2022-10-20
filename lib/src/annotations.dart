@@ -52,6 +52,6 @@ class JsonSerializable {
 }
 
 abstract class JsonConverter<T> {
-  T fromJson(dynamic);
+  T fromJson(dynamic data);
   dynamic toJson(T model);
 }

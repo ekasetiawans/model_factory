@@ -61,8 +61,8 @@ class MyConvertedModel {
 
 class MyConverterModel extends JsonConverter<MyConvertedModel> {
   @override
-  MyConvertedModel fromJson(dynamic) {
-    return MyConvertedModel(nama: dynamic['nama']);
+  MyConvertedModel fromJson(dynamic data) {
+    return MyConvertedModel(nama: data['nama']);
   }
 
   @override
