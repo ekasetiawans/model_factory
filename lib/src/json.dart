@@ -95,6 +95,10 @@ extension JsonMap on Map<String, dynamic> {
 
   E value<E>(String key, {E? defaultValue}) {
     try {
+      if (E == dynamic) {
+        return this[key];
+      }
+
       if (!containsKey(key)) {
         if (defaultValue != null) return defaultValue;
         return null as E;
