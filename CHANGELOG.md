@@ -1,3 +1,7 @@
+## 1.5.0
+
+ - **FEAT**: allow dynamic type.
+
 ## 1.4.6
 
  - **FIX**: JsonConverter.fromJson arg name.
