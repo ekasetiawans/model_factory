@@ -1,3 +1,6 @@
+## 1.3.9
+
+ - Fix deprecated
 ## 1.3.8
 
  - Update a dependency to the latest release.
