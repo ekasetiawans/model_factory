@@ -1,3 +1,6 @@
+## 1.3.10
+
+ - Fix make dynamic as nullable
 ## 1.3.9
 
  - Fix deprecated
