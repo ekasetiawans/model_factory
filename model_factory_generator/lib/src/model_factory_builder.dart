@@ -269,7 +269,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       if (['hashCode'].contains(fieldName)) continue;
 
       final isNullable =
-          field.type.nullabilitySuffix == NullabilitySuffix.question;
+          field.type.nullabilitySuffix == NullabilitySuffix.question ||
+              field.type.isDynamic;
 
       if (_jsonIgnoreChecker.hasAnnotationOf(field)) {
         final ann = _jsonIgnoreChecker.firstAnnotationOfExact(field)!;
