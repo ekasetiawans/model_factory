@@ -33,8 +33,12 @@ extension JsonExt on JsonCodec {
 
 extension JsonMap on Map<String, dynamic> {
   String? string(String key, {String? defaultValue}) {
-    if (containsKey(key) && this[key] is String) {
-      return this[key];
+    if (containsKey(key)) {
+      if (this[key] is String) {
+        return this[key];
+      } else if (this[key] == null) {
+        return defaultValue ?? _defaultValues[String];
+      }
     }
 
     return defaultValue;
@@ -48,6 +52,10 @@ extension JsonMap on Map<String, dynamic> {
 
       if (this[key] is String) {
         return num.tryParse(this[key]) ?? defaultValue;
+      }
+
+      if (this[key] == null) {
+        return defaultValue;
       }
     }
 
@@ -67,19 +75,29 @@ extension JsonMap on Map<String, dynamic> {
       if (this[key] is int) {
         return this[key] == 1;
       }
+
+      if (this[key] == null) {
+        return defaultValue;
+      }
     }
 
     return defaultValue;
   }
 
   DateTime? dateTime(String key) {
-    if (containsKey(key) && this[key] is String) {
-      String str = this[key];
-      if (str.length > 10 && !str.contains('Z') && !str.contains('+')) {
-        str += 'Z';
+    if (containsKey(key)) {
+      if (this[key] is String) {
+        String str = this[key];
+        if (str.length > 10 && !str.contains('Z') && !str.contains('+')) {
+          str += 'Z';
+        }
+
+        return DateTime.parse(str).toLocal();
       }
 
-      return DateTime.parse(str).toLocal();
+      if (this[key] == null) {
+        return DateTime.fromMillisecondsSinceEpoch(0);
+      }
     }
 
     return null;
@@ -214,6 +232,8 @@ extension JsonArray on List {
 Type _typeOf<T>() => T;
 typedef JsonFactory<E> = E Function(dynamic value);
 
+final _defaultValues = <Type, dynamic>{};
+
 final _factories = <Type, dynamic>{
   _typeOf<List<String>>(): (data) {
     if (data is List) {
@@ -230,6 +250,10 @@ final _factories = <Type, dynamic>{
     return [];
   },
 };
+
+void registerDefaultValue(Map<Type, dynamic> values) {
+  _defaultValues.addAll(values);
+}
 
 void registerJsonFactory<E>(JsonFactory<E> builder) {
   _factories[E] = builder;
