@@ -1,3 +1,8 @@
+## 1.4.0
+
+ - **FIX**: dynamic nullable.
+ - **FEAT**: update pubspec.
+
 ## 1.3.10
 
  - Fix make dynamic as nullable

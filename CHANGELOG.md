@@ -1,3 +1,42 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 2023-06-22
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v1.6.0`](#model_factory---v160)
+ - [`model_factory_generator` - `v1.4.0`](#model_factory_generator---v140)
+
+---
+
+#### `model_factory` - `v1.6.0`
+
+ - **FIX**: dynamic nullable.
+ - **FEAT**: update pubspec.
+ - **FEAT**: added registerDefaultValue.
+
+#### `model_factory_generator` - `v1.4.0`
+
+ - **FIX**: dynamic nullable.
+ - **FEAT**: update pubspec.
+
+## 1.6.0
+
+ - **FIX**: dynamic nullable.
+ - **FEAT**: update pubspec.
+ - **FEAT**: added registerDefaultValue.
+
 ## 1.5.0
 
  - **FEAT**: allow dynamic type.
