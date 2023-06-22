@@ -4,7 +4,7 @@ version: 1.3.10
 repository: https://github.com/ekasetiawans/model_factory/tree/master/model_factory_generator
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
 
 dependencies:
   model_factory: ^1.5.0

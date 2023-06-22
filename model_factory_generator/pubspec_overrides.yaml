@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: model_factory
+dependency_overrides:
+  model_factory:
+    path: ..
