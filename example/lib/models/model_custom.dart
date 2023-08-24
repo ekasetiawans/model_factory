@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:model_factory/model_factory.dart';
 
-part 'model_custom.g.dart';
+part 'model_custom.model.dart';
 
 @JsonSerializable()
 class ModelWithCustom {
