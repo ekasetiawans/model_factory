@@ -80,7 +80,7 @@ class ModelFactoryGenerator extends Builder {
     await buildStep.writeAsString(codeId, code);
   }
 
-  static const codeFile = 'model_factories.g.dart';
+  static const codeFile = 'model_factories.generated_models.dart';
   static final _outputs = [codeFile];
 
   @override

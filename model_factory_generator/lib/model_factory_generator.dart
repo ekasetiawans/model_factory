@@ -8,6 +8,6 @@ Builder codeGeneratorResolver(BuilderOptions options) => ModelFactoryResolver();
 Builder codeGeneratorFactory(BuilderOptions options) => ModelFactoryGenerator();
 Builder codeGeneratorBuilder(BuilderOptions options) => PartBuilder(
       [ModelFactoryBuilder()],
-      '.g.dart',
+      '.model.dart',
       header: templateHeader,
     );
