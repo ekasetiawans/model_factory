@@ -11,6 +11,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v2.0.1`](#model_factory---v201)
+ - [`model_factory_generator` - `v2.0.1`](#model_factory_generator---v201)
+
+---
+
+#### `model_factory` - `v2.0.1`
+
+ - **FIX**: generator.
+
+#### `model_factory_generator` - `v2.0.1`
+
+ - **FIX**: generator.
+
+## 2.0.1
+
+ - **FIX**: generator.
+
+
+## 2023-08-24
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - [`model_factory` - `v2.0.0`](#model_factory---v200)
  - [`model_factory_generator` - `v2.0.0`](#model_factory_generator---v200)
 
