@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-08-24
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`model_factory` - `v2.0.0`](#model_factory---v200)
+ - [`model_factory_generator` - `v2.0.0`](#model_factory_generator---v200)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `model_factory` - `v2.0.0`
+
+ - **BREAKING** **FEAT**: changed generated extension to avoid conflict with other builder.
+
+#### `model_factory_generator` - `v2.0.0`
+
+ - **BREAKING** **FEAT**: changed generated extension to avoid conflict with other builder.
+
+## 2.0.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: changed generated extension to avoid conflict with other builder.
+
+
 ## 2023-06-22
 
 ### Changes

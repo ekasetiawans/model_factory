@@ -1,3 +1,9 @@
+## 2.0.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: changed generated extension to avoid conflict with other builder.
+
 ## 1.4.0
 
  - **FIX**: dynamic nullable.
