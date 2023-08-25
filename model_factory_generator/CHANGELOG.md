@@ -1,3 +1,7 @@
+## 2.2.1
+
+ - **FIX**: don't expose alias field that not defined.
+
 ## 2.2.0
 
  - **FEAT**: added aliases.
