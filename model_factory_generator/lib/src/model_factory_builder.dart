@@ -395,6 +395,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(buildFields(cl));
     buffer.writeln(buildMetaFieldList(cl));
     buffer.writeln(buildMetaAllFieldList(cl));
+    buffer.writeln(buildMetaAllAliasFieldList(cl));
     buffer.writeln(getValueByField(cl));
     buffer.writeln('}');
 
@@ -435,6 +436,28 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
     buffer.writeln('default: return null;');
     buffer.write('}}');
+    return buffer.toString();
+  }
+
+  String buildMetaAllAliasFieldList(ClassElement cl) {
+    final buffer = StringBuffer();
+    buffer.write('Map<String, String> get aliases => ');
+    buffer.write('{');
+    for (final f in getFields(cl)) {
+      var name = f.name;
+      var alias = name;
+
+      if (['hashCode'].contains(name)) continue;
+
+      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
+        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
+        name = ann.getField('name')!.toStringValue()!;
+        alias = ann.getField('alias')?.toStringValue() ?? name;
+      }
+
+      buffer.write('\'$name\' : \'$alias\',');
+    }
+    buffer.write('};');
     return buffer.toString();
   }
 

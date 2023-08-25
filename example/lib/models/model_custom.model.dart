@@ -130,6 +130,15 @@ class ModelWithCustomMetadata {
         'customAll',
         'converted',
       ];
+  Map<String, String> get aliases => {
+        'name': 'name',
+        'payment': 'payment',
+        'shipment': 'shipment',
+        'customTo': 'customTo',
+        'tanggal': 'tanggal',
+        'customAll': 'customAll',
+        'converted': 'converted',
+      };
   dynamic valueOf(ModelWithCustom instance, String fieldName) {
     switch (fieldName) {
       case 'name':

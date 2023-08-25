@@ -23,6 +23,7 @@ class SerializationInfo {
 
 class JsonKey<T> {
   final String name;
+  final String? alias;
 
   final T Function(DeserializationInfo info)? fromJson;
   final Object? Function(SerializationInfo info)? toJson;
@@ -33,6 +34,7 @@ class JsonKey<T> {
     this.fromJson,
     this.toJson,
     this.withConverter,
+    this.alias,
   });
 }
 
