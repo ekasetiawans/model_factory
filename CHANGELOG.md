@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v2.2.0`](#model_factory---v220)
+ - [`model_factory_generator` - `v2.2.0`](#model_factory_generator---v220)
+
+---
+
+#### `model_factory` - `v2.2.0`
+
+ - **FEAT**: added aliases.
+
+#### `model_factory_generator` - `v2.2.0`
+
+ - **FEAT**: added aliases.
+
+## 2.2.0
+
+ - **FEAT**: added aliases.
+
+
+## 2023-08-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v2.1.0`](#model_factory---v210)
  - [`model_factory_generator` - `v2.1.0`](#model_factory_generator---v210)
 

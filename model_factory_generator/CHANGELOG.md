@@ -1,3 +1,7 @@
+## 2.2.0
+
+ - **FEAT**: added aliases.
+
 ## 2.1.0
 
  - **FEAT**: added list fields and get value dynamically.
