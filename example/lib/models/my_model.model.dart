@@ -69,9 +69,17 @@ class MyModelMetadata {
   List<String> get allFields => [
         'name',
       ];
-  Map<String, String> get aliases => {
-        'name': 'name',
-      };
+  Map<String, String> get aliases => {};
+  List<JsonField> get allJsonFields => [
+        JsonField<MyModel>(
+          name: 'name',
+          field: 'name',
+          alias: null,
+          fieldType: String,
+          fromSuper: false,
+          valueOf: (instance) => instance.name,
+        ),
+      ];
   dynamic valueOf(MyModel instance, String fieldName) {
     switch (fieldName) {
       case 'name':

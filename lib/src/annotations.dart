@@ -57,3 +57,21 @@ abstract class JsonConverter<T> {
   T fromJson(dynamic data);
   dynamic toJson(T model);
 }
+
+class JsonField<T> {
+  final String name;
+  final String field;
+  final String? alias;
+  final Type fieldType;
+  final bool fromSuper;
+  final dynamic Function(T instance) valueOf;
+
+  const JsonField({
+    required this.name,
+    required this.field,
+    this.alias,
+    required this.fieldType,
+    required this.fromSuper,
+    required this.valueOf,
+  });
+}

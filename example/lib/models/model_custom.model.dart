@@ -130,15 +130,65 @@ class ModelWithCustomMetadata {
         'customAll',
         'converted',
       ];
-  Map<String, String> get aliases => {
-        'name': 'name',
-        'payment': 'payment',
-        'shipment': 'shipment',
-        'customTo': 'customTo',
-        'tanggal': 'tanggal',
-        'customAll': 'customAll',
-        'converted': 'converted',
-      };
+  Map<String, String> get aliases => {};
+  List<JsonField> get allJsonFields => [
+        JsonField<ModelWithCustom>(
+          name: 'payment',
+          field: 'payment',
+          alias: null,
+          fieldType: String,
+          fromSuper: false,
+          valueOf: (instance) => instance.payment,
+        ),
+        JsonField<ModelWithCustom>(
+          name: 'shipment',
+          field: 'shipment',
+          alias: null,
+          fieldType: String,
+          fromSuper: false,
+          valueOf: (instance) => instance.shipment,
+        ),
+        JsonField<ModelWithCustom>(
+          name: 'customTo',
+          field: 'customTo',
+          alias: null,
+          fieldType: String,
+          fromSuper: false,
+          valueOf: (instance) => instance.customTo,
+        ),
+        JsonField<ModelWithCustom>(
+          name: 'tanggal',
+          field: 'tanggal',
+          alias: null,
+          fieldType: DateTime,
+          fromSuper: false,
+          valueOf: (instance) => instance.tanggal,
+        ),
+        JsonField<ModelWithCustom>(
+          name: 'customAll',
+          field: 'customAll',
+          alias: null,
+          fieldType: String,
+          fromSuper: false,
+          valueOf: (instance) => instance.customAll,
+        ),
+        JsonField<ModelWithCustom>(
+          name: 'converted',
+          field: 'converted',
+          alias: null,
+          fieldType: MyConvertedModel,
+          fromSuper: false,
+          valueOf: (instance) => instance.converted,
+        ),
+        JsonField<ModelWithCustom>(
+          name: 'name',
+          field: 'name',
+          alias: null,
+          fieldType: String,
+          fromSuper: true,
+          valueOf: (instance) => instance.name,
+        ),
+      ];
   dynamic valueOf(ModelWithCustom instance, String fieldName) {
     switch (fieldName) {
       case 'name':

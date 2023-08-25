@@ -396,6 +396,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(buildMetaFieldList(cl));
     buffer.writeln(buildMetaAllFieldList(cl));
     buffer.writeln(buildMetaAllAliasFieldList(cl));
+    buffer.writeln(buildMetaAllJSONFieldList(cl));
     buffer.writeln(getValueByField(cl));
     buffer.writeln('}');
 
@@ -403,6 +404,10 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
   }
 
   List<FieldElement> getFields(ClassElement cl) {
+    return [...getSuperFields(cl), ...getLocalFields(cl)];
+  }
+
+  List<FieldElement> getLocalFields(ClassElement cl) {
     final result = <FieldElement>[];
     for (final f in cl.fields) {
       if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
@@ -410,9 +415,17 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       }
     }
 
+    return result;
+  }
+
+  List<FieldElement> getSuperFields(ClassElement cl) {
+    final result = <FieldElement>[];
     final s = cl.supertype;
     if (s != null && s.element is ClassElement) {
-      return [...getFields(s.element as ClassElement), ...result];
+      return [
+        ...getSuperFields(s.element as ClassElement),
+        ...getLocalFields(s.element as ClassElement),
+      ];
     }
 
     return result;
@@ -461,6 +474,49 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       buffer.write('\'$name\' : \'$alias\',');
     }
     buffer.write('};');
+    return buffer.toString();
+  }
+
+  String buildMetaAllJSONFieldList(ClassElement cl) {
+    final className = cl.displayName;
+    final buffer = StringBuffer();
+    buffer.write('List<JsonField> get allJsonFields => ');
+    buffer.write('[');
+
+    final localFields = getLocalFields(cl);
+    final superFields = getSuperFields(cl);
+
+    for (final f in [...localFields, ...superFields]) {
+      var name = f.name;
+      String? alias;
+      if (['hashCode'].contains(name)) continue;
+
+      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
+        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
+        name = ann.getField('name')!.toStringValue()!;
+        alias = ann.getField('alias')!.toStringValue();
+      }
+
+      buffer.write('JsonField<$className>(');
+      buffer.write('name: \'${f.name}\',');
+      buffer.write('field: \'$name\',');
+      if (alias != null) {
+        buffer.write('alias: \'$alias\',');
+      } else {
+        buffer.write('alias: null,');
+      }
+
+      buffer.write(
+        'fieldType: ${f.type.getDisplayString(withNullability: false)},',
+      );
+
+      final isSuper = superFields.contains(f);
+      buffer.write('fromSuper: $isSuper,');
+      buffer.write('valueOf: (instance) => instance.${f.name},');
+      buffer.writeln('),');
+    }
+
+    buffer.write('];');
     return buffer.toString();
   }
 
