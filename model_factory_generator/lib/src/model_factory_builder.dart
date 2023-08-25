@@ -393,8 +393,86 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     buffer.writeln('${className}Metadata._();');
     buffer.writeln(buildFields(cl));
+    buffer.writeln(buildMetaFieldList(cl));
+    buffer.writeln(buildMetaAllFieldList(cl));
+    buffer.writeln(getValueByField(cl));
     buffer.writeln('}');
 
+    return buffer.toString();
+  }
+
+  List<FieldElement> getFields(ClassElement cl) {
+    final result = <FieldElement>[];
+    for (final f in cl.fields) {
+      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
+        result.add(f);
+      }
+    }
+
+    final s = cl.supertype;
+    if (s != null && s.element is ClassElement) {
+      return [...getFields(s.element as ClassElement), ...result];
+    }
+
+    return result;
+  }
+
+  String getValueByField(ClassElement cl) {
+    final className = cl.displayName;
+    final buffer = StringBuffer();
+    buffer.write('dynamic valueOf($className instance, String fieldName) { ');
+    buffer.writeln('switch (fieldName) {');
+    for (final f in getFields(cl)) {
+      var name = f.name;
+      if (['hashCode'].contains(name)) continue;
+
+      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
+        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
+        name = ann.getField('name')!.toStringValue()!;
+      }
+
+      buffer.writeln('case \'$name\': return instance.${f.name};');
+    }
+    buffer.writeln('default: return null;');
+    buffer.write('}}');
+    return buffer.toString();
+  }
+
+  String buildMetaAllFieldList(ClassElement cl) {
+    final buffer = StringBuffer();
+    buffer.write('List<String> get allFields => ');
+    buffer.write('[');
+    for (final f in getFields(cl)) {
+      var name = f.name;
+      if (['hashCode'].contains(name)) continue;
+
+      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
+        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
+        name = ann.getField('name')!.toStringValue()!;
+      }
+
+      buffer.write(' \'$name\',');
+    }
+    buffer.write('];');
+    return buffer.toString();
+  }
+
+  String buildMetaFieldList(ClassElement cl) {
+    final buffer = StringBuffer();
+    buffer.write('List<String> get fields => ');
+    buffer.write('[');
+    for (final f in cl.fields) {
+      var name = f.name;
+      if (['hashCode'].contains(name)) continue;
+
+      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
+        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
+        name = ann.getField('name')!.toStringValue()!;
+      }
+
+      buffer.write(' \'$name\',');
+    }
+    buffer.write('];');
     return buffer.toString();
   }
 

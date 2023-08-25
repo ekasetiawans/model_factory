@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:model_factory/model_factory.dart';
+import 'package:model_factory_example/models/my_model.dart';
 
 part 'model_custom.model.dart';
 
 @JsonSerializable()
-class ModelWithCustom {
+class ModelWithCustom extends MyModel {
   @JsonKey<String>('payment', fromJson: _paymentFromJson)
   final String payment;
 
@@ -28,7 +29,8 @@ class ModelWithCustom {
   @JsonKey('converted', withConverter: MyConverterModel)
   final MyConvertedModel converted;
 
-  const ModelWithCustom({
+  ModelWithCustom({
+    required super.name,
     required this.payment,
     required this.shipment,
     required this.customTo,

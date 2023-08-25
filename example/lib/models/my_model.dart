@@ -1,7 +1,13 @@
-class MyModel {
-  final String name;
-  MyModel({required this.name});
+import 'package:model_factory/model_factory.dart';
 
-  factory MyModel.fromJson(Map<String, dynamic> json) =>
-      MyModel(name: json['name']);
+part 'my_model.model.dart';
+
+@JsonSerializable()
+class MyModel {
+  @JsonKey('name')
+  final String name;
+  MyModel({
+    required this.name,
+  });
+  factory MyModel.fromJson(Map<String, dynamic> map) => _$MyModelFromJson(map);
 }

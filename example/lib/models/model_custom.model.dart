@@ -18,6 +18,9 @@ final ModelWithCustomJsonDeserializer defaultModelWithCustomDeserializer = (
 ) {
   try {
     return ModelWithCustom(
+      name: json.value<String>(
+        MyModelMetadata.instance.name,
+      ),
       payment: _paymentFromJson(
         DeserializationInfo(
           key: ModelWithCustomMetadata.instance.payment,
@@ -53,6 +56,7 @@ typedef ModelWithCustomJsonSerializer = Map<String, dynamic> Function(
 final ModelWithCustomJsonSerializer defaultModelWithCustomSerializer =
     (ModelWithCustom instance) {
   return {
+    MyModelMetadata.instance.name: instance.name,
     ModelWithCustomMetadata.instance.payment: instance.payment,
     ModelWithCustomMetadata.instance.shipment: instance.shipment,
     ModelWithCustomMetadata.instance.customTo: _toJson(
@@ -74,6 +78,7 @@ Map<String, dynamic> _$ModelWithCustomToJson(ModelWithCustom instance) =>
 extension ModelWithCustomJsonExtension on ModelWithCustom {
   Map<String, dynamic> toJson() => _$ModelWithCustomToJson(this);
   ModelWithCustom copyWith({
+    String? name,
     String? payment,
     String? shipment,
     String? customTo,
@@ -82,6 +87,7 @@ extension ModelWithCustomJsonExtension on ModelWithCustom {
     MyConvertedModel? converted,
   }) =>
       ModelWithCustom(
+        name: name ?? this.name,
         payment: payment ?? this.payment,
         shipment: shipment ?? this.shipment,
         customTo: customTo ?? this.customTo,
@@ -106,4 +112,42 @@ class ModelWithCustomMetadata {
   final String tanggal = 'tanggal';
   final String customAll = 'customAll';
   final String converted = 'converted';
+
+  List<String> get fields => [
+        'payment',
+        'shipment',
+        'customTo',
+        'tanggal',
+        'customAll',
+        'converted',
+      ];
+  List<String> get allFields => [
+        'name',
+        'payment',
+        'shipment',
+        'customTo',
+        'tanggal',
+        'customAll',
+        'converted',
+      ];
+  dynamic valueOf(ModelWithCustom instance, String fieldName) {
+    switch (fieldName) {
+      case 'name':
+        return instance.name;
+      case 'payment':
+        return instance.payment;
+      case 'shipment':
+        return instance.shipment;
+      case 'customTo':
+        return instance.customTo;
+      case 'tanggal':
+        return instance.tanggal;
+      case 'customAll':
+        return instance.customAll;
+      case 'converted':
+        return instance.converted;
+      default:
+        return null;
+    }
+  }
 }

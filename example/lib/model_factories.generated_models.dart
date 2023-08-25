@@ -7,8 +7,10 @@
 
 import 'package:model_factory/model_factory.dart';
 import 'package:model_factory_example/models/model_custom.dart' as m0;
+import 'package:model_factory_example/models/my_model.dart' as m1;
 
 void registerFactories() {
   registerJsonFactory<m0.ModelWithCustom>(
       (json) => m0.ModelWithCustom.fromJson(json));
+  registerJsonFactory<m1.MyModel>((json) => m1.MyModel.fromJson(json));
 }
