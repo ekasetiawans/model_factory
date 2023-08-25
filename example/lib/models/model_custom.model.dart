@@ -138,7 +138,7 @@ class ModelWithCustomMetadata {
           alias: null,
           fieldType: String,
           fromSuper: false,
-          valueOf: (instance) => instance.payment,
+          handler: (instance) => instance.payment,
         ),
         JsonField<ModelWithCustom>(
           name: 'shipment',
@@ -146,7 +146,7 @@ class ModelWithCustomMetadata {
           alias: null,
           fieldType: String,
           fromSuper: false,
-          valueOf: (instance) => instance.shipment,
+          handler: (instance) => instance.shipment,
         ),
         JsonField<ModelWithCustom>(
           name: 'customTo',
@@ -154,7 +154,7 @@ class ModelWithCustomMetadata {
           alias: null,
           fieldType: String,
           fromSuper: false,
-          valueOf: (instance) => instance.customTo,
+          handler: (instance) => instance.customTo,
         ),
         JsonField<ModelWithCustom>(
           name: 'tanggal',
@@ -162,7 +162,7 @@ class ModelWithCustomMetadata {
           alias: null,
           fieldType: DateTime,
           fromSuper: false,
-          valueOf: (instance) => instance.tanggal,
+          handler: (instance) => instance.tanggal,
         ),
         JsonField<ModelWithCustom>(
           name: 'customAll',
@@ -170,7 +170,7 @@ class ModelWithCustomMetadata {
           alias: null,
           fieldType: String,
           fromSuper: false,
-          valueOf: (instance) => instance.customAll,
+          handler: (instance) => instance.customAll,
         ),
         JsonField<ModelWithCustom>(
           name: 'converted',
@@ -178,7 +178,7 @@ class ModelWithCustomMetadata {
           alias: null,
           fieldType: MyConvertedModel,
           fromSuper: false,
-          valueOf: (instance) => instance.converted,
+          handler: (instance) => instance.converted,
         ),
         JsonField<ModelWithCustom>(
           name: 'name',
@@ -186,7 +186,7 @@ class ModelWithCustomMetadata {
           alias: null,
           fieldType: String,
           fromSuper: true,
-          valueOf: (instance) => instance.name,
+          handler: (instance) => instance.name,
         ),
       ];
   dynamic valueOf(ModelWithCustom instance, String fieldName) {

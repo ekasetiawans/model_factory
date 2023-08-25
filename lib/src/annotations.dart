@@ -64,7 +64,7 @@ class JsonField<T> {
   final String? alias;
   final Type fieldType;
   final bool fromSuper;
-  final dynamic Function(T instance) valueOf;
+  final dynamic Function(T instance) _handler;
 
   const JsonField({
     required this.name,
@@ -72,6 +72,10 @@ class JsonField<T> {
     this.alias,
     required this.fieldType,
     required this.fromSuper,
-    required this.valueOf,
-  });
+    required dynamic Function(T instance) handler,
+  }) : _handler = handler;
+
+  dynamic valueOf(T instance) {
+    return _handler(instance);
+  }
 }

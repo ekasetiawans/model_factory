@@ -512,7 +512,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
       final isSuper = superFields.contains(f);
       buffer.write('fromSuper: $isSuper,');
-      buffer.write('valueOf: (instance) => instance.${f.name},');
+      buffer.write('handler: (instance) => instance.${f.name},');
       buffer.writeln('),');
     }
 

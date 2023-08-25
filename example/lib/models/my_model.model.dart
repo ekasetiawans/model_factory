@@ -77,7 +77,7 @@ class MyModelMetadata {
           alias: null,
           fieldType: String,
           fromSuper: false,
-          valueOf: (instance) => instance.name,
+          handler: (instance) => instance.name,
         ),
       ];
   dynamic valueOf(MyModel instance, String fieldName) {
