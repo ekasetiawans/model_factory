@@ -445,14 +445,17 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.write('{');
     for (final f in getFields(cl)) {
       var name = f.name;
-      var alias = name;
+      String? alias;
 
       if (['hashCode'].contains(name)) continue;
 
       if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
         final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
         name = ann.getField('name')!.toStringValue()!;
-        alias = ann.getField('alias')?.toStringValue() ?? name;
+        alias = ann.getField('alias')?.toStringValue();
+        if (alias == null) {
+          continue;
+        }
       }
 
       buffer.write('\'$name\' : \'$alias\',');
