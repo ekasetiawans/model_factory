@@ -1,3 +1,7 @@
+## 2.1.0
+
+ - **FEAT**: added list fields and get value dynamically.
+
 ## 2.0.1
 
  - **FIX**: generator.

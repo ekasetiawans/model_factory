@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-08-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v2.1.0`](#model_factory---v210)
+ - [`model_factory_generator` - `v2.1.0`](#model_factory_generator---v210)
+
+---
+
+#### `model_factory` - `v2.1.0`
+
+ - **FEAT**: added list fields and get value dynamically.
+
+#### `model_factory_generator` - `v2.1.0`
+
+ - **FEAT**: added list fields and get value dynamically.
+
+## 2.1.0
+
+ - **FEAT**: added list fields and get value dynamically.
+
+
 ## 2023-08-24
 
 ### Changes
