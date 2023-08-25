@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v2.3.1`](#model_factory---v231)
+ - [`model_factory_generator` - `v2.3.1`](#model_factory_generator---v231)
+
+---
+
+#### `model_factory` - `v2.3.1`
+
+ - **FIX**: annotation.
+
+#### `model_factory_generator` - `v2.3.1`
+
+ - **FIX**: annotation.
+
+## 2.3.1
+
+ - **FIX**: annotation.
+
+
+## 2023-08-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v2.3.0`](#model_factory---v230)
  - [`model_factory_generator` - `v2.3.0`](#model_factory_generator---v230)
 

@@ -1,3 +1,7 @@
+## 2.3.1
+
+ - **FIX**: annotation.
+
 ## 2.3.0
 
  - **FEAT**: exposes jsonfields.
