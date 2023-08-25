@@ -1,3 +1,7 @@
+## 2.3.0
+
+ - **FEAT**: exposes jsonfields.
+
 ## 2.2.1
 
  - **FIX**: don't expose alias field that not defined.

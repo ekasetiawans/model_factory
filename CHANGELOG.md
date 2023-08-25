@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v2.3.0`](#model_factory---v230)
+ - [`model_factory_generator` - `v2.3.0`](#model_factory_generator---v230)
+
+---
+
+#### `model_factory` - `v2.3.0`
+
+ - **FEAT**: exposes jsonfields.
+
+#### `model_factory_generator` - `v2.3.0`
+
+ - **FEAT**: exposes jsonfields.
+
+## 2.3.0
+
+ - **FEAT**: exposes jsonfields.
+
+
+## 2023-08-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v2.2.1`](#model_factory---v221)
  - [`model_factory_generator` - `v2.2.1`](#model_factory_generator---v221)
 
