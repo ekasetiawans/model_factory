@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-09-09
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v2.3.2`](#model_factory---v232)
+ - [`model_factory_generator` - `v2.3.2`](#model_factory_generator---v232)
+
+---
+
+#### `model_factory` - `v2.3.2`
+
+ - **FIX**: nullable.
+ - **FIX**: generator for nullable.
+
+#### `model_factory_generator` - `v2.3.2`
+
+ - **FIX**: nullable.
+ - **FIX**: generator for nullable.
+
+## 2.3.2
+
+ - **FIX**: nullable.
+ - **FIX**: generator for nullable.
+
+
 ## 2023-08-25
 
 ### Changes

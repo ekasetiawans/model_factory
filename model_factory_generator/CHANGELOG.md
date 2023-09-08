@@ -1,3 +1,8 @@
+## 2.3.2
+
+ - **FIX**: nullable.
+ - **FIX**: generator for nullable.
+
 ## 2.3.1
 
  - **FIX**: annotation.
