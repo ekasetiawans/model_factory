@@ -65,8 +65,12 @@ class ModelFactoryGenerator extends Builder {
       if (classes!.isEmpty) continue;
 
       for (final c in classes) {
-        contentBuffer
-            .writeln('registerJsonFactory<m$m.$c>((json) => m$m.$c.fromJson(json));');
+        contentBuffer.writeln(
+          'registerJsonFactory<m$m.$c>((json) => m$m.$c.fromJson(json));',
+        );
+        contentBuffer.writeln(
+          'registerJsonFactory<m$m.$c?>((json) => m$m.$c.fromJson(json));',
+        );
       }
     }
     contentBuffer.write('}');
