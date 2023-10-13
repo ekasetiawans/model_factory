@@ -12,5 +12,9 @@ import 'package:model_factory_example/models/my_model.dart' as m1;
 void registerFactories() {
   registerJsonFactory<m0.ModelWithCustom>(
       (json) => m0.ModelWithCustom.fromJson(json));
+  registerJsonFactory<m0.ModelWithCustom?>(
+      (json) => json == null ? null : m0.ModelWithCustom.fromJson(json));
   registerJsonFactory<m1.MyModel>((json) => m1.MyModel.fromJson(json));
+  registerJsonFactory<m1.MyModel?>(
+      (json) => json == null ? null : m1.MyModel.fromJson(json));
 }

@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -143,20 +144,20 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
           field.type.nullabilitySuffix == NullabilitySuffix.question;
       final type = field.type.getDisplayString(withNullability: isNullable);
 
-      if (_jsonIgnoreChecker.hasAnnotationOfExact(field)) {
-        final ann = _jsonIgnoreChecker.firstAnnotationOfExact(field)!;
+      final jsonIgnoreAnn = getFieldAnnotation(_jsonIgnoreChecker, field);
+
+      if (jsonIgnoreAnn != null) {
         final ignoreFromJson =
-            ann.getField('ignoreFromJson')?.toBoolValue() ?? true;
+            jsonIgnoreAnn.getField('ignoreFromJson')?.toBoolValue() ?? true;
 
         if (ignoreFromJson) continue;
       }
 
       final meta = '${className}Metadata.instance';
 
-      if (_jsonKeyChecker.hasAnnotationOfExact(field)) {
-        final jsonKey = _jsonKeyChecker.firstAnnotationOfExact(field)!;
-
-        final fromJson = jsonKey.getField('fromJson');
+      final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, field);
+      if (jsonKeyAnn != null) {
+        final fromJson = jsonKeyAnn.getField('fromJson');
         if (fromJson != null) {
           final fn = fromJson.toFunctionValue();
           if (fn != null) {
@@ -175,7 +176,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
           }
         }
 
-        final converter = jsonKey.getField('withConverter')?.toTypeValue();
+        final converter = jsonKeyAnn.getField('withConverter')?.toTypeValue();
         if (converter != null) {
           buffer.writeln(
             '${field.name} : ${converter.element2!.name}().fromJson(json[$meta.$fieldName]),',
@@ -252,6 +253,24 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     return buffer.toString();
   }
 
+  DartObject? getFieldAnnotation(TypeChecker checker, FieldElement field) {
+    if (checker.hasAnnotationOfExact(field)) {
+      return checker.firstAnnotationOfExact(field);
+    }
+
+    final getter = field.getter;
+    if (getter != null && checker.hasAnnotationOfExact(getter)) {
+      return checker.firstAnnotationOfExact(getter);
+    }
+
+    final setter = field.setter;
+    if (setter != null && checker.hasAnnotationOfExact(setter)) {
+      return checker.firstAnnotationOfExact(setter);
+    }
+
+    return null;
+  }
+
   void buildToJsonFields(InterfaceElement classElement, StringBuffer buffer) {
     if (!_jsonSerializableChecker.hasAnnotationOfExact(classElement)) {
       return;
@@ -259,12 +278,6 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     final className = classElement.displayName;
     for (final field in classElement.fields) {
-      if (field.setter == null &&
-          !field.isFinal &&
-          !_jsonKeyChecker.hasAnnotationOf(field)) {
-        continue;
-      }
-
       var fieldName = field.name;
       if (['hashCode'].contains(fieldName)) continue;
 
@@ -272,21 +285,20 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
           field.type.nullabilitySuffix == NullabilitySuffix.question ||
               field.type.isDynamic;
 
-      if (_jsonIgnoreChecker.hasAnnotationOf(field)) {
-        final ann = _jsonIgnoreChecker.firstAnnotationOfExact(field)!;
+      final jsonIgnoreAnn = getFieldAnnotation(_jsonIgnoreChecker, field);
+      if (jsonIgnoreAnn != null) {
         final ignoreToJson =
-            ann.getField('ignoreToJson')?.toBoolValue() ?? true;
+            jsonIgnoreAnn.getField('ignoreToJson')?.toBoolValue() ?? true;
 
         if (ignoreToJson) continue;
       }
 
       final meta = '${className}Metadata.instance';
+      final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, field);
 
-      if (_jsonKeyChecker.hasAnnotationOf(field)) {
-        final ann = _jsonKeyChecker.firstAnnotationOfExact(field)!;
-        fieldName = ann.getField('name')!.toStringValue()!;
-
-        final toJson = ann.getField('toJson');
+      if (jsonKeyAnn != null) {
+        fieldName = jsonKeyAnn.getField('name')!.toStringValue()!;
+        final toJson = jsonKeyAnn.getField('toJson');
         if (toJson != null) {
           final fn = toJson.toFunctionValue();
           if (fn != null) {
@@ -303,7 +315,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
           }
         }
 
-        final converter = ann.getField('withConverter')?.toTypeValue();
+        final converter = jsonKeyAnn.getField('withConverter')?.toTypeValue();
         if (converter != null) {
           buffer.writeln(
             '$meta.${field.name} : ${converter.element2!.name}().toJson(instance.${field.name}),',
@@ -410,7 +422,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
   List<FieldElement> getLocalFields(ClassElement cl) {
     final result = <FieldElement>[];
     for (final f in cl.fields) {
-      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
+      final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, f);
+      if (jsonKeyAnn != null) {
         result.add(f);
       }
     }
@@ -440,9 +453,9 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       var name = f.name;
       if (['hashCode'].contains(name)) continue;
 
-      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
-        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
-        name = ann.getField('name')!.toStringValue()!;
+      final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, f);
+      if (jsonKeyAnn != null) {
+        name = jsonKeyAnn.getField('name')!.toStringValue()!;
       }
 
       buffer.writeln('case \'$name\': return instance.${f.name};');
@@ -462,10 +475,10 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
       if (['hashCode'].contains(name)) continue;
 
-      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
-        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
-        name = ann.getField('name')!.toStringValue()!;
-        alias = ann.getField('alias')?.toStringValue();
+      final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, f);
+      if (jsonKeyAnn != null) {
+        name = jsonKeyAnn.getField('name')!.toStringValue()!;
+        alias = jsonKeyAnn.getField('alias')?.toStringValue();
         if (alias == null) {
           continue;
         }
@@ -491,10 +504,11 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       String? alias;
       if (['hashCode'].contains(name)) continue;
 
-      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
-        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
-        name = ann.getField('name')!.toStringValue()!;
-        alias = ann.getField('alias')!.toStringValue();
+      final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, f);
+
+      if (jsonKeyAnn != null) {
+        name = jsonKeyAnn.getField('name')!.toStringValue()!;
+        alias = jsonKeyAnn.getField('alias')!.toStringValue();
       }
 
       buffer.write('JsonField<$className>(');
@@ -528,9 +542,9 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       var name = f.name;
       if (['hashCode'].contains(name)) continue;
 
-      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
-        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
-        name = ann.getField('name')!.toStringValue()!;
+      final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, f);
+      if (jsonKeyAnn != null) {
+        name = jsonKeyAnn.getField('name')!.toStringValue()!;
       }
 
       buffer.write(' \'$name\',');
@@ -547,9 +561,9 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       var name = f.name;
       if (['hashCode'].contains(name)) continue;
 
-      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
-        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
-        name = ann.getField('name')!.toStringValue()!;
+      final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, f);
+      if (jsonKeyAnn != null) {
+        name = jsonKeyAnn.getField('name')!.toStringValue()!;
       }
 
       buffer.write(' \'$name\',');
@@ -565,9 +579,9 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       var name = f.name;
       if (['hashCode'].contains(name)) continue;
 
-      if (_jsonKeyChecker.hasAnnotationOfExact(f)) {
-        final ann = _jsonKeyChecker.firstAnnotationOfExact(f)!;
-        name = ann.getField('name')!.toStringValue()!;
+      final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, f);
+      if (jsonKeyAnn != null) {
+        name = jsonKeyAnn.getField('name')!.toStringValue()!;
       }
 
       buffer.writeln('final String ${f.name} = \'$name\';');

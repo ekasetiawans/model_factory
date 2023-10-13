@@ -69,6 +69,7 @@ final ModelWithCustomJsonSerializer defaultModelWithCustomSerializer =
         instance.tanggal.toUtc().toIso8601String(),
     ModelWithCustomMetadata.instance.converted:
         MyConverterModel().toJson(instance.converted),
+    ModelWithCustomMetadata.instance.abc: instance.abc,
   };
 };
 
@@ -111,7 +112,8 @@ class ModelWithCustomMetadata {
   final String customTo = 'customTo';
   final String tanggal = 'tanggal';
   final String customAll = 'customAll';
-  final String converted = 'converted';
+  final String converted = 'x_converted';
+  final String abc = 'aaa';
 
   List<String> get fields => [
         'payment',
@@ -119,7 +121,8 @@ class ModelWithCustomMetadata {
         'customTo',
         'tanggal',
         'customAll',
-        'converted',
+        'x_converted',
+        'aaa',
       ];
   List<String> get allFields => [
         'name',
@@ -128,7 +131,8 @@ class ModelWithCustomMetadata {
         'customTo',
         'tanggal',
         'customAll',
-        'converted',
+        'x_converted',
+        'aaa',
       ];
   Map<String, String> get aliases => {};
   List<JsonField> get allJsonFields => [
@@ -174,11 +178,19 @@ class ModelWithCustomMetadata {
         ),
         JsonField<ModelWithCustom>(
           name: 'converted',
-          field: 'converted',
+          field: 'x_converted',
           alias: null,
           fieldType: MyConvertedModel,
           fromSuper: false,
           handler: (instance) => instance.converted,
+        ),
+        JsonField<ModelWithCustom>(
+          name: 'abc',
+          field: 'aaa',
+          alias: null,
+          fieldType: int,
+          fromSuper: false,
+          handler: (instance) => instance.abc,
         ),
         JsonField<ModelWithCustom>(
           name: 'name',
@@ -203,8 +215,10 @@ class ModelWithCustomMetadata {
         return instance.tanggal;
       case 'customAll':
         return instance.customAll;
-      case 'converted':
+      case 'x_converted':
         return instance.converted;
+      case 'aaa':
+        return instance.abc;
       default:
         return null;
     }

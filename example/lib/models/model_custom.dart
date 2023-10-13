@@ -26,7 +26,13 @@ class ModelWithCustom extends MyModel {
   @JsonIgnore()
   final String customAll;
 
-  @JsonKey('converted', withConverter: MyConverterModel)
+  @JsonKey('aaa')
+  @JsonIgnore(
+    ignoreToJson: false,
+  )
+  int get abc => 1;
+
+  @JsonKey('x_converted', withConverter: MyConverterModel)
   final MyConvertedModel converted;
 
   ModelWithCustom({
