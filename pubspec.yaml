@@ -1,6 +1,6 @@
 name: model_factory
 description: Generate model boiler plate
-version: 2.3.2
+version: 2.3.3
 repository: https://github.com/ekasetiawans/model_factory
 
 environment:
