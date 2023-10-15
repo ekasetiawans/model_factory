@@ -17,7 +17,7 @@ final MyModelJsonDeserializer defaultMyModelDeserializer = (
 ) {
   try {
     return MyModel(
-      name: json.value<String>(
+      name: json.valueOf<String>(
         MyModelMetadata.instance.name,
       ),
     );
@@ -35,7 +35,7 @@ MyModel _$MyModelFromJson(Map<String, dynamic> json) =>
 typedef MyModelJsonSerializer = Map<String, dynamic> Function(MyModel instance);
 final MyModelJsonSerializer defaultMyModelSerializer = (MyModel instance) {
   return {
-    MyModelMetadata.instance.name: instance.name,
+    MyModelMetadata.instance.name: convertToJson(instance.name),
   };
 };
 

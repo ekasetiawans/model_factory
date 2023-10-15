@@ -132,6 +132,11 @@ extension JsonMap on Map<String, dynamic> {
         return null as E;
       }
 
+      if (_converters.containsKey(E)) {
+        final converter = _converters[E] as JsonConverter<E>;
+        return converter.fromJson(this[key]);
+      }
+
       if (_factories.containsKey(E)) {
         return _factories[E](this[key]);
       }
@@ -216,6 +221,17 @@ extension JsonMap on Map<String, dynamic> {
 
     return null;
   }
+
+  E valueOf<E>(String key, {E? defaultValue}) {
+    try {
+      return convertFromJson<E>(this[key]);
+    } catch (e) {
+      throw FieldParseException(
+        key: key,
+        innerException: e,
+      );
+    }
+  }
 }
 
 extension JsonArray on List {
@@ -251,6 +267,12 @@ final _factories = <Type, dynamic>{
   },
 };
 
+final _converters = <Type, dynamic>{};
+void registerJsonConverter<E>(JsonConverter<E> converter) {
+  _converters[E] = converter;
+  _converters[_typeOf<E?>()] = converter;
+}
+
 void registerDefaultValue(Map<Type, dynamic> values) {
   _defaultValues.addAll(values);
 }
@@ -276,4 +298,161 @@ T modelDecode<T>(dynamic data) {
   }
 
   throw UnsupportedError('unsupported type');
+}
+
+E convertFromJson<E>(dynamic value, [dynamic defaultValue]) {
+  if (E == dynamic) {
+    return value;
+  }
+
+  if (value == null) {
+    if (defaultValue != null) return defaultValue;
+    return null as E;
+  }
+
+  if (value is Map && (value).isEmpty) {
+    if (defaultValue != null) return defaultValue;
+    return null as E;
+  }
+
+  if (_converters.containsKey(E)) {
+    final converter = _converters[E] as JsonConverter<E>;
+    return converter.fromJson(value);
+  }
+
+  if (_factories.containsKey(E)) {
+    return _factories[E](value);
+  }
+
+  if (_factories.containsKey(_typeOf<E>())) {
+    return _factories[_typeOf<E>()](value);
+  }
+
+  if (E == String || E == _typeOf<E>()) {
+    return value.toString() as E;
+  }
+
+  if (E == int || E == _typeOf<int>()) {
+    if (value == null) {
+      return 0 as E;
+    }
+
+    if (value is String) {
+      return int.tryParse(value) ?? defaultValue;
+    }
+
+    if (value is num) {
+      return value.toInt() as E;
+    }
+
+    return defaultValue as E;
+  }
+
+  if (E == double || E == _typeOf<double>()) {
+    if (value == null) {
+      return 0.0 as E;
+    }
+
+    if (value is String) {
+      return double.tryParse(value) ?? defaultValue;
+    }
+
+    if (value is num) {
+      return value.toDouble() as E;
+    }
+
+    return defaultValue as E;
+  }
+
+  if (E == num || E == _typeOf<num>()) {
+    if (value == null) {
+      return 0.0 as E;
+    }
+
+    if (value is String) {
+      return num.tryParse(value) ?? defaultValue;
+    }
+
+    if (value is num) {
+      return value as E;
+    }
+
+    return defaultValue as E;
+  }
+
+  if (E == DateTime || E == _typeOf<DateTime>()) {
+    if (value is String) {
+      var str = value;
+      if (str.length > 10 && !str.contains('Z') && !str.contains('+')) {
+        str += 'Z';
+      }
+
+      return DateTime.parse(str).toLocal() as E;
+    }
+
+    if (value is int) {
+      return DateTime.fromMillisecondsSinceEpoch(value) as E;
+    }
+
+    if (value is DateTime) {
+      return value as E;
+    }
+
+    return DateTime.fromMillisecondsSinceEpoch(0) as E;
+  }
+
+  if (E == bool || E == _typeOf<bool>()) {
+    if (value is bool) {
+      return value as E;
+    }
+
+    if (value is String) {
+      return (value == '1' || value == 'true') as E;
+    }
+
+    if (value is int) {
+      return (value == 1) as E;
+    }
+
+    return false as E;
+  }
+
+  if (E == List || E == _typeOf<List>()) {
+    return (value as List).convert();
+  }
+
+  if (value is List) {
+    return (value).convert();
+  }
+
+  if (value is Map<String, dynamic>) {
+    return (value).convert();
+  }
+
+  return value;
+}
+
+dynamic convertToJson(dynamic value) {
+  if (_converters.containsKey(value.runtimeType)) {
+    final converter = _converters[value.runtimeType] as JsonConverter;
+    return converter.toJson(value);
+  }
+
+  if (_factories.containsKey(value.runtimeType)) {
+    return value.toJson();
+  }
+
+  if (value is List) {
+    return value.map((e) => convertToJson(e)).toList();
+  }
+
+  if (value is Map) {
+    return value.map((key, value) => MapEntry(key, convertToJson(value)));
+  }
+
+  if (value is DateTime) {
+    return value.toUtc().toIso8601String();
+  }
+
+  return value;
 }

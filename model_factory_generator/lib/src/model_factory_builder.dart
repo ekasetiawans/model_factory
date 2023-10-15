@@ -201,7 +201,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         }
       }
 
-      buffer.writeln('${field.name} : json.value<$type>($meta.$fieldName,),');
+      buffer.writeln('${field.name} : json.valueOf<$type>($meta.$fieldName,),');
     }
   }
 
@@ -340,38 +340,42 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         }
       }
 
-      var suffix = '';
-      if (!field.type.isDartCoreBool &&
-          !field.type.isDartCoreDouble &&
-          !field.type.isDartCoreInt &&
-          !field.type.isDartCoreIterable &&
-          !field.type.isDartCoreList &&
-          !field.type.isDartCoreMap &&
-          !field.type.isDartCoreNum &&
-          !field.type.isDartCoreSet &&
-          !field.type.isDartCoreString) {
-        suffix = '${isNullable ? '?' : ''}.toJson()';
-      }
+      // var suffix = '';
+      // if (!field.type.isDartCoreBool &&
+      //     !field.type.isDartCoreDouble &&
+      //     !field.type.isDartCoreInt &&
+      //     !field.type.isDartCoreIterable &&
+      //     !field.type.isDartCoreList &&
+      //     !field.type.isDartCoreMap &&
+      //     !field.type.isDartCoreNum &&
+      //     !field.type.isDartCoreSet &&
+      //     !field.type.isDartCoreString) {
+      //   suffix = '${isNullable ? '?' : ''}.toJson()';
+      // }
 
-      if (field.type.getDisplayString(withNullability: false) == 'DateTime') {
-        suffix = '${isNullable ? '?' : ''}.toUtc().toIso8601String()';
-      }
+      // if (field.type.getDisplayString(withNullability: false) == 'DateTime') {
+      //   suffix = '${isNullable ? '?' : ''}.toUtc().toIso8601String()';
+      // }
 
-      final coreList = <String>[
-        'List<String>',
-        'List<int>',
-        'List<double>',
-        'List<num>',
-        'List<bool>',
-      ];
+      // final coreList = <String>[
+      //   'List<String>',
+      //   'List<int>',
+      //   'List<double>',
+      //   'List<num>',
+      //   'List<bool>',
+      // ];
 
-      if (field.type.isDartCoreList &&
-          !coreList
-              .contains(field.type.getDisplayString(withNullability: false))) {
-        suffix = '${isNullable ? '?' : ''}.map((e) => e.toJson()).toList()';
-      }
+      // if (field.type.isDartCoreList &&
+      //     !coreList
+      //         .contains(field.type.getDisplayString(withNullability: false))) {
+      //   suffix = '${isNullable ? '?' : ''}.map((e) => e.toJson()).toList()';
+      // }
 
-      buffer.writeln('$meta.${field.name} : instance.${field.name}$suffix,');
+      // buffer.writeln('$meta.${field.name} : instance.${field.name}$suffix,');
+
+      buffer.writeln(
+        '$meta.${field.name} : convertToJson(instance.${field.name}),',
+      );
     }
   }
 

@@ -18,7 +18,7 @@ final ModelWithCustomJsonDeserializer defaultModelWithCustomDeserializer = (
 ) {
   try {
     return ModelWithCustom(
-      name: json.value<String>(
+      name: json.valueOf<String>(
         MyModelMetadata.instance.name,
       ),
       payment: _paymentFromJson(
@@ -28,13 +28,13 @@ final ModelWithCustomJsonDeserializer defaultModelWithCustomDeserializer = (
           current: json[ModelWithCustomMetadata.instance.payment],
         ),
       ),
-      shipment: json.value<String>(
+      shipment: json.valueOf<String>(
         ModelWithCustomMetadata.instance.shipment,
       ),
-      customTo: json.value<String>(
+      customTo: json.valueOf<String>(
         ModelWithCustomMetadata.instance.customTo,
       ),
-      tanggal: json.value<DateTime>(
+      tanggal: json.valueOf<DateTime>(
         ModelWithCustomMetadata.instance.tanggal,
       ),
       converted: MyConverterModel()
@@ -56,20 +56,19 @@ typedef ModelWithCustomJsonSerializer = Map<String, dynamic> Function(
 final ModelWithCustomJsonSerializer defaultModelWithCustomSerializer =
     (ModelWithCustom instance) {
   return {
-    MyModelMetadata.instance.name: instance.name,
-    ModelWithCustomMetadata.instance.payment: instance.payment,
-    ModelWithCustomMetadata.instance.shipment: instance.shipment,
+    MyModelMetadata.instance.name: convertToJson(instance.name),
+    ModelWithCustomMetadata.instance.payment: convertToJson(instance.payment),
+    ModelWithCustomMetadata.instance.shipment: convertToJson(instance.shipment),
     ModelWithCustomMetadata.instance.customTo: _toJson(
       SerializationInfo(
         key: ModelWithCustomMetadata.instance.customTo,
         data: instance.customTo,
       ),
     ),
-    ModelWithCustomMetadata.instance.tanggal:
-        instance.tanggal.toUtc().toIso8601String(),
+    ModelWithCustomMetadata.instance.tanggal: convertToJson(instance.tanggal),
     ModelWithCustomMetadata.instance.converted:
         MyConverterModel().toJson(instance.converted),
-    ModelWithCustomMetadata.instance.abc: instance.abc,
+    ModelWithCustomMetadata.instance.abc: convertToJson(instance.abc),
   };
 };
 
