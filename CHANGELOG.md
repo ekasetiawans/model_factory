@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-10-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v2.4.0`](#model_factory---v240)
+ - [`model_factory_generator` - `v2.4.0`](#model_factory_generator---v240)
+
+---
+
+#### `model_factory` - `v2.4.0`
+
+ - **FEAT**: improve with converters.
+
+#### `model_factory_generator` - `v2.4.0`
+
+ - **FEAT**: improve with converters.
+
+## 2.4.0
+
+ - **FEAT**: improve with converters.
+
+
 ## 2023-10-13
 
 ### Changes
