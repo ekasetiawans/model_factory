@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:model_factory/model_factory.dart';
+
 class DeserializationInfo {
   final String key;
   final Map<String, dynamic> map;
@@ -56,6 +58,23 @@ class JsonSerializable {
 abstract class JsonConverter<T> {
   T fromJson(dynamic data);
   dynamic toJson(T model);
+}
+
+T tryConvertFromJson<T>(JsonConverter<T> converter, dynamic value,
+    [dynamic defaultValue]) {
+  try {
+    return converter.fromJson(value);
+  } catch (e) {
+    return convertFromJson(value, defaultValue, false);
+  }
+}
+
+dynamic tryConvertToJson<T>(JsonConverter<T> converter, T model) {
+  try {
+    return converter.toJson(model);
+  } catch (e) {
+    return convertToJson(model, false);
+  }
 }
 
 class JsonField<T> {

@@ -37,8 +37,8 @@ final ModelWithCustomJsonDeserializer defaultModelWithCustomDeserializer = (
       tanggal: json.valueOf<DateTime>(
         ModelWithCustomMetadata.instance.tanggal,
       ),
-      converted: MyConverterModel()
-          .fromJson(json[ModelWithCustomMetadata.instance.converted]),
+      converted: tryConvertFromJson(
+          MyConverterModel(), json[ModelWithCustomMetadata.instance.converted]),
     );
   } on FieldParseException catch (e) {
     throw ModelParseException(
@@ -67,7 +67,7 @@ final ModelWithCustomJsonSerializer defaultModelWithCustomSerializer =
     ),
     ModelWithCustomMetadata.instance.tanggal: convertToJson(instance.tanggal),
     ModelWithCustomMetadata.instance.converted:
-        MyConverterModel().toJson(instance.converted),
+        tryConvertToJson(MyConverterModel(), instance.converted),
     ModelWithCustomMetadata.instance.abc: convertToJson(instance.abc),
   };
 };

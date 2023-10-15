@@ -179,7 +179,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         final converter = jsonKeyAnn.getField('withConverter')?.toTypeValue();
         if (converter != null) {
           buffer.writeln(
-            '${field.name} : ${converter.element2!.name}().fromJson(json[$meta.$fieldName]),',
+            '${field.name} : tryConvertFromJson(${converter.element2!.name}(), json[$meta.$fieldName]),',
           );
           continue;
         }
@@ -318,7 +318,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         final converter = jsonKeyAnn.getField('withConverter')?.toTypeValue();
         if (converter != null) {
           buffer.writeln(
-            '$meta.${field.name} : ${converter.element2!.name}().toJson(instance.${field.name}),',
+            '$meta.${field.name} : tryConvertToJson( ${converter.element2!.name}(), instance.${field.name}),',
           );
           continue;
         }

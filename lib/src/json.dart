@@ -300,7 +300,11 @@ T modelDecode<T>(dynamic data) {
   throw UnsupportedError('unsupported type');
 }
 
-E convertFromJson<E>(dynamic value, [dynamic defaultValue]) {
+E convertFromJson<E>(
+  dynamic value, [
+  dynamic defaultValue,
+  bool useConverters = true,
+]) {
   if (E == dynamic) {
     return value;
   }
@@ -315,9 +319,11 @@ E convertFromJson<E>(dynamic value, [dynamic defaultValue]) {
     return null as E;
   }
 
-  if (_converters.containsKey(E)) {
-    final converter = _converters[E] as JsonConverter<E>;
-    return converter.fromJson(value);
+  if (useConverters) {
+    if (_converters.containsKey(E)) {
+      final converter = _converters[E] as JsonConverter<E>;
+      return converter.fromJson(value);
+    }
   }
 
   if (_factories.containsKey(E)) {
@@ -432,10 +438,12 @@ E convertFromJson<E>(dynamic value, [dynamic defaultValue]) {
   return value;
 }
 
-dynamic convertToJson(dynamic value) {
-  if (_converters.containsKey(value.runtimeType)) {
-    final converter = _converters[value.runtimeType] as JsonConverter;
-    return converter.toJson(value);
+dynamic convertToJson(dynamic value, [bool useConverter = true]) {
+  if (useConverter) {
+    if (_converters.containsKey(value.runtimeType)) {
+      final converter = _converters[value.runtimeType] as JsonConverter;
+      return converter.toJson(value);
+    }
   }
 
   if (_factories.containsKey(value.runtimeType)) {
