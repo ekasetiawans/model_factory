@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v2.5.0`](#model_factory---v250)
+ - [`model_factory_generator` - `v2.5.0`](#model_factory_generator---v250)
+
+---
+
+#### `model_factory` - `v2.5.0`
+
+ - **FEAT**: tryConvert.
+
+#### `model_factory_generator` - `v2.5.0`
+
+ - **FEAT**: tryConvert.
+
+## 2.5.0
+
+ - **FEAT**: tryConvert.
+
+
+## 2023-10-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v2.4.0`](#model_factory---v240)
  - [`model_factory_generator` - `v2.4.0`](#model_factory_generator---v240)
 

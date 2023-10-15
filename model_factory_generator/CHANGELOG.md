@@ -1,3 +1,7 @@
+## 2.5.0
+
+ - **FEAT**: tryConvert.
+
 ## 2.4.0
 
  - **FEAT**: improve with converters.
