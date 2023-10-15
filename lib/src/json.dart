@@ -334,7 +334,7 @@ E convertFromJson<E>(
     return _factories[_typeOf<E>()](value);
   }
 
-  if (E == String || E == _typeOf<E>()) {
+  if (E == String || E == _typeOf<String>()) {
     return value.toString() as E;
   }
 
