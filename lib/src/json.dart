@@ -267,7 +267,7 @@ final _factories = <Type, dynamic>{
   },
 };
 
-final _toJsonFactories = <Type, dynamic Function()>{};
+final _toJsonFactories = <Type, dynamic Function(dynamic value)>{};
 
 final _converters = <Type, dynamic>{};
 void registerJsonConverter<E>(JsonConverter<E> converter) {
@@ -290,7 +290,7 @@ void registerJsonFactory<E>(JsonFactory<E> builder) {
       (List list) => list.map((e) => builder(e)).toList();
 }
 
-void registerToJson<E>(dynamic Function() toJson) {
+void registerToJson<E>(dynamic Function(dynamic value) toJson) {
   _toJsonFactories[E] = toJson;
 }
 
@@ -458,7 +458,7 @@ dynamic convertToJson(
 
   if (_toJsonFactories.containsKey(value.runtimeType)) {
     final toJson = _toJsonFactories[value.runtimeType]!;
-    return toJson();
+    return toJson(value);
   }
 
   if (value is List) {
