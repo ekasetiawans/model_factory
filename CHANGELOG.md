@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v2.5.4`](#model_factory---v254)
+ - [`model_factory_generator` - `v2.5.4`](#model_factory_generator---v254)
+
+---
+
+#### `model_factory` - `v2.5.4`
+
+ - **FIX**: toJson.
+
+#### `model_factory_generator` - `v2.5.4`
+
+ - **FIX**: toJson.
+
+## 2.5.4
+
+ - **FIX**: toJson.
+
+
+## 2023-11-02
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v2.5.3`](#model_factory---v253)
  - [`model_factory_generator` - `v2.5.3`](#model_factory_generator---v253)
 
