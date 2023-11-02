@@ -1,3 +1,7 @@
+## 2.5.2
+
+ - **FIX**: toJson.
+
 ## 2.5.1
 
  - Update a dependency to the latest release.
