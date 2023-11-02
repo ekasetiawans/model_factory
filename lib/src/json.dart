@@ -267,6 +267,8 @@ final _factories = <Type, dynamic>{
   },
 };
 
+final _toJsonFactories = <Type, dynamic Function()>{};
+
 final _converters = <Type, dynamic>{};
 void registerJsonConverter<E>(JsonConverter<E> converter) {
   _converters[E] = converter;
@@ -286,6 +288,10 @@ void registerJsonFactory<E>(JsonFactory<E> builder) {
       (List list) => list.map((e) => builder(e)).toList();
   _factories[_typeOf<FutureOr<List<E>>>()] =
       (List list) => list.map((e) => builder(e)).toList();
+}
+
+void registerToJson<E>(dynamic Function() toJson) {
+  _toJsonFactories[E] = toJson;
 }
 
 T modelDecode<T>(dynamic data) {
@@ -438,7 +444,11 @@ E convertFromJson<E>(
   return value;
 }
 
-dynamic convertToJson(dynamic value, [bool useConverter = true]) {
+dynamic convertToJson(
+  dynamic value, [
+  bool useConverter = true,
+  dynamic Function(dynamic object)? toJson,
+]) {
   if (useConverter) {
     if (_converters.containsKey(value.runtimeType)) {
       final converter = _converters[value.runtimeType] as JsonConverter;
@@ -446,8 +456,9 @@ dynamic convertToJson(dynamic value, [bool useConverter = true]) {
     }
   }
 
-  if (_factories.containsKey(value.runtimeType)) {
-    return value.toJson();
+  if (_toJsonFactories.containsKey(value.runtimeType)) {
+    final toJson = _toJsonFactories[value.runtimeType]!;
+    return toJson();
   }
 
   if (value is List) {
