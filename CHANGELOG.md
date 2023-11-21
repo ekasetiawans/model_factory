@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v2.5.6`](#model_factory---v256)
+ - [`model_factory_generator` - `v2.5.6`](#model_factory_generator---v256)
+
+---
+
+#### `model_factory` - `v2.5.6`
+
+ - **FIX**: gitignore.
+
+#### `model_factory_generator` - `v2.5.6`
+
+ - **FIX**: gitignore.
+
+## 2.5.6
+
+ - **FIX**: gitignore.
+
+
+## 2023-11-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v2.5.5`](#model_factory---v255)
  - [`model_factory_generator` - `v2.5.5`](#model_factory_generator---v255)
 
