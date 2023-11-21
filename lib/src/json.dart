@@ -340,12 +340,24 @@ E convertFromJson<E>(
     return _factories[_typeOf<E>()](value);
   }
 
-  if (E == String || E == _typeOf<String>()) {
+  if (E == String || E == _typeOf<String>() || E == _typeOf<String?>()) {
+    if (value == null) {
+      if (E == _typeOf<String?>()) {
+        return null as E;
+      }
+
+      return 0 as E;
+    }
+
     return value.toString() as E;
   }
 
-  if (E == int || E == _typeOf<int>()) {
+  if (E == int || E == _typeOf<int>() || E == _typeOf<int?>()) {
     if (value == null) {
+      if (E == _typeOf<int?>()) {
+        return null as E;
+      }
+
       return 0 as E;
     }
 
@@ -360,8 +372,12 @@ E convertFromJson<E>(
     return defaultValue as E;
   }
 
-  if (E == double || E == _typeOf<double>()) {
+  if (E == double || E == _typeOf<double>() || E == _typeOf<double?>()) {
     if (value == null) {
+      if (E == _typeOf<double?>()) {
+        return null as E;
+      }
+
       return 0.0 as E;
     }
 
@@ -376,8 +392,12 @@ E convertFromJson<E>(
     return defaultValue as E;
   }
 
-  if (E == num || E == _typeOf<num>()) {
+  if (E == num || E == _typeOf<num>() || E == _typeOf<num?>()) {
     if (value == null) {
+      if (E == _typeOf<num?>()) {
+        return null as E;
+      }
+
       return 0.0 as E;
     }
 
@@ -392,7 +412,15 @@ E convertFromJson<E>(
     return defaultValue as E;
   }
 
-  if (E == DateTime || E == _typeOf<DateTime>()) {
+  if (E == DateTime || E == _typeOf<DateTime>() || E == _typeOf<DateTime?>()) {
+    if (value == null) {
+      if (E == _typeOf<DateTime?>()) {
+        return null as E;
+      }
+
+      return 0 as E;
+    }
+
     if (value is String) {
       var str = value;
       if (str.length > 10 && !str.contains('Z') && !str.contains('+')) {
@@ -413,7 +441,7 @@ E convertFromJson<E>(
     return DateTime.fromMillisecondsSinceEpoch(0) as E;
   }
 
-  if (E == bool || E == _typeOf<bool>()) {
+  if (E == bool || E == _typeOf<bool>() || E == _typeOf<bool?>()) {
     if (value is bool) {
       return value as E;
     }
@@ -429,7 +457,7 @@ E convertFromJson<E>(
     return false as E;
   }
 
-  if (E == List || E == _typeOf<List>()) {
+  if (E == List || E == _typeOf<List>() || E == _typeOf<List?>()) {
     return (value as List).convert();
   }
 
