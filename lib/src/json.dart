@@ -6,7 +6,7 @@ import 'package:model_factory/model_factory.dart';
 extension JsonExt on JsonCodec {
   E? decodeAs<E>(String source) {
     if (source.startsWith('[')) {
-      throw Exception('use decodeAsList instead');
+      throw Exception('use decodeAsList instead.');
     }
 
     if (source.startsWith('{')) {
