@@ -15,7 +15,7 @@ builders:
     import: "package:model_factory_generator/model_factory_generator.dart"
     builder_factories: ["codeGeneratorBuilder"]
     build_extensions:
-      ".dart": [".model.dart"]
+      ".dart": [".g.dart"]
     auto_apply: dependents
     build_to: source
     runs_before: ["resolver", "generator"]

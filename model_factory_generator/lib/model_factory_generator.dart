@@ -6,8 +6,7 @@ import 'package:source_gen/source_gen.dart';
 
 Builder codeGeneratorResolver(BuilderOptions options) => ModelFactoryResolver();
 Builder codeGeneratorFactory(BuilderOptions options) => ModelFactoryGenerator();
-Builder codeGeneratorBuilder(BuilderOptions options) => PartBuilder(
+Builder codeGeneratorBuilder(BuilderOptions options) => SharedPartBuilder(
       [ModelFactoryBuilder()],
-      '.model.dart',
-      header: templateHeader,
+      'model_factory_generator',
     );
