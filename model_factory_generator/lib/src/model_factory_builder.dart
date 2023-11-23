@@ -135,9 +135,11 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
       "throw ModelParseException(innerException: e.innerException, key: e.key, className: '${classElement.name}',);",
     );
-
-    buffer.writeln('}');
-    buffer.writeln('}');
+    buffer.writeln('} catch (e) {');
+    buffer.writeln(
+      "throw ModelParseException(innerException: e, key: '', className: '${classElement.name}',);",
+    );
+    buffer.writeln('}}');
 
     buffer.writeln();
     buffer.writeln();
