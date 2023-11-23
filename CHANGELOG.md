@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v3.0.3`](#model_factory---v303)
+ - [`model_factory_generator` - `v3.0.3`](#model_factory_generator---v303)
+
+---
+
+#### `model_factory` - `v3.0.3`
+
+ - **FIX**: lint.
+
+#### `model_factory_generator` - `v3.0.3`
+
+ - **FIX**: lint.
+
+## 3.0.3
+
+ - **FIX**: lint.
+
+
+## 2023-11-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v3.0.2`](#model_factory---v302)
  - [`model_factory_generator` - `v3.0.2`](#model_factory_generator---v302)
 
