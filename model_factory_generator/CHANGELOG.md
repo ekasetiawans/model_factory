@@ -1,3 +1,7 @@
+## 4.0.2
+
+ - **FIX**: registration.
+
 ## 4.0.1
 
  - **FIX**: list.
