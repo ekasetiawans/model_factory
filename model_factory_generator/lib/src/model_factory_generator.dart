@@ -58,7 +58,9 @@ class ModelFactoryGenerator extends Builder {
     }
 
     contentBuffer.writeln();
-    contentBuffer.writeln('void registerFactories(){');
+    contentBuffer.writeln('class JsonRegistrant {');
+    contentBuffer.writeln('static void register(){');
+    contentBuffer.writeln('registerDefaultAdapters();');
     for (final uri in imp) {
       final m = imp.indexOf(uri);
       final classes = uris[uri];
@@ -66,17 +68,41 @@ class ModelFactoryGenerator extends Builder {
 
       for (final c in classes) {
         contentBuffer.writeln(
-          'registerJsonFactory<m$m.$c>((json) => m$m.$c.fromJson(json));',
+          'GetIt.I.registerSingleton<JsonAdapter<m$m.$c?>>(m$m.${c}JsonAdapter());',
         );
-        contentBuffer.writeln(
-          'registerJsonFactory<m$m.$c?>((json) => json == null ? null : m$m.$c.fromJson(json));',
-        );
-        contentBuffer.writeln(
-          'registerToJson<m$m.$c>((e) => (e as m$m.$c).toJson());',
-        );
+
+        // contentBuffer.writeln(
+        //   'registerJsonFactory<m$m.$c>((json) => m$m.$c.fromJson(json));',
+        // );
+        // contentBuffer.writeln(
+        //   'registerJsonFactory<m$m.$c?>((json) => json == null ? null : m$m.$c.fromJson(json));',
+        // );
+        // contentBuffer.writeln(
+        //   'registerToJson<m$m.$c>((e) => (e as m$m.$c).toJson());',
+        // );
       }
     }
-    contentBuffer.write('}');
+    contentBuffer.writeln('}}');
+
+    // contentBuffer.writeln('void registerFactories(){');
+    // for (final uri in imp) {
+    //   final m = imp.indexOf(uri);
+    //   final classes = uris[uri];
+    //   if (classes!.isEmpty) continue;
+
+    //   for (final c in classes) {
+    //     contentBuffer.writeln(
+    //       'registerJsonFactory<m$m.$c>((json) => m$m.$c.fromJson(json));',
+    //     );
+    //     contentBuffer.writeln(
+    //       'registerJsonFactory<m$m.$c?>((json) => json == null ? null : m$m.$c.fromJson(json));',
+    //     );
+    //     contentBuffer.writeln(
+    //       'registerToJson<m$m.$c>((e) => (e as m$m.$c).toJson());',
+    //     );
+    //   }
+    // }
+    // contentBuffer.write('}');
 
     final code = DartFormatter().format(contentBuffer.toString());
     final codeId = AssetId(
@@ -87,7 +113,7 @@ class ModelFactoryGenerator extends Builder {
     await buildStep.writeAsString(codeId, code);
   }
 
-  static const codeFile = 'model_factories.generated_models.dart';
+  static const codeFile = 'json_registrant.dart';
   static final _outputs = [codeFile];
 
   @override

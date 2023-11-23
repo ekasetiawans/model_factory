@@ -1,6 +1,6 @@
 import 'package:model_factory/model_factory.dart';
 
-part 'my_model.model.dart';
+part 'my_model.g.dart';
 
 @JsonSerializable()
 class MyModel {

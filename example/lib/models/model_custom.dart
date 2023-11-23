@@ -2,7 +2,7 @@
 import 'package:model_factory/model_factory.dart';
 import 'package:model_factory_example/models/my_model.dart';
 
-part 'model_custom.model.dart';
+part 'model_custom.g.dart';
 
 @JsonSerializable()
 class ModelWithCustom extends MyModel {
@@ -17,6 +17,9 @@ class ModelWithCustom extends MyModel {
 
   @JsonKey('tanggal')
   final DateTime tanggal;
+
+  @JsonKey('nullable')
+  final String? nullable;
 
   @JsonKey<String>(
     'customAll',
@@ -43,6 +46,7 @@ class ModelWithCustom extends MyModel {
     required this.tanggal,
     this.customAll = 'Test',
     required this.converted,
+    this.nullable,
   });
 
   factory ModelWithCustom.fromJson(Map<String, dynamic> map) =>

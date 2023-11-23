@@ -34,10 +34,28 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     final buffer = StringBuffer();
+
+    final className = element.displayName;
+    buffer.writeln(
+      'class ${className}JsonAdapter implements JsonAdapter<$className?>{',
+    );
     buffer.writeln(buildFromJson(element));
     buffer.writeln(buildToJson(element));
+    buffer.writeln('}');
+
+    buffer.writeln(buildCompatibility(element));
+
     buffer.writeln(buildExtension(element));
     buffer.writeln(buildClassFields(element));
+    return buffer.toString();
+  }
+
+  String buildCompatibility(ClassElement element) {
+    final buffer = StringBuffer();
+    final className = element.displayName;
+    buffer.writeln(
+      '_\$${className}FromJson(dynamic json) => GetIt.I<JsonAdapter<$className?>>().fromJson(json)!;',
+    );
     return buffer.toString();
   }
 
@@ -45,7 +63,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     if (type is ParameterizedType) {
       if (type.typeArguments.isNotEmpty) {
         for (final i in type.typeArguments) {
-          final el = i.element2;
+          final el = i.element;
           if (el is ClassElement &&
               _jsonSerializableChecker.hasAnnotationOfExact(el)) {
             yield el;
@@ -60,35 +78,30 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
   String buildFromJson(ClassElement classElement) {
     final buffer = StringBuffer();
     final className = classElement.displayName;
+
+    buffer.writeln('@override');
     buffer.writeln(
-      'typedef ${className}JsonDeserializer = $className Function(Map<String, dynamic> json);',
+      '$className? fromJson(dynamic json){',
     );
 
-    buffer.writeln(
-      '$className default${className}Deserializer(Map<String, dynamic> json,) {',
-    );
-
+    buffer.writeln('if (json == null) return null;');
     buffer.writeln('try {');
 
     final List<String> added = [];
     for (final field in classElement.fields) {
-      final ce = field.type.element2;
+      final ce = field.type.element;
 
       final els = findGenericElements(field.type);
       for (final el in els) {
         if (added.contains(el.displayName)) continue;
         added.add(el.displayName);
-        //buffer.writeln('${el.displayName}Metadata.registerFactory();');
       }
 
       if (ce is ClassElement) {
         if (added.contains(ce.displayName)) continue;
         added.add(ce.displayName);
 
-        if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {
-          //final className = ce.displayName;
-          //buffer.writeln('${className}Metadata.registerFactory();');
-        }
+        if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {}
       }
     }
 
@@ -96,7 +109,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     final supers = classElement.allSupertypes;
     for (final sup in supers) {
-      buildFromJsonFields(sup.element2, buffer);
+      buildFromJsonFields(sup.element, buffer);
     }
 
     buildFromJsonFields(classElement, buffer);
@@ -106,13 +119,9 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
       "throw ModelParseException(innerException: e.innerException, key: e.key, className: '${classElement.name}',);",
     );
-    buffer.writeln('}');
 
     buffer.writeln('}');
-
-    buffer.writeln(
-      '$className _\$${className}FromJson(Map<String, dynamic> json) => default${className}Deserializer(json);',
-    );
+    buffer.writeln('}');
 
     buffer.writeln();
     buffer.writeln();
@@ -180,13 +189,13 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         final converter = jsonKeyAnn.getField('withConverter')?.toTypeValue();
         if (converter != null) {
           buffer.writeln(
-            '${field.name} : tryConvertFromJson(${converter.element2!.name}(), json[$meta.$fieldName]),',
+            '${field.name} : tryConvertFromJson(${converter.element!.name}(), json[$meta.$fieldName]),',
           );
           continue;
         }
       }
 
-      final fieldTypeElement = field.type.element2;
+      final fieldTypeElement = field.type.element;
       if (fieldTypeElement is ClassElement &&
           _jsonSerializableChecker.hasAnnotationOfExact(fieldTypeElement)) {
         final an =
@@ -196,13 +205,16 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         final ty = t.toTypeValue();
         if (ty != null) {
           buffer.writeln(
-            '${field.name} : ${ty.element2!.name}().fromJson(json[$meta.$fieldName]),',
+            '${field.name} : ${ty.element!.name}().fromJson(json[$meta.$fieldName]),',
           );
           continue;
         }
       }
 
-      buffer.writeln('${field.name} : json.valueOf<$type>($meta.$fieldName,),');
+      final xtype = isNullable ? type.substring(0, type.length - 1) : type;
+      buffer.writeln(
+        '${field.name} : tryDecode<$xtype>(json[$meta.$fieldName])${isNullable ? '' : '!'},',
+      );
     }
   }
 
@@ -210,47 +222,41 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final className = classElement.displayName;
     final buffer = StringBuffer();
 
+    buffer.writeln('@override');
     buffer.writeln(
-      'typedef ${className}JsonSerializer = Map<String, dynamic> Function($className instance);',
+      'dynamic toJson($className? instance){',
     );
 
-    buffer.writeln(
-      'Map<String, dynamic> default${className}Serializer($className instance){',
-    );
+    buffer.writeln('if (instance == null) return null;');
 
     final List<String> added = [];
     for (final field in classElement.fields) {
-      final ce = field.type.element2;
+      final ce = field.type.element;
 
       final els = findGenericElements(field.type);
       for (final el in els) {
         if (added.contains(el.displayName)) continue;
         added.add(el.displayName);
-        //buffer.writeln('${el.displayName}Metadata.registerFactory();');
       }
 
       if (ce is ClassElement) {
         if (added.contains(ce.displayName)) continue;
         added.add(ce.displayName);
 
-        if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {
-          //final className = ce.displayName;
-          //buffer.writeln('${className}Metadata.registerFactory();');
-        }
+        if (_jsonSerializableChecker.hasAnnotationOfExact(ce)) {}
       }
     }
 
     buffer.writeln('return {');
     final supers = classElement.allSupertypes;
     for (final sup in supers) {
-      buildToJsonFields(sup.element2, buffer);
+      buildToJsonFields(sup.element, buffer);
     }
 
     buildToJsonFields(classElement, buffer);
-    buffer.writeln('};\n}\n');
-    buffer.writeln(
-      'Map<String, dynamic> _\$${className}ToJson($className instance)  => default${className}Serializer(instance);',
-    );
+    buffer.writeln('};');
+    buffer.writeln('}');
+
     return buffer.toString();
   }
 
@@ -283,8 +289,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       if (['hashCode'].contains(fieldName)) continue;
 
       final isNullable =
-          field.type.nullabilitySuffix == NullabilitySuffix.question ||
-              field.type.isDynamic;
+          field.type.nullabilitySuffix == NullabilitySuffix.question;
+      final type = field.type.getDisplayString(withNullability: isNullable);
 
       final jsonIgnoreAnn = getFieldAnnotation(_jsonIgnoreChecker, field);
       if (jsonIgnoreAnn != null) {
@@ -319,13 +325,13 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         final converter = jsonKeyAnn.getField('withConverter')?.toTypeValue();
         if (converter != null) {
           buffer.writeln(
-            '$meta.${field.name} : tryConvertToJson( ${converter.element2!.name}(), instance.${field.name}),',
+            '$meta.${field.name} : tryConvertToJson( ${converter.element!.name}(), instance.${field.name}),',
           );
           continue;
         }
       }
 
-      final fieldTypeElement = field.type.element2;
+      final fieldTypeElement = field.type.element;
       if (fieldTypeElement is ClassElement &&
           _jsonSerializableChecker.hasAnnotationOfExact(fieldTypeElement)) {
         final an =
@@ -335,47 +341,15 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         final ty = t.toTypeValue();
         if (ty != null) {
           buffer.writeln(
-            '$meta.${field.name} : ${ty.element2!.name}().toJson(instance.${field.name}),',
+            '$meta.${field.name} : ${ty.element!.name}().toJson(instance.${field.name}),',
           );
           continue;
         }
       }
 
-      // var suffix = '';
-      // if (!field.type.isDartCoreBool &&
-      //     !field.type.isDartCoreDouble &&
-      //     !field.type.isDartCoreInt &&
-      //     !field.type.isDartCoreIterable &&
-      //     !field.type.isDartCoreList &&
-      //     !field.type.isDartCoreMap &&
-      //     !field.type.isDartCoreNum &&
-      //     !field.type.isDartCoreSet &&
-      //     !field.type.isDartCoreString) {
-      //   suffix = '${isNullable ? '?' : ''}.toJson()';
-      // }
-
-      // if (field.type.getDisplayString(withNullability: false) == 'DateTime') {
-      //   suffix = '${isNullable ? '?' : ''}.toUtc().toIso8601String()';
-      // }
-
-      // final coreList = <String>[
-      //   'List<String>',
-      //   'List<int>',
-      //   'List<double>',
-      //   'List<num>',
-      //   'List<bool>',
-      // ];
-
-      // if (field.type.isDartCoreList &&
-      //     !coreList
-      //         .contains(field.type.getDisplayString(withNullability: false))) {
-      //   suffix = '${isNullable ? '?' : ''}.map((e) => e.toJson()).toList()';
-      // }
-
-      // buffer.writeln('$meta.${field.name} : instance.${field.name}$suffix,');
-
+      final xtype = isNullable ? type.substring(0, type.length - 1) : type;
       buffer.writeln(
-        '$meta.${field.name} : convertToJson(instance.${field.name}),',
+        '$meta.${field.name} : tryEncode<$xtype>(instance.${field.name})${isNullable ? '' : '!'},',
       );
     }
   }
@@ -386,7 +360,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     buffer.writeln('extension ${className}JsonExtension on $className {');
     buffer.writeln(
-      'Map<String, dynamic> toJson() => _\$${className}ToJson(this);',
+      'dynamic toJson() => GetIt.I<JsonAdapter<$className?>>().toJson(this);',
     );
     buffer.writeln(buildCopyWith(cl));
     buffer.writeln(buildApply(cl));
@@ -672,7 +646,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final buffer = StringBuffer();
 
     buffer.writeln('$className clone() => ');
-    buffer.writeln('_\$${className}FromJson(toJson());');
+    buffer.writeln('GetIt.I<JsonAdapter<$className?>>().fromJson(toJson()!)!;');
 
     return buffer.toString();
   }
