@@ -1,3 +1,7 @@
+## 4.0.5
+
+ - **FIX**: catch error.
+
 ## 4.0.4
 
  - **FIX**: encode.

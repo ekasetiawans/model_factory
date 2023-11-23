@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.0.5`](#model_factory---v405)
+ - [`model_factory_generator` - `v4.0.5`](#model_factory_generator---v405)
+
+---
+
+#### `model_factory` - `v4.0.5`
+
+ - **FIX**: catch error.
+
+#### `model_factory_generator` - `v4.0.5`
+
+ - **FIX**: catch error.
+
+## 4.0.5
+
+ - **FIX**: catch error.
+
+
+## 2023-11-24
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.0.4`](#model_factory---v404)
  - [`model_factory_generator` - `v4.0.4`](#model_factory_generator---v404)
 
