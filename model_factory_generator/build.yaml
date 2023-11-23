@@ -23,7 +23,7 @@ builders:
   resolver:
     import: "package:model_factory_generator/model_factory_generator.dart"
     builder_factories: ["codeGeneratorResolver"]
-    build_extensions: { ".dart": [".model_factory.info"] }
+    build_extensions: { ".dart": [".model_factory.json"] }
     auto_apply: dependents
     build_to: cache
     runs_before: ["generator"]
@@ -34,6 +34,6 @@ builders:
     build_extensions:
       "$lib$": ["models_factories.dart"]
       "$test": ["models_factories.dart"]
-    required_inputs: [".model_factory.info"]
+    required_inputs: [".model_factory.json"]
     auto_apply: dependents
     build_to: source

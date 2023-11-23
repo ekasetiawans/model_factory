@@ -42,7 +42,7 @@ class ModelFactoryResolver extends Builder {
     );
   }
 
-  static const suffix = '.model_factory.info';
+  static const suffix = '.model_factory.json';
   @override
   Map<String, List<String>> get buildExtensions => {
         '.dart': [
