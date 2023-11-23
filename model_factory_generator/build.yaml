@@ -15,10 +15,11 @@ builders:
     import: "package:model_factory_generator/model_factory_generator.dart"
     builder_factories: ["codeGeneratorBuilder"]
     build_extensions:
-      ".dart": [".g.dart"]
+      ".dart": ["model_factory_generator.g.dart"]
     auto_apply: dependents
-    build_to: source
+    build_to: cache
     runs_before: ["resolver", "generator"]
+    applies_builders: ["source_gen|combining_builder"]
 
   resolver:
     import: "package:model_factory_generator/model_factory_generator.dart"
