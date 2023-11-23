@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-11-24
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`model_factory` - `v4.0.0`](#model_factory---v400)
+ - [`model_factory_generator` - `v4.0.0`](#model_factory_generator---v400)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `model_factory` - `v4.0.0`
+
+ - **BREAKING** **FEAT**: introduct JsonAdapter.
+
+#### `model_factory_generator` - `v4.0.0`
+
+ - **BREAKING** **FEAT**: introduct JsonAdapter.
+
+## 4.0.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: introduct JsonAdapter.
+
+
 ## 2023-11-23
 
 ### Changes

@@ -1,3 +1,9 @@
+## 4.0.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: introduct JsonAdapter.
+
 ## 3.1.0
 
  - **FEAT**: change resolver output extension.
