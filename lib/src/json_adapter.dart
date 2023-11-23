@@ -1,4 +1,4 @@
-import 'package:get_it/get_it.dart';
+import 'package:model_factory/model_factory.dart';
 
 abstract class JsonAdapter<T> {
   T fromJson(dynamic value);
@@ -16,11 +16,7 @@ class JsonAdapterNotRegisteredException implements Exception {
   }
 }
 
-dynamic tryDecode<E>(dynamic json) {
-  if (json is List) {
-    return json.map((e) => tryDecode<E>(e)).toList().cast<E>();
-  }
-
+dynamic _decode<E>(dynamic json) {
   if (GetIt.I.isRegistered<JsonAdapter<E?>>()) {
     return GetIt.I<JsonAdapter<E?>>().fromJson(json);
   }
@@ -28,14 +24,45 @@ dynamic tryDecode<E>(dynamic json) {
   throw JsonAdapterNotRegisteredException(E);
 }
 
-dynamic tryEncode<E>(E? object) {
-  if (object is List) {
-    return object.map((e) => tryEncode<E>(e)).toList();
-  }
+dynamic tryDecode<E>(dynamic map, String key) {
+  try {
+    final json = map[key];
+    if (json == null) return null;
 
+    if (json is List) {
+      return json.map((e) => _decode(e)).toList().cast<E>();
+    }
+
+    return _decode<E>(json);
+  } catch (e) {
+    throw FieldParseException(
+      innerException: e,
+      key: key,
+    );
+  }
+}
+
+dynamic _encode<E>(E? object) {
   if (GetIt.I.isRegistered<JsonAdapter<E?>>()) {
     return GetIt.I<JsonAdapter<E?>>().toJson(object);
   }
 
   throw JsonAdapterNotRegisteredException(E);
+}
+
+dynamic tryEncode<E>(dynamic object, String key) {
+  try {
+    if (object == null) return null;
+
+    if (object is List) {
+      return object.map((e) => _encode<E>(e)).toList();
+    }
+
+    return _encode<E>(object);
+  } catch (e) {
+    throw FieldParseException(
+      innerException: e,
+      key: key,
+    );
+  }
 }

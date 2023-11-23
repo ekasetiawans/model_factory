@@ -16,7 +16,7 @@ class MyModelJsonAdapter implements JsonAdapter<MyModel?> {
     if (json == null) return null;
     try {
       return MyModel(
-        name: tryDecode<String>(json[MyModelMetadata.instance.name])!,
+        name: tryDecode<String>(json, MyModelMetadata.instance.name)!,
       );
     } on FieldParseException catch (e) {
       throw ModelParseException(
@@ -31,7 +31,8 @@ class MyModelJsonAdapter implements JsonAdapter<MyModel?> {
   dynamic toJson(MyModel? instance) {
     if (instance == null) return null;
     return {
-      MyModelMetadata.instance.name: tryEncode<String>(instance.name)!,
+      MyModelMetadata.instance.name:
+          tryEncode<String>(instance.name, MyModelMetadata.instance.name)!,
     };
   }
 }

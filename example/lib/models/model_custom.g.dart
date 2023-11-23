@@ -17,7 +17,7 @@ class ModelWithCustomJsonAdapter implements JsonAdapter<ModelWithCustom?> {
     if (json == null) return null;
     try {
       return ModelWithCustom(
-        name: tryDecode<String>(json[MyModelMetadata.instance.name])!,
+        name: tryDecode<String>(json, MyModelMetadata.instance.name)!,
         payment: _paymentFromJson(
           DeserializationInfo(
             key: ModelWithCustomMetadata.instance.payment,
@@ -26,13 +26,13 @@ class ModelWithCustomJsonAdapter implements JsonAdapter<ModelWithCustom?> {
           ),
         ),
         shipment:
-            tryDecode<String>(json[ModelWithCustomMetadata.instance.shipment])!,
+            tryDecode<String>(json, ModelWithCustomMetadata.instance.shipment)!,
         customTo:
-            tryDecode<String>(json[ModelWithCustomMetadata.instance.customTo])!,
+            tryDecode<String>(json, ModelWithCustomMetadata.instance.customTo)!,
         tanggal: tryDecode<DateTime>(
-            json[ModelWithCustomMetadata.instance.tanggal])!,
+            json, ModelWithCustomMetadata.instance.tanggal)!,
         nullable:
-            tryDecode<String>(json[ModelWithCustomMetadata.instance.nullable]),
+            tryDecode<String>(json, ModelWithCustomMetadata.instance.nullable),
         converted: tryConvertFromJson(MyConverterModel(),
             json[ModelWithCustomMetadata.instance.converted]),
       );
@@ -49,24 +49,26 @@ class ModelWithCustomJsonAdapter implements JsonAdapter<ModelWithCustom?> {
   dynamic toJson(ModelWithCustom? instance) {
     if (instance == null) return null;
     return {
-      MyModelMetadata.instance.name: tryEncode<String>(instance.name)!,
-      ModelWithCustomMetadata.instance.payment:
-          tryEncode<String>(instance.payment)!,
-      ModelWithCustomMetadata.instance.shipment:
-          tryEncode<String>(instance.shipment)!,
+      MyModelMetadata.instance.name:
+          tryEncode<String>(instance.name, MyModelMetadata.instance.name)!,
+      ModelWithCustomMetadata.instance.payment: tryEncode<String>(
+          instance.payment, ModelWithCustomMetadata.instance.payment)!,
+      ModelWithCustomMetadata.instance.shipment: tryEncode<String>(
+          instance.shipment, ModelWithCustomMetadata.instance.shipment)!,
       ModelWithCustomMetadata.instance.customTo: _toJson(
         SerializationInfo(
           key: ModelWithCustomMetadata.instance.customTo,
           data: instance.customTo,
         ),
       ),
-      ModelWithCustomMetadata.instance.tanggal:
-          tryEncode<DateTime>(instance.tanggal)!,
-      ModelWithCustomMetadata.instance.nullable:
-          tryEncode<String>(instance.nullable),
+      ModelWithCustomMetadata.instance.tanggal: tryEncode<DateTime>(
+          instance.tanggal, ModelWithCustomMetadata.instance.tanggal)!,
+      ModelWithCustomMetadata.instance.nullable: tryEncode<String>(
+          instance.nullable, ModelWithCustomMetadata.instance.nullable),
       ModelWithCustomMetadata.instance.converted:
           tryConvertToJson(MyConverterModel(), instance.converted),
-      ModelWithCustomMetadata.instance.abc: tryEncode<int>(instance.abc)!,
+      ModelWithCustomMetadata.instance.abc:
+          tryEncode<int>(instance.abc, ModelWithCustomMetadata.instance.abc)!,
     };
   }
 }

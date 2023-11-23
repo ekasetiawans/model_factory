@@ -16,10 +16,10 @@ class ParentJsonAdapter implements JsonAdapter<Parent?> {
     if (json == null) return null;
     try {
       return Parent(
-        id: tryDecode<int>(json[ParentMetadata.instance.id])!,
-        name: tryDecode<String>(json[ParentMetadata.instance.name])!,
-        address: tryDecode<String>(json[ParentMetadata.instance.address]),
-        hobbies: tryDecode<String>(json[ParentMetadata.instance.hobbies]),
+        id: tryDecode<int>(json, ParentMetadata.instance.id)!,
+        name: tryDecode<String>(json, ParentMetadata.instance.name)!,
+        address: tryDecode<String>(json, ParentMetadata.instance.address),
+        hobbies: tryDecode<String>(json, ParentMetadata.instance.hobbies),
       );
     } on FieldParseException catch (e) {
       throw ModelParseException(
@@ -34,11 +34,14 @@ class ParentJsonAdapter implements JsonAdapter<Parent?> {
   dynamic toJson(Parent? instance) {
     if (instance == null) return null;
     return {
-      ParentMetadata.instance.id: tryEncode<int>(instance.id)!,
-      ParentMetadata.instance.name: tryEncode<String>(instance.name)!,
-      ParentMetadata.instance.address: tryEncode<String>(instance.address),
+      ParentMetadata.instance.id:
+          tryEncode<int>(instance.id, ParentMetadata.instance.id)!,
+      ParentMetadata.instance.name:
+          tryEncode<String>(instance.name, ParentMetadata.instance.name)!,
+      ParentMetadata.instance.address:
+          tryEncode<String>(instance.address, ParentMetadata.instance.address),
       ParentMetadata.instance.hobbies:
-          tryEncode<List<String>>(instance.hobbies),
+          tryEncode<String>(instance.hobbies, ParentMetadata.instance.hobbies),
     };
   }
 }
@@ -149,11 +152,11 @@ class KidJsonAdapter implements JsonAdapter<Kid?> {
     if (json == null) return null;
     try {
       return Kid(
-        id: tryDecode<int>(json[KidMetadata.instance.id])!,
-        name: tryDecode<String>(json[KidMetadata.instance.name])!,
-        father: tryDecode<Parent>(json[KidMetadata.instance.father])!,
-        mother: tryDecode<Parent>(json[KidMetadata.instance.mother]),
-        born: tryDecode<DateTime>(json[KidMetadata.instance.born])!,
+        id: tryDecode<int>(json, KidMetadata.instance.id)!,
+        name: tryDecode<String>(json, KidMetadata.instance.name)!,
+        father: tryDecode<Parent>(json, KidMetadata.instance.father)!,
+        mother: tryDecode<Parent>(json, KidMetadata.instance.mother),
+        born: tryDecode<DateTime>(json, KidMetadata.instance.born)!,
       );
     } on FieldParseException catch (e) {
       throw ModelParseException(
@@ -168,11 +171,16 @@ class KidJsonAdapter implements JsonAdapter<Kid?> {
   dynamic toJson(Kid? instance) {
     if (instance == null) return null;
     return {
-      KidMetadata.instance.id: tryEncode<int>(instance.id)!,
-      KidMetadata.instance.name: tryEncode<String>(instance.name)!,
-      KidMetadata.instance.father: tryEncode<Parent>(instance.father)!,
-      KidMetadata.instance.mother: tryEncode<Parent>(instance.mother),
-      KidMetadata.instance.born: tryEncode<DateTime>(instance.born)!,
+      KidMetadata.instance.id:
+          tryEncode<int>(instance.id, KidMetadata.instance.id)!,
+      KidMetadata.instance.name:
+          tryEncode<String>(instance.name, KidMetadata.instance.name)!,
+      KidMetadata.instance.father:
+          tryEncode<Parent>(instance.father, KidMetadata.instance.father)!,
+      KidMetadata.instance.mother:
+          tryEncode<Parent>(instance.mother, KidMetadata.instance.mother),
+      KidMetadata.instance.born:
+          tryEncode<DateTime>(instance.born, KidMetadata.instance.born)!,
     };
   }
 }

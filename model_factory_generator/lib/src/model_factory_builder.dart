@@ -233,7 +233,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       }
 
       buffer.writeln(
-        '${field.name} : tryDecode<$xtype>(json[$meta.$fieldName])${isNullable ? '' : '!'},',
+        '${field.name} : tryDecode<$xtype>(json, $meta.$fieldName)${isNullable ? '' : '!'},',
       );
     }
   }
@@ -304,6 +304,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     final className = classElement.displayName;
+
     for (final field in classElement.fields) {
       var fieldName = field.name;
       if (['hashCode'].contains(fieldName)) continue;
@@ -373,7 +374,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       }
 
       buffer.writeln(
-        '$meta.${field.name} : tryEncode<$xtype>(instance.${field.name})${isNullable ? '' : '!'},',
+        '$meta.${field.name} : tryEncode<$xtype>(instance.${field.name}, $meta.${field.name})${isNullable ? '' : '!'},',
       );
     }
   }
