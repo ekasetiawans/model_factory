@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-11-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`model_factory` - `v3.0.0`](#model_factory---v300)
+ - [`model_factory_generator` - `v3.0.0`](#model_factory_generator---v300)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `model_factory` - `v3.0.0`
+
+ - **BREAKING** **FEAT**: using sharedPartBuilder.
+
+#### `model_factory_generator` - `v3.0.0`
+
+ - **BREAKING** **FEAT**: using sharedPartBuilder.
+
+## 3.0.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: using sharedPartBuilder.
+
+
 ## 2023-11-21
 
 ### Changes

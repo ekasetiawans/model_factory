@@ -1,3 +1,9 @@
+## 3.0.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: using sharedPartBuilder.
+
 ## 2.5.6
 
  - **FIX**: gitignore.
