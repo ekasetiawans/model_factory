@@ -65,7 +65,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     );
 
     buffer.writeln(
-      'final ${className}JsonDeserializer default${className}Deserializer = (Map<String, dynamic> json,) {',
+      'default${className}Deserializer(Map<String, dynamic> json,) {',
     );
 
     buffer.writeln('try {');
@@ -107,6 +107,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       "throw ModelParseException(innerException: e.innerException, key: e.key, className: '${classElement.name}',);",
     );
     buffer.writeln('}');
+    
     buffer.writeln('};');
 
     buffer.writeln(
