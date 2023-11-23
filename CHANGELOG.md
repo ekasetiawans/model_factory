@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v3.1.0`](#model_factory---v310)
+ - [`model_factory_generator` - `v3.1.0`](#model_factory_generator---v310)
+
+---
+
+#### `model_factory` - `v3.1.0`
+
+ - **FEAT**: change resolver output extension.
+
+#### `model_factory_generator` - `v3.1.0`
+
+ - **FEAT**: change resolver output extension.
+
+## 3.1.0
+
+ - **FEAT**: change resolver output extension.
+
+
+## 2023-11-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v3.0.5`](#model_factory---v305)
  - [`model_factory_generator` - `v3.0.5`](#model_factory_generator---v305)
 

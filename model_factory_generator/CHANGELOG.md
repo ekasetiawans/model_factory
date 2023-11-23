@@ -1,3 +1,7 @@
+## 3.1.0
+
+ - **FEAT**: change resolver output extension.
+
 ## 3.0.5
 
  - **FIX**: builder.
