@@ -1,3 +1,7 @@
+## 3.0.2
+
+ - **FIX**: build.yaml.
+
 ## 3.0.1
 
  - **FIX**: build.yaml.
