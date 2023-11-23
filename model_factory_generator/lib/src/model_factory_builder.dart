@@ -310,7 +310,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
       final isNullable =
           field.type.nullabilitySuffix == NullabilitySuffix.question;
-      final type = field.type.getDisplayString(withNullability: isNullable);
+      final type = field.type.getDisplayString(withNullability: false);
 
       final jsonIgnoreAnn = getFieldAnnotation(_jsonIgnoreChecker, field);
       if (jsonIgnoreAnn != null) {
@@ -367,7 +367,11 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         }
       }
 
-      final xtype = isNullable ? type.substring(0, type.length - 1) : type;
+      var xtype = type;
+      if (field.type.isDartCoreList) {
+        xtype = type.substring(5, type.length - 1);
+      }
+
       buffer.writeln(
         '$meta.${field.name} : tryEncode<$xtype>(instance.${field.name})${isNullable ? '' : '!'},',
       );
