@@ -7,6 +7,10 @@ part of 't_model.dart';
 // **************************************************************************
 
 class ParentJsonAdapter implements JsonAdapter<Parent?> {
+  static void register() {
+    GetIt.I.registerSingleton<JsonAdapter<Parent?>>(ParentJsonAdapter());
+  }
+
   @override
   Parent? fromJson(dynamic json) {
     if (json == null) return null;
@@ -15,7 +19,7 @@ class ParentJsonAdapter implements JsonAdapter<Parent?> {
         id: tryDecode<int>(json[ParentMetadata.instance.id])!,
         name: tryDecode<String>(json[ParentMetadata.instance.name])!,
         address: tryDecode<String>(json[ParentMetadata.instance.address]),
-        hobbies: tryDecode<List<String>>(json[ParentMetadata.instance.hobbies]),
+        hobbies: tryDecode<String>(json[ParentMetadata.instance.hobbies]),
       );
     } on FieldParseException catch (e) {
       throw ModelParseException(
@@ -136,6 +140,10 @@ class ParentMetadata {
 }
 
 class KidJsonAdapter implements JsonAdapter<Kid?> {
+  static void register() {
+    GetIt.I.registerSingleton<JsonAdapter<Kid?>>(KidJsonAdapter());
+  }
+
   @override
   Kid? fromJson(dynamic json) {
     if (json == null) return null;

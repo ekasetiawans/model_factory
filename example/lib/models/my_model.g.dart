@@ -7,6 +7,10 @@ part of 'my_model.dart';
 // **************************************************************************
 
 class MyModelJsonAdapter implements JsonAdapter<MyModel?> {
+  static void register() {
+    GetIt.I.registerSingleton<JsonAdapter<MyModel?>>(MyModelJsonAdapter());
+  }
+
   @override
   MyModel? fromJson(dynamic json) {
     if (json == null) return null;

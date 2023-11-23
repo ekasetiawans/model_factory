@@ -68,22 +68,8 @@ class ModelFactoryGenerator extends Builder {
 
       for (final c in classes) {
         contentBuffer.writeln(
-          'GetIt.I.registerSingleton<JsonAdapter<m$m.$c?>>(m$m.${c}JsonAdapter());',
+          'm$m.${c}JsonAdapter.register();',
         );
-
-        contentBuffer.writeln(
-          'GetIt.I.registerSingleton<JsonAdapter<List<m$m.$c>?>>(ListJsonAdapter<m$m.$c>());',
-        );
-
-        // contentBuffer.writeln(
-        //   'registerJsonFactory<m$m.$c>((json) => m$m.$c.fromJson(json));',
-        // );
-        // contentBuffer.writeln(
-        //   'registerJsonFactory<m$m.$c?>((json) => json == null ? null : m$m.$c.fromJson(json));',
-        // );
-        // contentBuffer.writeln(
-        //   'registerToJson<m$m.$c>((e) => (e as m$m.$c).toJson());',
-        // );
       }
     }
     contentBuffer.writeln('}}');

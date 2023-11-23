@@ -7,6 +7,11 @@ part of 'model_custom.dart';
 // **************************************************************************
 
 class ModelWithCustomJsonAdapter implements JsonAdapter<ModelWithCustom?> {
+  static void register() {
+    GetIt.I.registerSingleton<JsonAdapter<ModelWithCustom?>>(
+        ModelWithCustomJsonAdapter());
+  }
+
   @override
   ModelWithCustom? fromJson(dynamic json) {
     if (json == null) return null;

@@ -16,7 +16,11 @@ class JsonAdapterNotRegisteredException implements Exception {
   }
 }
 
-E? tryDecode<E>(dynamic json) {
+dynamic tryDecode<E>(dynamic json) {
+  if (json is List) {
+    return json.map((e) => tryDecode<E>(e)).toList().cast<E>();
+  }
+
   if (GetIt.I.isRegistered<JsonAdapter<E?>>()) {
     return GetIt.I<JsonAdapter<E?>>().fromJson(json);
   }
@@ -25,6 +29,10 @@ E? tryDecode<E>(dynamic json) {
 }
 
 dynamic tryEncode<E>(E? object) {
+  if (object is List) {
+    return object.map((e) => tryEncode<E>(e)).toList();
+  }
+
   if (GetIt.I.isRegistered<JsonAdapter<E?>>()) {
     return GetIt.I<JsonAdapter<E?>>().toJson(object);
   }

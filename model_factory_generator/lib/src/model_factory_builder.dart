@@ -39,6 +39,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
       'class ${className}JsonAdapter implements JsonAdapter<$className?>{',
     );
+    buffer.writeln(buildRegister(element));
     buffer.writeln(buildFromJson(element));
     buffer.writeln(buildToJson(element));
     buffer.writeln('}');
@@ -47,6 +48,21 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     buffer.writeln(buildExtension(element));
     buffer.writeln(buildClassFields(element));
+    return buffer.toString();
+  }
+
+  String buildRegister(ClassElement element) {
+    final buffer = StringBuffer();
+    final className = element.displayName;
+    buffer.writeln(
+      'static void register(){',
+    );
+
+    buffer.writeln(
+      'GetIt.I.registerSingleton<JsonAdapter<$className?>>(${className}JsonAdapter());',
+    );
+
+    buffer.writeln('}');
     return buffer.toString();
   }
 
@@ -152,7 +168,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
       final isNullable =
           field.type.nullabilitySuffix == NullabilitySuffix.question;
-      final type = field.type.getDisplayString(withNullability: isNullable);
+      final type = field.type.getDisplayString(withNullability: false);
 
       final jsonIgnoreAnn = getFieldAnnotation(_jsonIgnoreChecker, field);
 
@@ -211,7 +227,11 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         }
       }
 
-      final xtype = isNullable ? type.substring(0, type.length - 1) : type;
+      var xtype = type;
+      if (field.type.isDartCoreList) {
+        xtype = type.substring(5, type.length - 1);
+      }
+
       buffer.writeln(
         '${field.name} : tryDecode<$xtype>(json[$meta.$fieldName])${isNullable ? '' : '!'},',
       );
