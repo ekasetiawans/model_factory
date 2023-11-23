@@ -11,6 +11,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v4.0.1`](#model_factory---v401)
+ - [`model_factory_generator` - `v4.0.1`](#model_factory_generator---v401)
+
+---
+
+#### `model_factory` - `v4.0.1`
+
+ - **FIX**: list.
+
+#### `model_factory_generator` - `v4.0.1`
+
+ - **FIX**: list.
+
+## 4.0.1
+
+ - **FIX**: list.
+
+
+## 2023-11-24
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - [`model_factory` - `v4.0.0`](#model_factory---v400)
  - [`model_factory_generator` - `v4.0.0`](#model_factory_generator---v400)
 
