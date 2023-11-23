@@ -1,3 +1,7 @@
+## 3.0.5
+
+ - **FIX**: builder.
+
 ## 3.0.4
 
  - **FIX**: generated.

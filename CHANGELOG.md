@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v3.0.5`](#model_factory---v305)
+ - [`model_factory_generator` - `v3.0.5`](#model_factory_generator---v305)
+
+---
+
+#### `model_factory` - `v3.0.5`
+
+ - **FIX**: builder.
+
+#### `model_factory_generator` - `v3.0.5`
+
+ - **FIX**: builder.
+
+## 3.0.5
+
+ - **FIX**: builder.
+
+
+## 2023-11-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v3.0.4`](#model_factory---v304)
  - [`model_factory_generator` - `v3.0.4`](#model_factory_generator---v304)
 
