@@ -15,6 +15,7 @@ class ParentJsonAdapter implements JsonAdapter<Parent?> {
         id: tryDecode<int>(json[ParentMetadata.instance.id])!,
         name: tryDecode<String>(json[ParentMetadata.instance.name])!,
         address: tryDecode<String>(json[ParentMetadata.instance.address]),
+        hobbies: tryDecode<List<String>>(json[ParentMetadata.instance.hobbies]),
       );
     } on FieldParseException catch (e) {
       throw ModelParseException(
@@ -32,6 +33,8 @@ class ParentJsonAdapter implements JsonAdapter<Parent?> {
       ParentMetadata.instance.id: tryEncode<int>(instance.id)!,
       ParentMetadata.instance.name: tryEncode<String>(instance.name)!,
       ParentMetadata.instance.address: tryEncode<String>(instance.address),
+      ParentMetadata.instance.hobbies:
+          tryEncode<List<String>>(instance.hobbies),
     };
   }
 }
@@ -45,11 +48,13 @@ extension ParentJsonExtension on Parent {
     int? id,
     String? name,
     String? address,
+    List<String>? hobbies,
   }) =>
       Parent(
         id: id ?? this.id,
         name: name ?? this.name,
         address: address ?? this.address,
+        hobbies: hobbies ?? this.hobbies,
       );
 
   void apply(Parent other) {}
@@ -65,16 +70,19 @@ class ParentMetadata {
   final String id = 'id';
   final String name = 'name';
   final String address = 'address';
+  final String hobbies = 'hobbies';
 
   List<String> get fields => [
         'id',
         'name',
         'address',
+        'hobbies',
       ];
   List<String> get allFields => [
         'id',
         'name',
         'address',
+        'hobbies',
       ];
   Map<String, String> get aliases => {};
   List<JsonField> get allJsonFields => [
@@ -102,6 +110,14 @@ class ParentMetadata {
           fromSuper: false,
           handler: (instance) => instance.address,
         ),
+        JsonField<Parent>(
+          name: 'hobbies',
+          field: 'hobbies',
+          alias: null,
+          fieldType: List<String>,
+          fromSuper: false,
+          handler: (instance) => instance.hobbies,
+        ),
       ];
   dynamic valueOf(Parent instance, String fieldName) {
     switch (fieldName) {
@@ -111,6 +127,8 @@ class ParentMetadata {
         return instance.name;
       case 'address':
         return instance.address;
+      case 'hobbies':
+        return instance.hobbies;
       default:
         return null;
     }

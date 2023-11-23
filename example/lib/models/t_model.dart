@@ -12,11 +12,14 @@ class Parent {
   final String name;
   @JsonKey('address')
   final String? address;
+  @JsonKey('hobbies')
+  final List<String>? hobbies;
 
   const Parent({
     required this.id,
     required this.name,
     this.address,
+    this.hobbies,
   });
   factory Parent.fromJson(Map<String, dynamic> map) => _$ParentFromJson(map);
 }

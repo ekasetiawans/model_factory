@@ -9,7 +9,24 @@ void main() {
     JsonRegistrant.register();
   });
 
-  test('test parse', () {
+  test('test parse parent', () {
+    final String data = '''
+{
+  "id" : 1,
+  "name" : "John",
+  "address" : "123 Main St",
+  "hobbies" : ["reading", "writing"]
+}
+''';
+
+    final parent = Parent.fromJson(json.decode(data));
+    expect(parent.id, 1);
+    expect(parent.name, 'John');
+    expect(parent.address, '123 Main St');
+    expect(parent.hobbies, ['reading', 'writing']);
+  });
+
+  test('test parse kid', () {
     final String data = '''
 {
   "id" : 1,

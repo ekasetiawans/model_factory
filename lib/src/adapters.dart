@@ -135,9 +135,17 @@ class ListJsonAdapter<T> implements JsonAdapter<List<T>?> {
 
 void registerDefaultAdapters() {
   GetIt.I.registerSingleton<JsonAdapter<int?>>(const IntJsonAdapter());
+  GetIt.I.registerSingleton<JsonAdapter<List<int>?>>(ListJsonAdapter<int>());
   GetIt.I.registerSingleton<JsonAdapter<double?>>(const DoubleJsonAdapter());
+  GetIt.I
+      .registerSingleton<JsonAdapter<List<double>?>>(ListJsonAdapter<double>());
   GetIt.I.registerSingleton<JsonAdapter<String?>>(const StringJsonAdapter());
+  GetIt.I
+      .registerSingleton<JsonAdapter<List<String>?>>(ListJsonAdapter<String>());
   GetIt.I.registerSingleton<JsonAdapter<bool?>>(const BoolJsonAdapter());
+  GetIt.I.registerSingleton<JsonAdapter<List<bool>?>>(ListJsonAdapter<bool>());
   GetIt.I
       .registerSingleton<JsonAdapter<DateTime?>>(const DateTimeJsonAdapter());
+  GetIt.I.registerSingleton<JsonAdapter<List<DateTime>?>>(
+      ListJsonAdapter<DateTime>());
 }

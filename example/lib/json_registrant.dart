@@ -15,9 +15,17 @@ class JsonRegistrant {
     registerDefaultAdapters();
     GetIt.I.registerSingleton<JsonAdapter<m0.ModelWithCustom?>>(
         m0.ModelWithCustomJsonAdapter());
+    GetIt.I.registerSingleton<JsonAdapter<List<m0.ModelWithCustom>?>>(
+        ListJsonAdapter<m0.ModelWithCustom>());
     GetIt.I
         .registerSingleton<JsonAdapter<m1.MyModel?>>(m1.MyModelJsonAdapter());
+    GetIt.I.registerSingleton<JsonAdapter<List<m1.MyModel>?>>(
+        ListJsonAdapter<m1.MyModel>());
     GetIt.I.registerSingleton<JsonAdapter<m2.Parent?>>(m2.ParentJsonAdapter());
+    GetIt.I.registerSingleton<JsonAdapter<List<m2.Parent>?>>(
+        ListJsonAdapter<m2.Parent>());
     GetIt.I.registerSingleton<JsonAdapter<m2.Kid?>>(m2.KidJsonAdapter());
+    GetIt.I.registerSingleton<JsonAdapter<List<m2.Kid>?>>(
+        ListJsonAdapter<m2.Kid>());
   }
 }
