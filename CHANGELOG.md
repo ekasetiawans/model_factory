@@ -15,6 +15,38 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.0.7`](#model_factory---v407)
+ - [`model_factory_generator` - `v4.0.7`](#model_factory_generator---v407)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `model_factory_generator` - `v4.0.7`
+
+---
+
+#### `model_factory` - `v4.0.7`
+
+ - **FIX**: JsonAdapter.
+
+## 4.0.7
+
+ - **FIX**: JsonAdapter.
+
+
+## 2023-11-24
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.0.6`](#model_factory---v406)
  - [`model_factory_generator` - `v4.0.6`](#model_factory_generator---v406)
 
