@@ -1,3 +1,7 @@
+## 4.1.1
+
+ - **FIX**: exceptions.
+
 ## 4.1.0
 
  - **FEAT**: added @pragma.

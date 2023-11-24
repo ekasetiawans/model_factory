@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.1.1`](#model_factory---v411)
+ - [`model_factory_generator` - `v4.1.1`](#model_factory_generator---v411)
+
+---
+
+#### `model_factory` - `v4.1.1`
+
+ - **FIX**: exceptions.
+
+#### `model_factory_generator` - `v4.1.1`
+
+ - **FIX**: exceptions.
+
+## 4.1.1
+
+ - **FIX**: exceptions.
+
+
+## 2023-11-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.1.0`](#model_factory---v410)
  - [`model_factory_generator` - `v4.1.0`](#model_factory_generator---v410)
 
