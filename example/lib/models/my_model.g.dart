@@ -6,7 +6,7 @@ part of 'my_model.dart';
 // Generator: ModelFactoryBuilder
 // **************************************************************************
 
-class MyModelJsonAdapter implements JsonAdapter<MyModel?> {
+class MyModelJsonAdapter extends JsonAdapter<MyModel?> {
   static void register() {
     GetIt.I.registerSingleton<JsonAdapter<MyModel?>>(MyModelJsonAdapter());
   }
@@ -16,7 +16,7 @@ class MyModelJsonAdapter implements JsonAdapter<MyModel?> {
     if (json == null) return null;
     try {
       return MyModel(
-        name: tryDecode<String>(json, MyModelMetadata.instance.name)!,
+        name: decode<String>(json, MyModelMetadata.instance.name)!,
       );
     } on FieldParseException catch (e) {
       throw ModelParseException(
@@ -38,7 +38,7 @@ class MyModelJsonAdapter implements JsonAdapter<MyModel?> {
     if (instance == null) return null;
     return {
       MyModelMetadata.instance.name:
-          tryEncode<String>(instance.name, MyModelMetadata.instance.name)!,
+          encode<String>(instance.name, MyModelMetadata.instance.name)!,
     };
   }
 }

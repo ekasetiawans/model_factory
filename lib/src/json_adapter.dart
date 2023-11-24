@@ -3,6 +3,22 @@ import 'package:model_factory/model_factory.dart';
 abstract class JsonAdapter<T> {
   T fromJson(dynamic value);
   dynamic toJson(T object);
+
+  dynamic decode<E>(dynamic map, String key, {bool isList = false}) {
+    try {
+      return _tryDecode<E>(map, key, isList: isList);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  dynamic encode<E>(dynamic object, String key) {
+    try {
+      return _tryEncode<E>(object, key);
+    } catch (e) {
+      print(e);
+    }
+  }
 }
 
 class JsonAdapterNotRegisteredException implements Exception {
@@ -24,7 +40,7 @@ dynamic _decode<E>(dynamic json) {
   throw JsonAdapterNotRegisteredException(E);
 }
 
-dynamic tryDecode<E>(
+dynamic _tryDecode<E>(
   dynamic map,
   String key, {
   bool isList = false,
@@ -62,7 +78,7 @@ dynamic _encode<E>(E? object) {
   throw JsonAdapterNotRegisteredException(E);
 }
 
-dynamic tryEncode<E>(dynamic object, String key) {
+dynamic _tryEncode<E>(dynamic object, String key) {
   try {
     if (object == null) return null;
 

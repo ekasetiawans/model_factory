@@ -37,7 +37,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
     final className = element.displayName;
     buffer.writeln(
-      'class ${className}JsonAdapter implements JsonAdapter<$className?>{',
+      'class ${className}JsonAdapter extends JsonAdapter<$className?>{',
     );
     buffer.writeln(buildRegister(element));
     buffer.writeln(buildFromJson(element));
@@ -237,7 +237,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       }
 
       buffer.writeln(
-        '${field.name} : tryDecode<$xtype>(json, $meta.$fieldName ${isList ? ', isList: true' : ''})${isNullable ? '' : '!'},',
+        '${field.name} : decode<$xtype>(json, $meta.$fieldName ${isList ? ', isList: true' : ''})${isNullable ? '' : '!'},',
       );
     }
   }
@@ -378,7 +378,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       }
 
       buffer.writeln(
-        '$meta.${field.name} : tryEncode<$xtype>(instance.${field.name}, $meta.${field.name})${isNullable ? '' : '!'},',
+        '$meta.${field.name} : encode<$xtype>(instance.${field.name}, $meta.${field.name})${isNullable ? '' : '!'},',
       );
     }
   }

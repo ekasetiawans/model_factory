@@ -6,7 +6,7 @@ part of 'model_custom.dart';
 // Generator: ModelFactoryBuilder
 // **************************************************************************
 
-class ModelWithCustomJsonAdapter implements JsonAdapter<ModelWithCustom?> {
+class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
   static void register() {
     GetIt.I.registerSingleton<JsonAdapter<ModelWithCustom?>>(
         ModelWithCustomJsonAdapter());
@@ -17,7 +17,7 @@ class ModelWithCustomJsonAdapter implements JsonAdapter<ModelWithCustom?> {
     if (json == null) return null;
     try {
       return ModelWithCustom(
-        name: tryDecode<String>(json, MyModelMetadata.instance.name)!,
+        name: decode<String>(json, MyModelMetadata.instance.name)!,
         payment: _paymentFromJson(
           DeserializationInfo(
             key: ModelWithCustomMetadata.instance.payment,
@@ -26,13 +26,13 @@ class ModelWithCustomJsonAdapter implements JsonAdapter<ModelWithCustom?> {
           ),
         ),
         shipment:
-            tryDecode<String>(json, ModelWithCustomMetadata.instance.shipment)!,
+            decode<String>(json, ModelWithCustomMetadata.instance.shipment)!,
         customTo:
-            tryDecode<String>(json, ModelWithCustomMetadata.instance.customTo)!,
-        tanggal: tryDecode<DateTime>(
-            json, ModelWithCustomMetadata.instance.tanggal)!,
+            decode<String>(json, ModelWithCustomMetadata.instance.customTo)!,
+        tanggal:
+            decode<DateTime>(json, ModelWithCustomMetadata.instance.tanggal)!,
         nullable:
-            tryDecode<String>(json, ModelWithCustomMetadata.instance.nullable),
+            decode<String>(json, ModelWithCustomMetadata.instance.nullable),
         converted: tryConvertFromJson(MyConverterModel(),
             json[ModelWithCustomMetadata.instance.converted]),
       );
@@ -56,10 +56,10 @@ class ModelWithCustomJsonAdapter implements JsonAdapter<ModelWithCustom?> {
     if (instance == null) return null;
     return {
       MyModelMetadata.instance.name:
-          tryEncode<String>(instance.name, MyModelMetadata.instance.name)!,
-      ModelWithCustomMetadata.instance.payment: tryEncode<String>(
+          encode<String>(instance.name, MyModelMetadata.instance.name)!,
+      ModelWithCustomMetadata.instance.payment: encode<String>(
           instance.payment, ModelWithCustomMetadata.instance.payment)!,
-      ModelWithCustomMetadata.instance.shipment: tryEncode<String>(
+      ModelWithCustomMetadata.instance.shipment: encode<String>(
           instance.shipment, ModelWithCustomMetadata.instance.shipment)!,
       ModelWithCustomMetadata.instance.customTo: _toJson(
         SerializationInfo(
@@ -67,14 +67,14 @@ class ModelWithCustomJsonAdapter implements JsonAdapter<ModelWithCustom?> {
           data: instance.customTo,
         ),
       ),
-      ModelWithCustomMetadata.instance.tanggal: tryEncode<DateTime>(
+      ModelWithCustomMetadata.instance.tanggal: encode<DateTime>(
           instance.tanggal, ModelWithCustomMetadata.instance.tanggal)!,
-      ModelWithCustomMetadata.instance.nullable: tryEncode<String>(
+      ModelWithCustomMetadata.instance.nullable: encode<String>(
           instance.nullable, ModelWithCustomMetadata.instance.nullable),
       ModelWithCustomMetadata.instance.converted:
           tryConvertToJson(MyConverterModel(), instance.converted),
       ModelWithCustomMetadata.instance.abc:
-          tryEncode<int>(instance.abc, ModelWithCustomMetadata.instance.abc)!,
+          encode<int>(instance.abc, ModelWithCustomMetadata.instance.abc)!,
     };
   }
 }

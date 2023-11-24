@@ -6,7 +6,7 @@ part of 't_model.dart';
 // Generator: ModelFactoryBuilder
 // **************************************************************************
 
-class ParentJsonAdapter implements JsonAdapter<Parent?> {
+class ParentJsonAdapter extends JsonAdapter<Parent?> {
   static void register() {
     GetIt.I.registerSingleton<JsonAdapter<Parent?>>(ParentJsonAdapter());
   }
@@ -16,10 +16,11 @@ class ParentJsonAdapter implements JsonAdapter<Parent?> {
     if (json == null) return null;
     try {
       return Parent(
-        id: tryDecode<int>(json, ParentMetadata.instance.id)!,
-        name: tryDecode<String>(json, ParentMetadata.instance.name)!,
-        address: tryDecode<String>(json, ParentMetadata.instance.address),
-        hobbies: tryDecode<String>(json, ParentMetadata.instance.hobbies),
+        id: decode<int>(json, ParentMetadata.instance.id)!,
+        name: decode<String>(json, ParentMetadata.instance.name)!,
+        address: decode<String>(json, ParentMetadata.instance.address),
+        hobbies:
+            decode<String>(json, ParentMetadata.instance.hobbies, isList: true),
       );
     } on FieldParseException catch (e) {
       throw ModelParseException(
@@ -41,13 +42,13 @@ class ParentJsonAdapter implements JsonAdapter<Parent?> {
     if (instance == null) return null;
     return {
       ParentMetadata.instance.id:
-          tryEncode<int>(instance.id, ParentMetadata.instance.id)!,
+          encode<int>(instance.id, ParentMetadata.instance.id)!,
       ParentMetadata.instance.name:
-          tryEncode<String>(instance.name, ParentMetadata.instance.name)!,
+          encode<String>(instance.name, ParentMetadata.instance.name)!,
       ParentMetadata.instance.address:
-          tryEncode<String>(instance.address, ParentMetadata.instance.address),
+          encode<String>(instance.address, ParentMetadata.instance.address),
       ParentMetadata.instance.hobbies:
-          tryEncode<String>(instance.hobbies, ParentMetadata.instance.hobbies),
+          encode<String>(instance.hobbies, ParentMetadata.instance.hobbies),
     };
   }
 }
@@ -148,7 +149,7 @@ class ParentMetadata {
   }
 }
 
-class KidJsonAdapter implements JsonAdapter<Kid?> {
+class KidJsonAdapter extends JsonAdapter<Kid?> {
   static void register() {
     GetIt.I.registerSingleton<JsonAdapter<Kid?>>(KidJsonAdapter());
   }
@@ -158,11 +159,11 @@ class KidJsonAdapter implements JsonAdapter<Kid?> {
     if (json == null) return null;
     try {
       return Kid(
-        id: tryDecode<int>(json, KidMetadata.instance.id)!,
-        name: tryDecode<String>(json, KidMetadata.instance.name)!,
-        father: tryDecode<Parent>(json, KidMetadata.instance.father)!,
-        mother: tryDecode<Parent>(json, KidMetadata.instance.mother),
-        born: tryDecode<DateTime>(json, KidMetadata.instance.born)!,
+        id: decode<int>(json, KidMetadata.instance.id)!,
+        name: decode<String>(json, KidMetadata.instance.name)!,
+        father: decode<Parent>(json, KidMetadata.instance.father)!,
+        mother: decode<Parent>(json, KidMetadata.instance.mother),
+        born: decode<DateTime>(json, KidMetadata.instance.born)!,
       );
     } on FieldParseException catch (e) {
       throw ModelParseException(
@@ -184,15 +185,15 @@ class KidJsonAdapter implements JsonAdapter<Kid?> {
     if (instance == null) return null;
     return {
       KidMetadata.instance.id:
-          tryEncode<int>(instance.id, KidMetadata.instance.id)!,
+          encode<int>(instance.id, KidMetadata.instance.id)!,
       KidMetadata.instance.name:
-          tryEncode<String>(instance.name, KidMetadata.instance.name)!,
+          encode<String>(instance.name, KidMetadata.instance.name)!,
       KidMetadata.instance.father:
-          tryEncode<Parent>(instance.father, KidMetadata.instance.father)!,
+          encode<Parent>(instance.father, KidMetadata.instance.father)!,
       KidMetadata.instance.mother:
-          tryEncode<Parent>(instance.mother, KidMetadata.instance.mother),
+          encode<Parent>(instance.mother, KidMetadata.instance.mother),
       KidMetadata.instance.born:
-          tryEncode<DateTime>(instance.born, KidMetadata.instance.born)!,
+          encode<DateTime>(instance.born, KidMetadata.instance.born)!,
     };
   }
 }

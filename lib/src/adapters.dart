@@ -1,8 +1,6 @@
 import 'package:model_factory/model_factory.dart';
 
-class IntJsonAdapter implements JsonAdapter<int?> {
-  const IntJsonAdapter();
-
+class IntJsonAdapter extends JsonAdapter<int?> {
   @override
   int? fromJson(dynamic json) {
     if (json == null) return null;
@@ -22,9 +20,7 @@ class IntJsonAdapter implements JsonAdapter<int?> {
   dynamic toJson(int? object) => object;
 }
 
-class DoubleJsonAdapter implements JsonAdapter<double?> {
-  const DoubleJsonAdapter();
-
+class DoubleJsonAdapter extends JsonAdapter<double?> {
   @override
   double? fromJson(dynamic json) {
     if (json == null) return null;
@@ -44,9 +40,7 @@ class DoubleJsonAdapter implements JsonAdapter<double?> {
   dynamic toJson(double? object) => object;
 }
 
-class StringJsonAdapter implements JsonAdapter<String?> {
-  const StringJsonAdapter();
-
+class StringJsonAdapter extends JsonAdapter<String?> {
   @override
   String? fromJson(dynamic json) {
     if (json == null) return null;
@@ -62,9 +56,7 @@ class StringJsonAdapter implements JsonAdapter<String?> {
   dynamic toJson(String? object) => object;
 }
 
-class BoolJsonAdapter implements JsonAdapter<bool?> {
-  const BoolJsonAdapter();
-
+class BoolJsonAdapter extends JsonAdapter<bool?> {
   @override
   bool? fromJson(dynamic json) {
     if (json == null) return null;
@@ -84,9 +76,7 @@ class BoolJsonAdapter implements JsonAdapter<bool?> {
   dynamic toJson(bool? object) => object;
 }
 
-class DateTimeJsonAdapter implements JsonAdapter<DateTime?> {
-  const DateTimeJsonAdapter();
-
+class DateTimeJsonAdapter extends JsonAdapter<DateTime?> {
   @override
   DateTime? fromJson(dynamic json) {
     if (json == null) return null;
@@ -111,7 +101,7 @@ class DateTimeJsonAdapter implements JsonAdapter<DateTime?> {
   dynamic toJson(DateTime? object) => object?.toIso8601String();
 }
 
-class ListJsonAdapter<T> implements JsonAdapter<List<T>?> {
+class ListJsonAdapter<T> extends JsonAdapter<List<T>?> {
   late final JsonAdapter<T?> itemAdapter;
 
   ListJsonAdapter() {
@@ -134,18 +124,17 @@ class ListJsonAdapter<T> implements JsonAdapter<List<T>?> {
 }
 
 void registerDefaultAdapters() {
-  GetIt.I.registerSingleton<JsonAdapter<int?>>(const IntJsonAdapter());
+  GetIt.I.registerSingleton<JsonAdapter<int?>>(IntJsonAdapter());
   GetIt.I.registerSingleton<JsonAdapter<List<int>?>>(ListJsonAdapter<int>());
-  GetIt.I.registerSingleton<JsonAdapter<double?>>(const DoubleJsonAdapter());
+  GetIt.I.registerSingleton<JsonAdapter<double?>>(DoubleJsonAdapter());
   GetIt.I
       .registerSingleton<JsonAdapter<List<double>?>>(ListJsonAdapter<double>());
-  GetIt.I.registerSingleton<JsonAdapter<String?>>(const StringJsonAdapter());
+  GetIt.I.registerSingleton<JsonAdapter<String?>>(StringJsonAdapter());
   GetIt.I
       .registerSingleton<JsonAdapter<List<String>?>>(ListJsonAdapter<String>());
-  GetIt.I.registerSingleton<JsonAdapter<bool?>>(const BoolJsonAdapter());
+  GetIt.I.registerSingleton<JsonAdapter<bool?>>(BoolJsonAdapter());
   GetIt.I.registerSingleton<JsonAdapter<List<bool>?>>(ListJsonAdapter<bool>());
-  GetIt.I
-      .registerSingleton<JsonAdapter<DateTime?>>(const DateTimeJsonAdapter());
+  GetIt.I.registerSingleton<JsonAdapter<DateTime?>>(DateTimeJsonAdapter());
   GetIt.I.registerSingleton<JsonAdapter<List<DateTime>?>>(
       ListJsonAdapter<DateTime>());
 }
