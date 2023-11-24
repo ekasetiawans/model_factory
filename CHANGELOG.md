@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.1.3`](#model_factory---v413)
+ - [`model_factory_generator` - `v4.1.3`](#model_factory_generator---v413)
+
+---
+
+#### `model_factory` - `v4.1.3`
+
+ - **FIX**: improve nullable.
+
+#### `model_factory_generator` - `v4.1.3`
+
+ - **FIX**: improve nullable.
+
+## 4.1.3
+
+ - **FIX**: improve nullable.
+
+
+## 2023-11-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.1.2`](#model_factory---v412)
  - [`model_factory_generator` - `v4.1.2`](#model_factory_generator---v412)
 
