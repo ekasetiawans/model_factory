@@ -1,3 +1,8 @@
+## 4.0.6
+
+ - **FIX**: decode encode.
+ - **FIX**: tryDecode.
+
 ## 4.0.5
 
  - **FIX**: catch error.
