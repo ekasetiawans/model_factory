@@ -19,8 +19,9 @@ class ParentJsonAdapter extends JsonAdapter<Parent?> {
     if (json == null) return null;
     try {
       return Parent(
-        id: decode<int>(json, ParentMetadata.instance.id)!,
-        name: decode<String>(json, ParentMetadata.instance.name)!,
+        id: decode<int>(json, ParentMetadata.instance.id, isNullable: false)!,
+        name: decode<String>(json, ParentMetadata.instance.name,
+            isNullable: false)!,
         address: decode<String>(json, ParentMetadata.instance.address),
         hobbies:
             decode<String>(json, ParentMetadata.instance.hobbies, isList: true),
@@ -161,11 +162,14 @@ class KidJsonAdapter extends JsonAdapter<Kid?> {
     if (json == null) return null;
     try {
       return Kid(
-        id: decode<int>(json, KidMetadata.instance.id)!,
-        name: decode<String>(json, KidMetadata.instance.name)!,
-        father: decode<Parent>(json, KidMetadata.instance.father)!,
+        id: decode<int>(json, KidMetadata.instance.id, isNullable: false)!,
+        name:
+            decode<String>(json, KidMetadata.instance.name, isNullable: false)!,
+        father: decode<Parent>(json, KidMetadata.instance.father,
+            isNullable: false)!,
         mother: decode<Parent>(json, KidMetadata.instance.mother),
-        born: decode<DateTime>(json, KidMetadata.instance.born)!,
+        born: decode<DateTime>(json, KidMetadata.instance.born,
+            isNullable: false)!,
       );
     } on FieldParseException catch (e) {
       throw ModelParseException(

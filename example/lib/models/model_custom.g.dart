@@ -20,7 +20,8 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
     if (json == null) return null;
     try {
       return ModelWithCustom(
-        name: decode<String>(json, MyModelMetadata.instance.name)!,
+        name: decode<String>(json, MyModelMetadata.instance.name,
+            isNullable: false)!,
         payment: _paymentFromJson(
           DeserializationInfo(
             key: ModelWithCustomMetadata.instance.payment,
@@ -28,12 +29,15 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
             current: json[ModelWithCustomMetadata.instance.payment],
           ),
         ),
-        shipment:
-            decode<String>(json, ModelWithCustomMetadata.instance.shipment)!,
-        customTo:
-            decode<String>(json, ModelWithCustomMetadata.instance.customTo)!,
-        tanggal:
-            decode<DateTime>(json, ModelWithCustomMetadata.instance.tanggal)!,
+        shipment: decode<String>(
+            json, ModelWithCustomMetadata.instance.shipment,
+            isNullable: false)!,
+        customTo: decode<String>(
+            json, ModelWithCustomMetadata.instance.customTo,
+            isNullable: false)!,
+        tanggal: decode<DateTime>(
+            json, ModelWithCustomMetadata.instance.tanggal,
+            isNullable: false)!,
         nullable:
             decode<String>(json, ModelWithCustomMetadata.instance.nullable),
         converted: tryConvertFromJson(MyConverterModel(),

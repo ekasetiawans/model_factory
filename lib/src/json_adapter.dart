@@ -4,8 +4,18 @@ abstract class JsonAdapter<T> {
   T fromJson(dynamic json);
   dynamic toJson(T instance);
 
-  dynamic decode<E>(dynamic map, String key, {bool isList = false}) {
-    return _tryDecode<E>(map, key, isList: isList);
+  dynamic decode<E>(
+    dynamic map,
+    String key, {
+    bool isList = false,
+    bool isNullable = true,
+  }) {
+    return _tryDecode<E>(
+      map,
+      key,
+      isList: isList,
+      isNullable: isNullable,
+    );
   }
 
   dynamic encode<E>(dynamic object, String key) {
@@ -36,13 +46,15 @@ dynamic _tryDecode<E>(
   dynamic map,
   String key, {
   bool isList = false,
+  bool isNullable = true,
 }) {
   try {
     final json = map[key];
     if (json == null) return null;
 
     if (isList && json is List) {
-      return json.map((e) => _decode<E>(e)).toList().cast<E>();
+      final result = json.map((e) => _decode<E>(e)).toList().cast<E>();
+      return result;
     }
 
     if (isList && json is! List) {
@@ -53,7 +65,12 @@ dynamic _tryDecode<E>(
       );
     }
 
-    return _decode<E>(json);
+    final result = _decode<E>(json);
+    if (isNullable) {
+      return result;
+    }
+
+    return result!;
   } catch (e) {
     throw FieldParseException(
       innerException: e,

@@ -234,7 +234,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       }
 
       buffer.writeln(
-        '${field.name} : decode<$xtype>(json, $meta.$fieldName ${isList ? ', isList: true' : ''})${isNullable ? '' : '!'},',
+        '${field.name} : decode<$xtype>(json, $meta.$fieldName ${isList ? ', isList: true' : ''} ${!isNullable ? ', isNullable: false' : ''})${isNullable ? '' : '!'},',
       );
     }
   }
