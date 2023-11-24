@@ -15,6 +15,38 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.1.2`](#model_factory---v412)
+ - [`model_factory_generator` - `v4.1.2`](#model_factory_generator---v412)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `model_factory_generator` - `v4.1.2`
+
+---
+
+#### `model_factory` - `v4.1.2`
+
+ - **FIX**: improve adapters.
+
+## 4.1.2
+
+ - **FIX**: improve adapters.
+
+
+## 2023-11-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.1.1`](#model_factory---v411)
  - [`model_factory_generator` - `v4.1.1`](#model_factory_generator---v411)
 
