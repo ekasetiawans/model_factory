@@ -1,3 +1,7 @@
+## 4.0.8
+
+ - **FIX**: decode list.
+
 ## 4.0.7
 
  - Update a dependency to the latest release.
