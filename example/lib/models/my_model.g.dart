@@ -24,6 +24,12 @@ class MyModelJsonAdapter implements JsonAdapter<MyModel?> {
         key: e.key,
         className: 'MyModel',
       );
+    } catch (e) {
+      throw ModelParseException(
+        innerException: e,
+        key: '',
+        className: 'MyModel',
+      );
     }
   }
 

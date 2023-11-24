@@ -230,12 +230,14 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       }
 
       var xtype = type;
+      bool isList = false;
       if (field.type.isDartCoreList) {
+        isList = true;
         xtype = type.substring(5, type.length - 1);
       }
 
       buffer.writeln(
-        '${field.name} : tryDecode<$xtype>(json, $meta.$fieldName)${isNullable ? '' : '!'},',
+        '${field.name} : tryDecode<$xtype>(json, $meta.$fieldName ${isList ? ', isList: true' : ''})${isNullable ? '' : '!'},',
       );
     }
   }

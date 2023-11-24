@@ -27,6 +27,12 @@ class ParentJsonAdapter implements JsonAdapter<Parent?> {
         key: e.key,
         className: 'Parent',
       );
+    } catch (e) {
+      throw ModelParseException(
+        innerException: e,
+        key: '',
+        className: 'Parent',
+      );
     }
   }
 
@@ -162,6 +168,12 @@ class KidJsonAdapter implements JsonAdapter<Kid?> {
       throw ModelParseException(
         innerException: e.innerException,
         key: e.key,
+        className: 'Kid',
+      );
+    } catch (e) {
+      throw ModelParseException(
+        innerException: e,
+        key: '',
         className: 'Kid',
       );
     }

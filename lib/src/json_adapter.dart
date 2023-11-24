@@ -24,13 +24,25 @@ dynamic _decode<E>(dynamic json) {
   throw JsonAdapterNotRegisteredException(E);
 }
 
-dynamic tryDecode<E>(dynamic map, String key) {
+dynamic tryDecode<E>(
+  dynamic map,
+  String key, {
+  bool isList = false,
+}) {
   try {
     final json = map[key];
     if (json == null) return null;
 
-    if (json is List) {
+    if (isList && json is List) {
       return json.map((e) => _decode(e)).toList().cast<E>();
+    }
+
+    if (isList && json is! List) {
+      throw FieldParseException(
+        innerException:
+            'Expected List<${E.runtimeType.toString()}> but got ${json.runtimeType}',
+        key: key,
+      );
     }
 
     return _decode<E>(json);
