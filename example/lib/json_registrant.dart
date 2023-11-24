@@ -5,17 +5,25 @@
 // To re-generate this file, run:
 //    flutter pub run build_runner build
 
-import 'package:model_factory/model_factory.dart';
+import 'package:model_factory/model_factory.dart' as model_factory;
 import 'package:model_factory_example/models/model_custom.dart' as m0;
 import 'package:model_factory_example/models/my_model.dart' as m1;
 import 'package:model_factory_example/models/t_model.dart' as m2;
 
-class JsonRegistrant {
-  static void register() {
-    registerDefaultAdapters();
+class JsonRegistrant extends model_factory.JsonRegistrant {
+  static final JsonRegistrant _instance = JsonRegistrant._();
+  JsonRegistrant._();
+
+  @override
+  void registerAdapters() {
+    super.registerAdapters();
     m0.ModelWithCustomJsonAdapter.register();
     m1.MyModelJsonAdapter.register();
     m2.ParentJsonAdapter.register();
     m2.KidJsonAdapter.register();
+  }
+
+  static void register() {
+    JsonRegistrant._instance.registerAdapters();
   }
 }

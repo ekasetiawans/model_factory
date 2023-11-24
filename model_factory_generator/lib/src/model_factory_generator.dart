@@ -48,7 +48,8 @@ class ModelFactoryGenerator extends Builder {
 
     final contentBuffer = StringBuffer();
     contentBuffer.writeln(templateHeader);
-    contentBuffer.writeln("import 'package:model_factory/model_factory.dart';");
+    contentBuffer.writeln(
+        "import 'package:model_factory/model_factory.dart' as model_factory;");
     final imp = uris.keys.toList()..sort((a, b) => a.compareTo(b));
     for (final uri in imp) {
       final classes = uris[uri];
@@ -58,9 +59,15 @@ class ModelFactoryGenerator extends Builder {
     }
 
     contentBuffer.writeln();
-    contentBuffer.writeln('class JsonRegistrant {');
-    contentBuffer.writeln('static void register(){');
-    contentBuffer.writeln('registerDefaultAdapters();');
+    contentBuffer
+        .writeln('class JsonRegistrant extends model_factory.JsonRegistrant {');
+    contentBuffer
+        .writeln('static final JsonRegistrant _instance = JsonRegistrant._();');
+    contentBuffer.writeln('JsonRegistrant._();');
+    contentBuffer.writeln();
+    contentBuffer.writeln('@override');
+    contentBuffer.writeln('void registerAdapters() {');
+    contentBuffer.writeln('super.registerAdapters();');
     for (final uri in imp) {
       final m = imp.indexOf(uri);
       final classes = uris[uri];
@@ -72,7 +79,13 @@ class ModelFactoryGenerator extends Builder {
         );
       }
     }
-    contentBuffer.writeln('}}');
+    contentBuffer.writeln('}');
+
+    contentBuffer.writeln('static void register() {');
+    contentBuffer.writeln('JsonRegistrant._instance.registerAdapters();');
+    contentBuffer.writeln('}');
+
+    contentBuffer.writeln('}');
 
     // contentBuffer.writeln('void registerFactories(){');
     // for (final uri in imp) {

@@ -62,6 +62,10 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       'GetIt.I.registerSingleton<JsonAdapter<$className?>>(${className}JsonAdapter());',
     );
 
+    buffer.writeln(
+      'GetIt.I.registerFactoryParam<$className, dynamic, dynamic>((json, _) => GetIt.I<JsonAdapter<$className?>>().fromJson(json)!);',
+    );
+
     buffer.writeln('}');
     return buffer.toString();
   }

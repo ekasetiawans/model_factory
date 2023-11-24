@@ -123,7 +123,7 @@ class ListJsonAdapter<T> extends JsonAdapter<List<T>?> {
   dynamic toJson(List<T>? object) => object?.map((e) => itemAdapter.toJson(e));
 }
 
-void registerDefaultAdapters() {
+void _registerDefaultAdapters() {
   GetIt.I.registerSingleton<JsonAdapter<int?>>(IntJsonAdapter());
   GetIt.I.registerSingleton<JsonAdapter<List<int>?>>(ListJsonAdapter<int>());
   GetIt.I.registerSingleton<JsonAdapter<double?>>(DoubleJsonAdapter());
@@ -137,4 +137,10 @@ void registerDefaultAdapters() {
   GetIt.I.registerSingleton<JsonAdapter<DateTime?>>(DateTimeJsonAdapter());
   GetIt.I.registerSingleton<JsonAdapter<List<DateTime>?>>(
       ListJsonAdapter<DateTime>());
+}
+
+abstract class JsonRegistrant {
+  void registerAdapters() {
+    _registerDefaultAdapters();
+  }
 }

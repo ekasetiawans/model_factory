@@ -9,6 +9,8 @@ part of 'my_model.dart';
 class MyModelJsonAdapter extends JsonAdapter<MyModel?> {
   static void register() {
     GetIt.I.registerSingleton<JsonAdapter<MyModel?>>(MyModelJsonAdapter());
+    GetIt.I.registerFactoryParam<MyModel, dynamic, dynamic>(
+        (json, _) => GetIt.I<JsonAdapter<MyModel?>>().fromJson(json)!);
   }
 
   @override

@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:model_factory/model_factory.dart' hide JsonRegistrant;
 import 'package:model_factory_example/json_registrant.dart';
 import 'package:model_factory_example/models/t_model.dart';
 
 void main() {
-  setUp(() {
+  setUpAll(() {
     JsonRegistrant.register();
   });
 
@@ -20,6 +21,23 @@ void main() {
 ''';
 
     final parent = Parent.fromJson(json.decode(data));
+    expect(parent.id, 1);
+    expect(parent.name, 'John');
+    expect(parent.address, '123 Main St');
+    expect(parent.hobbies, ['reading', 'writing']);
+  });
+
+  test('test parse with GetIt', () {
+    final String data = '''
+{
+  "id" : 1,
+  "name" : "John",
+  "address" : "123 Main St",
+  "hobbies" : ["reading", "writing"]
+}
+''';
+
+    final parent = GetIt.I.get<Parent>(param1: json.decode(data));
     expect(parent.id, 1);
     expect(parent.name, 'John');
     expect(parent.address, '123 Main St');

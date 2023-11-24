@@ -9,6 +9,8 @@ part of 't_model.dart';
 class ParentJsonAdapter extends JsonAdapter<Parent?> {
   static void register() {
     GetIt.I.registerSingleton<JsonAdapter<Parent?>>(ParentJsonAdapter());
+    GetIt.I.registerFactoryParam<Parent, dynamic, dynamic>(
+        (json, _) => GetIt.I<JsonAdapter<Parent?>>().fromJson(json)!);
   }
 
   @override
@@ -152,6 +154,8 @@ class ParentMetadata {
 class KidJsonAdapter extends JsonAdapter<Kid?> {
   static void register() {
     GetIt.I.registerSingleton<JsonAdapter<Kid?>>(KidJsonAdapter());
+    GetIt.I.registerFactoryParam<Kid, dynamic, dynamic>(
+        (json, _) => GetIt.I<JsonAdapter<Kid?>>().fromJson(json)!);
   }
 
   @override

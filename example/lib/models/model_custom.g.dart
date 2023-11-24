@@ -10,6 +10,8 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
   static void register() {
     GetIt.I.registerSingleton<JsonAdapter<ModelWithCustom?>>(
         ModelWithCustomJsonAdapter());
+    GetIt.I.registerFactoryParam<ModelWithCustom, dynamic, dynamic>(
+        (json, _) => GetIt.I<JsonAdapter<ModelWithCustom?>>().fromJson(json)!);
   }
 
   @override

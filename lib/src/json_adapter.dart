@@ -8,7 +8,7 @@ abstract class JsonAdapter<T> {
     try {
       return _tryDecode<E>(map, key, isList: isList);
     } catch (e) {
-      print(e);
+      print(e.toString());
     }
   }
 
@@ -16,7 +16,7 @@ abstract class JsonAdapter<T> {
     try {
       return _tryEncode<E>(object, key);
     } catch (e) {
-      print(e);
+      print(e.toString());
     }
   }
 }
@@ -50,7 +50,7 @@ dynamic _tryDecode<E>(
     if (json == null) return null;
 
     if (isList && json is List) {
-      return json.map((e) => _decode(e)).toList().cast<E>();
+      return json.map((e) => _decode<E>(e)).toList().cast<E>();
     }
 
     if (isList && json is! List) {
