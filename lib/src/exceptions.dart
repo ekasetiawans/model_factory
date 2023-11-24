@@ -6,6 +6,17 @@ class FieldParseException implements Exception {
     this.innerException,
     this.key,
   });
+
+  @override
+  String toString() {
+    return '''
+FieldParseException (
+  key: $key,
+  innerException: ${innerException.toString()}
+)
+'''
+        .trim();
+  }
 }
 
 class ModelParseException implements Exception {

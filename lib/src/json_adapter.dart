@@ -5,19 +5,11 @@ abstract class JsonAdapter<T> {
   dynamic toJson(T instance);
 
   dynamic decode<E>(dynamic map, String key, {bool isList = false}) {
-    try {
-      return _tryDecode<E>(map, key, isList: isList);
-    } catch (e) {
-      print(e.toString());
-    }
+    return _tryDecode<E>(map, key, isList: isList);
   }
 
   dynamic encode<E>(dynamic object, String key) {
-    try {
-      return _tryEncode<E>(object, key);
-    } catch (e) {
-      print(e.toString());
-    }
+    return _tryEncode<E>(object, key);
   }
 }
 

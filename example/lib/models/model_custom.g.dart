@@ -45,12 +45,6 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
         key: e.key,
         className: 'ModelWithCustom',
       );
-    } catch (e) {
-      throw ModelParseException(
-        innerException: e,
-        key: '',
-        className: 'ModelWithCustom',
-      );
     }
   }
 
