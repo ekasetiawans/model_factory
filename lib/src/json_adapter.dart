@@ -1,8 +1,8 @@
 import 'package:model_factory/model_factory.dart';
 
 abstract class JsonAdapter<T> {
-  T fromJson(dynamic value);
-  dynamic toJson(T object);
+  T fromJson(dynamic json);
+  dynamic toJson(T instance);
 
   dynamic decode<E>(dynamic map, String key, {bool isList = false}) {
     try {
