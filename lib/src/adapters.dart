@@ -11,7 +11,7 @@ class IntJsonAdapter extends JsonAdapter<int?> {
       return json;
     } else if (json is String) {
       if (json.trim().isEmpty) {
-        return 0;
+        return null;
       }
 
       return int.parse(json);
@@ -35,7 +35,7 @@ class DoubleJsonAdapter extends JsonAdapter<double?> {
       return json;
     } else if (json is String) {
       if (json.trim().isEmpty) {
-        return 0.0;
+        return null;
       }
       return double.parse(json);
     }
@@ -99,7 +99,7 @@ class DateTimeJsonAdapter extends JsonAdapter<DateTime?> {
     } else if (json is String) {
       var str = json;
       if (str.trim().isEmpty) {
-        return DateTime.fromMillisecondsSinceEpoch(0);
+        return null;
       }
 
       if (str.length > 10 && !str.contains('Z') && !str.contains('+')) {
