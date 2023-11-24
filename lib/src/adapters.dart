@@ -10,6 +10,10 @@ class IntJsonAdapter extends JsonAdapter<int?> {
     } else if (json is int) {
       return json;
     } else if (json is String) {
+      if (json.trim().isEmpty) {
+        return 0;
+      }
+
       return int.parse(json);
     }
 
@@ -30,6 +34,9 @@ class DoubleJsonAdapter extends JsonAdapter<double?> {
     } else if (json is double) {
       return json;
     } else if (json is String) {
+      if (json.trim().isEmpty) {
+        return 0.0;
+      }
       return double.parse(json);
     }
 
@@ -66,6 +73,10 @@ class BoolJsonAdapter extends JsonAdapter<bool?> {
     } else if (json is bool) {
       return json;
     } else if (json is String) {
+      if (json.trim().isEmpty) {
+        return false;
+      }
+
       return json.toLowerCase() == 'true';
     }
 
@@ -87,6 +98,10 @@ class DateTimeJsonAdapter extends JsonAdapter<DateTime?> {
       return json;
     } else if (json is String) {
       var str = json;
+      if (str.trim().isEmpty) {
+        return DateTime.fromMillisecondsSinceEpoch(0);
+      }
+
       if (str.length > 10 && !str.contains('Z') && !str.contains('+')) {
         str += 'Z';
       }
