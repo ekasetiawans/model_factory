@@ -13,6 +13,7 @@ class ParentJsonAdapter extends JsonAdapter<Parent?> {
         (json, _) => GetIt.I<JsonAdapter<Parent?>>().fromJson(json)!);
   }
 
+  @pragma('vm:entry-point')
   @override
   Parent? fromJson(dynamic json) {
     if (json == null) return null;
@@ -39,6 +40,7 @@ class ParentJsonAdapter extends JsonAdapter<Parent?> {
     }
   }
 
+  @pragma('vm:entry-point')
   @override
   dynamic toJson(Parent? instance) {
     if (instance == null) return null;
@@ -59,6 +61,7 @@ _$ParentFromJson(dynamic json) =>
     GetIt.I<JsonAdapter<Parent?>>().fromJson(json)!;
 
 extension ParentJsonExtension on Parent {
+  @pragma('vm:entry-point')
   dynamic toJson() => GetIt.I<JsonAdapter<Parent?>>().toJson(this);
   Parent copyWith({
     int? id,
@@ -158,6 +161,7 @@ class KidJsonAdapter extends JsonAdapter<Kid?> {
         (json, _) => GetIt.I<JsonAdapter<Kid?>>().fromJson(json)!);
   }
 
+  @pragma('vm:entry-point')
   @override
   Kid? fromJson(dynamic json) {
     if (json == null) return null;
@@ -184,6 +188,7 @@ class KidJsonAdapter extends JsonAdapter<Kid?> {
     }
   }
 
+  @pragma('vm:entry-point')
   @override
   dynamic toJson(Kid? instance) {
     if (instance == null) return null;
@@ -205,6 +210,7 @@ class KidJsonAdapter extends JsonAdapter<Kid?> {
 _$KidFromJson(dynamic json) => GetIt.I<JsonAdapter<Kid?>>().fromJson(json)!;
 
 extension KidJsonExtension on Kid {
+  @pragma('vm:entry-point')
   dynamic toJson() => GetIt.I<JsonAdapter<Kid?>>().toJson(this);
   Kid copyWith({
     int? id,

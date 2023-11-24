@@ -99,6 +99,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final buffer = StringBuffer();
     final className = classElement.displayName;
 
+    buffer.write("@pragma('vm:entry-point')");
     buffer.writeln('@override');
     buffer.writeln(
       '$className? fromJson(dynamic json){',
@@ -250,6 +251,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final className = classElement.displayName;
     final buffer = StringBuffer();
 
+    buffer.write("@pragma('vm:entry-point')");
     buffer.writeln('@override');
     buffer.writeln(
       'dynamic toJson($className? instance){',
@@ -392,6 +394,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final buffer = StringBuffer();
 
     buffer.writeln('extension ${className}JsonExtension on $className {');
+    buffer.write("@pragma('vm:entry-point')");
     buffer.writeln(
       'dynamic toJson() => GetIt.I<JsonAdapter<$className?>>().toJson(this);',
     );

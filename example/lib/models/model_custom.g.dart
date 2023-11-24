@@ -14,6 +14,7 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
         (json, _) => GetIt.I<JsonAdapter<ModelWithCustom?>>().fromJson(json)!);
   }
 
+  @pragma('vm:entry-point')
   @override
   ModelWithCustom? fromJson(dynamic json) {
     if (json == null) return null;
@@ -53,6 +54,7 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
     }
   }
 
+  @pragma('vm:entry-point')
   @override
   dynamic toJson(ModelWithCustom? instance) {
     if (instance == null) return null;
@@ -85,6 +87,7 @@ _$ModelWithCustomFromJson(dynamic json) =>
     GetIt.I<JsonAdapter<ModelWithCustom?>>().fromJson(json)!;
 
 extension ModelWithCustomJsonExtension on ModelWithCustom {
+  @pragma('vm:entry-point')
   dynamic toJson() => GetIt.I<JsonAdapter<ModelWithCustom?>>().toJson(this);
   ModelWithCustom copyWith({
     String? name,
