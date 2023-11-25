@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.1.5`](#model_factory---v415)
+ - [`model_factory_generator` - `v4.1.5`](#model_factory_generator---v415)
+
+---
+
+#### `model_factory` - `v4.1.5`
+
+ - **FIX**: decode nullable.
+
+#### `model_factory_generator` - `v4.1.5`
+
+ - **FIX**: decode nullable.
+
+## 4.1.5
+
+ - **FIX**: decode nullable.
+
+
+## 2023-11-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.1.4`](#model_factory---v414)
  - [`model_factory_generator` - `v4.1.4`](#model_factory_generator---v414)
 

@@ -1,3 +1,7 @@
+## 4.1.5
+
+ - **FIX**: decode nullable.
+
 ## 4.1.4
 
  - Update a dependency to the latest release.
