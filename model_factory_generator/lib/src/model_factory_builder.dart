@@ -233,8 +233,26 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         xtype = type.substring(5, type.length - 1);
       }
 
+      final List<String> params = [];
+
+      if (isList) {
+        params.add('isList: true');
+      }
+
+      if (!isNullable) {
+        params.add('isNullable: false');
+      } else {
+        params.add('isNullable: true');
+      }
+
+      String suffix = '';
+      if (!isNullable) {
+        suffix = '!';
+      }
+
+      final paramsString = params.join(', ');
       buffer.writeln(
-        '${field.name} : decode<$xtype>(json, $meta.$fieldName ${isList ? ', isList: true' : ''} ${!isNullable ? ', isNullable: false' : ''})${isNullable ? '' : '!'},',
+        '${field.name} : decode<$xtype>(json, $meta.$fieldName, $paramsString,)$suffix,',
       );
     }
   }

@@ -19,8 +19,11 @@ class MyModelJsonAdapter extends JsonAdapter<MyModel?> {
     if (json == null) return null;
     try {
       return MyModel(
-        name: decode<String>(json, MyModelMetadata.instance.name,
-            isNullable: false)!,
+        name: decode<String>(
+          json,
+          MyModelMetadata.instance.name,
+          isNullable: false,
+        )!,
       );
     } on FieldParseException catch (e) {
       throw ModelParseException(
