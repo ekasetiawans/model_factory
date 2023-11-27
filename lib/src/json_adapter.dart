@@ -53,6 +53,10 @@ dynamic _tryDecode<E>(
     if (json == null) return null;
 
     if (isList && json is List) {
+      if (json.isEmpty) {
+        return <E>[];
+      }
+
       final result = json.map((e) => _decode<E>(e)).toList().cast<E>();
       return result;
     }
