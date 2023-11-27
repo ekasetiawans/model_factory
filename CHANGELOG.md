@@ -15,6 +15,38 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.1.7`](#model_factory---v417)
+ - [`model_factory_generator` - `v4.1.7`](#model_factory_generator---v417)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `model_factory_generator` - `v4.1.7`
+
+---
+
+#### `model_factory` - `v4.1.7`
+
+ - **FIX**: error message.
+
+## 4.1.7
+
+ - **FIX**: error message.
+
+
+## 2023-11-27
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.1.6`](#model_factory---v416)
  - [`model_factory_generator` - `v4.1.6`](#model_factory_generator---v416)
 
