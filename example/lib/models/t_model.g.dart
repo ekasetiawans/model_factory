@@ -28,6 +28,7 @@ class ParentJsonAdapter extends JsonAdapter<Parent?> {
           json,
           ParentMetadata.instance.name,
           isNullable: false,
+          defaultValue: 'John Doe',
         )!,
         address: decode<String>(
           json,

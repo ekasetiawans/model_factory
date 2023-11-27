@@ -8,7 +8,7 @@ part 't_model.g.dart';
 class Parent {
   @JsonKey('id')
   final int id;
-  @JsonKey('name')
+  @JsonKey('name', defaultValue: 'John Doe')
   final String name;
   @JsonKey('address')
   final String? address;

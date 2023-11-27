@@ -9,12 +9,14 @@ abstract class JsonAdapter<T> {
     String key, {
     bool isList = false,
     bool isNullable = true,
+    dynamic defaultValue,
   }) {
     return _tryDecode<E>(
       map,
       key,
       isList: isList,
       isNullable: isNullable,
+      defaultValue: defaultValue,
     );
   }
 
@@ -47,12 +49,17 @@ dynamic _tryDecode<E>(
   String key, {
   bool isList = false,
   bool isNullable = true,
+  dynamic defaultValue,
 }) {
   try {
-    final json = map[key];
+    final json = map[key] ?? defaultValue;
     if (json == null) {
       if (isNullable) {
-        return null;
+        return defaultValue;
+      }
+
+      if (defaultValue != null) {
+        return defaultValue;
       }
 
       throw FieldParseException(
@@ -83,6 +90,10 @@ dynamic _tryDecode<E>(
     final result = _decode<E>(json);
     if (isNullable) {
       return result;
+    }
+
+    if (defaultValue != null) {
+      return defaultValue;
     }
 
     return result!;

@@ -180,6 +180,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
       final meta = '${className}Metadata.instance';
 
+      String? defaultValue;
       final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, field);
       if (jsonKeyAnn != null) {
         final fromJson = jsonKeyAnn.getField('fromJson');
@@ -208,6 +209,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
           );
           continue;
         }
+
+        defaultValue = jsonKeyAnn.getField('defaultValue')?.toStringValue();
       }
 
       final fieldTypeElement = field.type.element;
@@ -243,6 +246,17 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         params.add('isNullable: false');
       } else {
         params.add('isNullable: true');
+      }
+
+      if (defaultValue != null) {
+        final needQuotes =
+            field.type.isDartCoreString || ['DateTime'].contains(xtype);
+
+        if (needQuotes) {
+          defaultValue = "'$defaultValue'";
+        }
+
+        params.add('defaultValue: $defaultValue');
       }
 
       String suffix = '';

@@ -31,12 +31,15 @@ class JsonKey<T> {
   final Object? Function(SerializationInfo info)? toJson;
   final Type? withConverter;
 
+  final dynamic defaultValue;
+
   const JsonKey(
     this.name, {
     this.fromJson,
     this.toJson,
     this.withConverter,
     this.alias,
+    this.defaultValue,
   });
 }
 
