@@ -1,10 +1,12 @@
 class FieldParseException implements Exception {
   final Object? innerException;
   final String? key;
+  final dynamic value;
 
   const FieldParseException({
     this.innerException,
     this.key,
+    this.value,
   });
 
   @override
@@ -13,6 +15,7 @@ class FieldParseException implements Exception {
 FieldParseException (
   key: $key,
   innerException: ${innerException.toString()}
+  value: ${value.toString()}
 )
 '''
         .trim();

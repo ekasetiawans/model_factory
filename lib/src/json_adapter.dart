@@ -50,7 +50,17 @@ dynamic _tryDecode<E>(
 }) {
   try {
     final json = map[key];
-    if (json == null) return null;
+    if (json == null) {
+      if (isNullable) {
+        return null;
+      }
+
+      throw FieldParseException(
+        innerException: 'Field is not nullable',
+        key: key,
+        value: json,
+      );
+    }
 
     if (isList && json is List) {
       if (json.isEmpty) {
@@ -66,6 +76,7 @@ dynamic _tryDecode<E>(
         innerException:
             'Expected List<${E.runtimeType.toString()}> but got ${json.runtimeType}',
         key: key,
+        value: json,
       );
     }
 
@@ -79,6 +90,7 @@ dynamic _tryDecode<E>(
     throw FieldParseException(
       innerException: e,
       key: key,
+      value: map[key] ?? map,
     );
   }
 }
