@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.2.0`](#model_factory---v420)
+ - [`model_factory_generator` - `v4.2.0`](#model_factory_generator---v420)
+
+---
+
+#### `model_factory` - `v4.2.0`
+
+ - **FEAT**: added default value.
+
+#### `model_factory_generator` - `v4.2.0`
+
+ - **FEAT**: added default value.
+
+## 4.2.0
+
+ - **FEAT**: added default value.
+
+
+## 2023-11-27
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.1.7`](#model_factory---v417)
  - [`model_factory_generator` - `v4.1.7`](#model_factory_generator---v417)
 

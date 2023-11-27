@@ -1,3 +1,7 @@
+## 4.2.0
+
+ - **FEAT**: added default value.
+
 ## 4.1.7
 
  - Update a dependency to the latest release.
