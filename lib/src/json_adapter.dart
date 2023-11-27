@@ -55,11 +55,7 @@ dynamic _tryDecode<E>(
     final json = map[key] ?? defaultValue;
     if (json == null) {
       if (isNullable) {
-        return defaultValue;
-      }
-
-      if (defaultValue != null) {
-        return defaultValue;
+        return null;
       }
 
       throw FieldParseException(
@@ -92,7 +88,7 @@ dynamic _tryDecode<E>(
       return result;
     }
 
-    if (defaultValue != null) {
+    if (result == null && defaultValue != null) {
       return defaultValue;
     }
 
