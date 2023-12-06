@@ -180,7 +180,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
       final meta = '${className}Metadata.instance';
 
-      String? defaultValue;
+      Object? defaultValue;
       final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, field);
       if (jsonKeyAnn != null) {
         final fromJson = jsonKeyAnn.getField('fromJson');
@@ -210,7 +210,16 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
           continue;
         }
 
-        defaultValue = jsonKeyAnn.getField('defaultValue')?.toStringValue();
+        final defaultValueField = jsonKeyAnn.getField('defaultValue');
+        if (defaultValueField != null) {
+          defaultValue = defaultValueField.toStringValue() ??
+              defaultValueField.toBoolValue() ??
+              defaultValueField.toDoubleValue() ??
+              defaultValueField.toIntValue() ??
+              defaultValueField.toListValue() ??
+              defaultValueField.toMapValue() ??
+              defaultValueField.toSymbolValue();
+        }
       }
 
       final fieldTypeElement = field.type.element;
