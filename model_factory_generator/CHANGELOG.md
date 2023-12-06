@@ -1,3 +1,7 @@
+## 4.2.2
+
+ - **FIX**: default value.
+
 ## 4.2.1
 
  - Update a dependency to the latest release.

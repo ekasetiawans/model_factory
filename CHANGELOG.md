@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-12-06
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v4.2.2`](#model_factory---v422)
+ - [`model_factory_generator` - `v4.2.2`](#model_factory_generator---v422)
+
+---
+
+#### `model_factory` - `v4.2.2`
+
+ - **FIX**: default value.
+
+#### `model_factory_generator` - `v4.2.2`
+
+ - **FIX**: default value.
+
+## 4.2.2
+
+ - **FIX**: default value.
+
+
 ## 2023-11-27
 
 ### Changes
