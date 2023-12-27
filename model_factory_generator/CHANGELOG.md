@@ -1,3 +1,7 @@
+## 4.2.3
+
+ - **FIX**: generated copyWith and no parameters constructor.
+
 ## 4.2.2
 
  - **FIX**: default value.
