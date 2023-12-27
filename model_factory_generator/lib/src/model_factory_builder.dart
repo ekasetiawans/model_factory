@@ -661,8 +661,11 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     final constructor = cl.constructors.first;
-    final buffer = StringBuffer();
+    if (constructor.parameters.isEmpty) {
+      return '';
+    }
 
+    final buffer = StringBuffer();
     buffer.write('$className copyWith({');
     for (final f in constructor.parameters) {
       final name = f.name;
@@ -672,7 +675,12 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         type = type.replaceAll('?', '');
       }
 
-      buffer.writeln('$type? $name,');
+      var t = type;
+      if (f.type is! DynamicType) {
+        t = '$t?';
+      }
+
+      buffer.writeln('$t $name,');
     }
 
     final fields = cl.fields
@@ -707,6 +715,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     }
 
     buffer.writeln(';');
+
     return buffer.toString();
   }
 

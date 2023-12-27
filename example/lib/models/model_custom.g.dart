@@ -25,6 +25,11 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
           MyModelMetadata.instance.name,
           isNullable: false,
         )!,
+        dinamic: decode<dynamic>(
+          json,
+          MyModelMetadata.instance.dinamic,
+          isNullable: false,
+        )!,
         payment: _paymentFromJson(
           DeserializationInfo(
             key: ModelWithCustomMetadata.instance.payment,
@@ -71,6 +76,8 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
     return {
       MyModelMetadata.instance.name:
           encode<String>(instance.name, MyModelMetadata.instance.name)!,
+      MyModelMetadata.instance.dinamic:
+          encode<dynamic>(instance.dinamic, MyModelMetadata.instance.dinamic)!,
       ModelWithCustomMetadata.instance.payment: encode<String>(
           instance.payment, ModelWithCustomMetadata.instance.payment)!,
       ModelWithCustomMetadata.instance.shipment: encode<String>(
@@ -101,6 +108,7 @@ extension ModelWithCustomJsonExtension on ModelWithCustom {
   dynamic toJson() => GetIt.I<JsonAdapter<ModelWithCustom?>>().toJson(this);
   ModelWithCustom copyWith({
     String? name,
+    dynamic dinamic,
     String? payment,
     String? shipment,
     String? customTo,
@@ -111,6 +119,7 @@ extension ModelWithCustomJsonExtension on ModelWithCustom {
   }) =>
       ModelWithCustom(
         name: name ?? this.name,
+        dinamic: dinamic ?? this.dinamic,
         payment: payment ?? this.payment,
         shipment: shipment ?? this.shipment,
         customTo: customTo ?? this.customTo,
@@ -152,6 +161,7 @@ class ModelWithCustomMetadata {
       ];
   List<String> get allFields => [
         'name',
+        'dynamic',
         'payment',
         'shipment',
         'customTo',
@@ -235,11 +245,21 @@ class ModelWithCustomMetadata {
           fromSuper: true,
           handler: (instance) => instance.name,
         ),
+        JsonField<ModelWithCustom>(
+          name: 'dinamic',
+          field: 'dynamic',
+          alias: null,
+          fieldType: dynamic,
+          fromSuper: true,
+          handler: (instance) => instance.dinamic,
+        ),
       ];
   dynamic valueOf(ModelWithCustom instance, String fieldName) {
     switch (fieldName) {
       case 'name':
         return instance.name;
+      case 'dynamic':
+        return instance.dinamic;
       case 'payment':
         return instance.payment;
       case 'shipment':

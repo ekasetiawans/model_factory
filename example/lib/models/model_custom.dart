@@ -40,6 +40,7 @@ class ModelWithCustom extends MyModel {
 
   ModelWithCustom({
     required super.name,
+    required super.dinamic,
     required this.payment,
     required this.shipment,
     required this.customTo,

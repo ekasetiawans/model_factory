@@ -19,6 +19,7 @@ class JsonRegistrant extends model_factory.JsonRegistrant {
     super.registerAdapters();
     m0.ModelWithCustomJsonAdapter.register();
     m1.MyModelJsonAdapter.register();
+    m1.ModelWithoutConstructorJsonAdapter.register();
     m2.ParentJsonAdapter.register();
     m2.KidJsonAdapter.register();
   }
