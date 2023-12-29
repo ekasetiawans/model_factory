@@ -32,6 +32,7 @@ class JsonKey<T> {
   final Type? withConverter;
 
   final dynamic defaultValue;
+  final bool omitIfNull;
 
   const JsonKey(
     this.name, {
@@ -40,6 +41,7 @@ class JsonKey<T> {
     this.withConverter,
     this.alias,
     this.defaultValue,
+    this.omitIfNull = true,
   });
 }
 

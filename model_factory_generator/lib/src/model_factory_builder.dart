@@ -366,9 +366,11 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
       final meta = '${className}Metadata.instance';
       final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, field);
+      bool omitIfNull = true;
 
       if (jsonKeyAnn != null) {
         fieldName = jsonKeyAnn.getField('name')!.toStringValue()!;
+        omitIfNull = jsonKeyAnn.getField('omitIfNull')?.toBoolValue() ?? true;
         final toJson = jsonKeyAnn.getField('toJson');
         if (toJson != null) {
           final fn = toJson.toFunctionValue();
@@ -404,6 +406,11 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         final t = an.getField('withConverter')!;
         final ty = t.toTypeValue();
         if (ty != null) {
+          if (omitIfNull && isNullable) {
+            buffer.writeln(
+              'if (instance.${field.name} != null) ',
+            );
+          }
           buffer.writeln(
             '$meta.${field.name} : ${ty.element!.name}().toJson(instance.${field.name}),',
           );
@@ -414,6 +421,12 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       var xtype = type;
       if (field.type.isDartCoreList) {
         xtype = type.substring(5, type.length - 1);
+      }
+
+      if (omitIfNull && isNullable) {
+        buffer.writeln(
+          'if (instance.${field.name} != null) ',
+        );
       }
 
       buffer.writeln(
