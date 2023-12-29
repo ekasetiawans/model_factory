@@ -1,3 +1,7 @@
+## 4.3.0
+
+ - **FEAT**: added omitIfNull on encode toJson.
+
 ## 4.2.3
 
  - **FIX**: generated copyWith and no parameters constructor.

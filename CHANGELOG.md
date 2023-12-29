@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-12-30
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v4.3.0`](#model_factory---v430)
+ - [`model_factory_generator` - `v4.3.0`](#model_factory_generator---v430)
+
+---
+
+#### `model_factory` - `v4.3.0`
+
+ - **FEAT**: added omitIfNull on encode toJson.
+
+#### `model_factory_generator` - `v4.3.0`
+
+ - **FEAT**: added omitIfNull on encode toJson.
+
+## 4.3.0
+
+ - **FEAT**: added omitIfNull on encode toJson.
+
+
 ## 2023-12-27
 
 ### Changes
