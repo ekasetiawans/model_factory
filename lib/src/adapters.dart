@@ -138,6 +138,24 @@ class ListJsonAdapter<T> extends JsonAdapter<List<T>?> {
   dynamic toJson(List<T>? object) => object?.map((e) => itemAdapter.toJson(e));
 }
 
+class MapJsonAdapter extends JsonAdapter<Map<String, dynamic>?> {
+  MapJsonAdapter();
+
+  @override
+  Map<String, dynamic>? fromJson(dynamic json) {
+    if (json == null) return null;
+
+    if (json is Map) {
+      return json.cast();
+    }
+
+    throw 'Cannot parse "$json" as Map<Sting, dynamic>';
+  }
+
+  @override
+  dynamic toJson(Map<String, dynamic>? object) => object;
+}
+
 void _registerDefaultAdapters() {
   GetIt.I.registerSingleton<JsonAdapter<int?>>(IntJsonAdapter());
   GetIt.I.registerSingleton<JsonAdapter<List<int>?>>(ListJsonAdapter<int>());
@@ -152,6 +170,8 @@ void _registerDefaultAdapters() {
   GetIt.I.registerSingleton<JsonAdapter<DateTime?>>(DateTimeJsonAdapter());
   GetIt.I.registerSingleton<JsonAdapter<List<DateTime>?>>(
       ListJsonAdapter<DateTime>());
+  GetIt.I
+      .registerSingleton<JsonAdapter<Map<String, dynamic>?>>(MapJsonAdapter());
 }
 
 abstract class JsonRegistrant {
