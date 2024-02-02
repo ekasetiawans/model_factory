@@ -113,7 +113,7 @@ class DateTimeJsonAdapter extends JsonAdapter<DateTime?> {
   }
 
   @override
-  dynamic toJson(DateTime? object) => object?.toIso8601String();
+  dynamic toJson(DateTime? object) => object?.toUtc().toIso8601String();
 }
 
 class ListJsonAdapter<T> extends JsonAdapter<List<T>?> {
