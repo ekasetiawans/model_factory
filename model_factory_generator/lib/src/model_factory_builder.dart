@@ -458,7 +458,6 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
   String buildSetValue(ClassElement cl) {
     final fields = getFields(cl);
-
     final buffer = StringBuffer();
     buffer.writeln('void setValue(String field, dynamic value){');
     buffer.writeln('switch (field) {');
