@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.4.5`](#model_factory---v445)
+ - [`model_factory_generator` - `v4.4.5`](#model_factory_generator---v445)
+
+---
+
+#### `model_factory` - `v4.4.5`
+
+ - **FIX**: added getValue.
+
+#### `model_factory_generator` - `v4.4.5`
+
+ - **FIX**: added getValue.
+
+## 4.4.5
+
+ - **FIX**: added getValue.
+
+
+## 2024-05-07
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.4.4`](#model_factory---v444)
  - [`model_factory_generator` - `v4.4.4`](#model_factory_generator---v444)
 

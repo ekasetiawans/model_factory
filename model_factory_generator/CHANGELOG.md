@@ -1,3 +1,7 @@
+## 4.4.5
+
+ - **FIX**: added getValue.
+
 ## 4.4.4
 
  - **FIX**: setValue.
