@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.4.1`](#model_factory---v441)
+ - [`model_factory_generator` - `v4.4.1`](#model_factory_generator---v441)
+
+---
+
+#### `model_factory` - `v4.4.1`
+
+ - **FIX**: setter.
+
+#### `model_factory_generator` - `v4.4.1`
+
+ - **FIX**: setter.
+
+## 4.4.1
+
+ - **FIX**: setter.
+
+
+## 2024-05-07
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.4.0`](#model_factory---v440)
  - [`model_factory_generator` - `v4.4.0`](#model_factory_generator---v440)
 

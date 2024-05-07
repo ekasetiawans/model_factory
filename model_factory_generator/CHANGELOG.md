@@ -1,3 +1,7 @@
+## 4.4.1
+
+ - **FIX**: setter.
+
 ## 4.4.0
 
  - **FEAT**: added setValue.
