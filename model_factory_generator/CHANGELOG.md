@@ -1,3 +1,7 @@
+## 4.4.3
+
+ - **FIX**: setValue.
+
 ## 4.4.2
 
  - **FIX**: setvalue.
