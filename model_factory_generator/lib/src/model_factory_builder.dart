@@ -471,18 +471,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         name = jsonKeyAnn.getField('name')!.toStringValue()!;
       }
 
-      final className = cl.displayName;
-      final adapterName = '${className}JsonAdapter';
-      final type = f.type.getDisplayString(withNullability: false);
-      var xtype = type;
-      if (f.type.isDartCoreList) {
-        xtype = type.substring(5, type.length - 1);
-      }
-
       if (f.setter == null || f.isFinal) continue;
-
-      final valueEncoder = '$adapterName().encode<$xtype>(value, \'$name\')';
-      buffer.writeln('case \'$name\': ${f.name} = $valueEncoder; break;');
+      buffer.writeln('case \'$name\': ${f.name} = value; break;');
     }
     buffer.write('}');
     buffer.write('}');
