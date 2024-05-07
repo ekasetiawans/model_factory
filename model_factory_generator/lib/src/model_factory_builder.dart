@@ -479,8 +479,10 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         xtype = type.substring(5, type.length - 1);
       }
 
+      if (f.setter == null || f.isFinal) continue;
+
       final valueEncoder = '$adapterName().encode<$xtype>(value)';
-      buffer.writeln('case \'$name\': $name = $valueEncoder; break;');
+      buffer.writeln('case \'$name\': ${f.name} = $valueEncoder; break;');
     }
     buffer.write('}');
     buffer.write('}');
