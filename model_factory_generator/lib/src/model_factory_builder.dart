@@ -458,9 +458,14 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
   String buildSetValue(ClassElement cl) {
     final fields = getFields(cl);
+    final className = cl.displayName;
+      final adapterName = '${className}JsonAdapter';
 
     final buffer = StringBuffer();
     buffer.writeln('void setValue(String field, dynamic value){');
+    buffer.writeln('final current = toJson();');
+    buffer.writeln('if (current == null) return;');
+
     buffer.writeln('switch (field) {');
     for (final f in fields) {
       var name = f.name;
@@ -471,8 +476,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
         name = jsonKeyAnn.getField('name')!.toStringValue()!;
       }
 
-      final className = cl.displayName;
-      final adapterName = '${className}JsonAdapter';
+
       final type = f.type.getDisplayString(withNullability: false);
       var xtype = type;
       if (f.type.isDartCoreList) {
@@ -481,10 +485,16 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
 
       if (f.setter == null || f.isFinal) continue;
 
-      final valueEncoder = '$adapterName().encode<$xtype>(value)';
-      buffer.writeln('case \'$name\': ${f.name} = $valueEncoder; break;');
+      final valueEncoder = '$adapterName().encode<$xtype>(value, \'$name\')';
+      buffer.writeln(
+        'case \'$name\': current[\'$name\'] = $valueEncoder; break;',
+      );
     }
-    buffer.write('}');
+    buffer.writeln('}');
+
+    buffer.writeln('final updated = $adapterName().fromJson(current);');
+    buffer.writeln('apply(updated!);');
+
     buffer.write('}');
     return buffer.toString();
   }
