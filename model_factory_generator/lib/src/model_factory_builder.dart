@@ -445,6 +445,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       'dynamic toJson() => GetIt.I<JsonAdapter<$className?>>().toJson(this);',
     );
     buffer.writeln(buildSetValue(cl));
+    buffer.writeln(buildGetValue(cl));
     buffer.writeln(buildCopyWith(cl));
     buffer.writeln(buildApply(cl));
     buffer.writeln(buildClone(cl));
@@ -474,6 +475,31 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
       buffer.writeln('case \'$name\': ${f.name} = value; break;');
     }
     buffer.write('}');
+    buffer.write('}');
+    return buffer.toString();
+  }
+
+  String buildGetValue(ClassElement cl) {
+    final fields = getFields(cl);
+    final buffer = StringBuffer();
+    buffer.writeln('dynamic getValue(String field){');
+    buffer.writeln('switch (field) {');
+    for (final f in fields) {
+      var name = f.name;
+      if (['hashCode'].contains(name)) continue;
+
+      final jsonKeyAnn = getFieldAnnotation(_jsonKeyChecker, f);
+      if (jsonKeyAnn != null) {
+        name = jsonKeyAnn.getField('name')!.toStringValue()!;
+      }
+
+      if (f.getter == null) continue;
+
+      buffer.writeln('case \'$name\': return ${f.name};');
+    }
+    buffer.write('}');
+
+    buffer.write('return null;');
     buffer.write('}');
     return buffer.toString();
   }
