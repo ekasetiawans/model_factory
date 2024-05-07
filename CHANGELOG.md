@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-05-07
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v4.4.0`](#model_factory---v440)
+ - [`model_factory_generator` - `v4.4.0`](#model_factory_generator---v440)
+
+---
+
+#### `model_factory` - `v4.4.0`
+
+ - **FEAT**: added setValue.
+
+#### `model_factory_generator` - `v4.4.0`
+
+ - **FEAT**: added setValue.
+
+## 4.4.0
+
+ - **FEAT**: added setValue.
+
+
 ## 2024-02-02
 
 ### Changes

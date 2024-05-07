@@ -1,3 +1,7 @@
+## 4.4.0
+
+ - **FEAT**: added setValue.
+
 ## 4.3.2
 
  - Update a dependency to the latest release.
