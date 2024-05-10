@@ -88,6 +88,12 @@ class BoolJsonAdapter extends JsonAdapter<bool?> {
 }
 
 class DateTimeJsonAdapter extends JsonAdapter<DateTime?> {
+  bool deserializeToLocalTimezone = true;
+  bool serializeToUTC = true;
+
+  static DateTimeJsonAdapter get instance =>
+      GetIt.I<JsonAdapter<DateTime?>>() as DateTimeJsonAdapter;
+
   @override
   DateTime? fromJson(dynamic json) {
     if (json == null) return null;
@@ -106,6 +112,10 @@ class DateTimeJsonAdapter extends JsonAdapter<DateTime?> {
         str += 'Z';
       }
 
+      if (!deserializeToLocalTimezone) {
+        return DateTime.parse(str);
+      }
+
       return DateTime.parse(str).toLocal();
     }
 
@@ -113,7 +123,13 @@ class DateTimeJsonAdapter extends JsonAdapter<DateTime?> {
   }
 
   @override
-  dynamic toJson(DateTime? object) => object?.toUtc().toIso8601String();
+  dynamic toJson(DateTime? object) {
+    if (!serializeToUTC) {
+      return object?.toIso8601String();
+    }
+
+    return object?.toUtc().toIso8601String();
+  }
 }
 
 class ListJsonAdapter<T> extends JsonAdapter<List<T>?> {
