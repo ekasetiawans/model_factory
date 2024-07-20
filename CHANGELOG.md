@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.6.1`](#model_factory---v461)
+ - [`model_factory_generator` - `v4.5.1`](#model_factory_generator---v451)
+
+---
+
+#### `model_factory` - `v4.6.1`
+
+ - **FIX**: added @override.
+
+#### `model_factory_generator` - `v4.5.1`
+
+ - **FIX**: added @override.
+
+## 4.6.1
+
+ - **FIX**: added @override.
+
+
+## 2024-07-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.6.0`](#model_factory---v460)
  - [`model_factory_generator` - `v4.5.0`](#model_factory_generator---v450)
 

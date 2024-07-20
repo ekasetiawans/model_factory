@@ -1,3 +1,7 @@
+## 4.5.1
+
+ - **FIX**: added @override.
+
 ## 4.5.0
 
  - **FEAT**: added metadata to JsonAdapter.
