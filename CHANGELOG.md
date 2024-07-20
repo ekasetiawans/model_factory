@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v4.6.0`](#model_factory---v460)
+ - [`model_factory_generator` - `v4.5.0`](#model_factory_generator---v450)
+
+---
+
+#### `model_factory` - `v4.6.0`
+
+ - **FEAT**: added metadata to JsonAdapter.
+
+#### `model_factory_generator` - `v4.5.0`
+
+ - **FEAT**: added metadata to JsonAdapter.
+
+## 4.6.0
+
+ - **FEAT**: added metadata to JsonAdapter.
+
+
 ## 2024-05-10
 
 ### Changes

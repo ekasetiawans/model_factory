@@ -1,3 +1,7 @@
+## 4.5.0
+
+ - **FEAT**: added metadata to JsonAdapter.
+
 ## 4.4.6
 
  - Update a dependency to the latest release.
