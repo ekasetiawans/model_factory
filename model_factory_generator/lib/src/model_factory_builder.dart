@@ -58,6 +58,8 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(
       '${className}Metadata get metadata => ${className}Metadata.instance;',
     );
+
+    buffer.writeln('@override');
     buffer.writeln('List<JsonField> get allFields => metadata.allJsonFields;');
     return buffer.toString();
   }
