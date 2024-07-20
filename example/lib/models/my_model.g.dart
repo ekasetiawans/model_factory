@@ -50,6 +50,9 @@ class MyModelJsonAdapter extends JsonAdapter<MyModel?> {
           encode<dynamic>(instance.dinamic, MyModelMetadata.instance.dinamic)!,
     };
   }
+
+  MyModelMetadata get metadata => MyModelMetadata.instance;
+  List<JsonField> get allFields => metadata.allJsonFields;
 }
 
 _$MyModelFromJson(dynamic json) =>
@@ -58,6 +61,20 @@ _$MyModelFromJson(dynamic json) =>
 extension MyModelJsonExtension on MyModel {
   @pragma('vm:entry-point')
   dynamic toJson() => GetIt.I<JsonAdapter<MyModel?>>().toJson(this);
+  void setValue(String field, dynamic value) {
+    switch (field) {}
+  }
+
+  dynamic getValue(String field) {
+    switch (field) {
+      case 'name':
+        return name;
+      case 'dynamic':
+        return dinamic;
+    }
+    return null;
+  }
+
   MyModel copyWith({
     String? name,
     dynamic dinamic,
@@ -150,6 +167,10 @@ class ModelWithoutConstructorJsonAdapter
     if (instance == null) return null;
     return {};
   }
+
+  ModelWithoutConstructorMetadata get metadata =>
+      ModelWithoutConstructorMetadata.instance;
+  List<JsonField> get allFields => metadata.allJsonFields;
 }
 
 _$ModelWithoutConstructorFromJson(dynamic json) =>
@@ -159,6 +180,14 @@ extension ModelWithoutConstructorJsonExtension on ModelWithoutConstructor {
   @pragma('vm:entry-point')
   dynamic toJson() =>
       GetIt.I<JsonAdapter<ModelWithoutConstructor?>>().toJson(this);
+  void setValue(String field, dynamic value) {
+    switch (field) {}
+  }
+
+  dynamic getValue(String field) {
+    switch (field) {}
+    return null;
+  }
 
   void apply(ModelWithoutConstructor other) {}
 

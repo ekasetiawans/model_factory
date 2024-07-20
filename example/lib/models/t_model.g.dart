@@ -60,12 +60,17 @@ class ParentJsonAdapter extends JsonAdapter<Parent?> {
           encode<int>(instance.id, ParentMetadata.instance.id)!,
       ParentMetadata.instance.name:
           encode<String>(instance.name, ParentMetadata.instance.name)!,
-      ParentMetadata.instance.address:
-          encode<String>(instance.address, ParentMetadata.instance.address),
-      ParentMetadata.instance.hobbies:
-          encode<String>(instance.hobbies, ParentMetadata.instance.hobbies),
+      if (instance.address != null)
+        ParentMetadata.instance.address:
+            encode<String>(instance.address, ParentMetadata.instance.address),
+      if (instance.hobbies != null)
+        ParentMetadata.instance.hobbies:
+            encode<String>(instance.hobbies, ParentMetadata.instance.hobbies),
     };
   }
+
+  ParentMetadata get metadata => ParentMetadata.instance;
+  List<JsonField> get allFields => metadata.allJsonFields;
 }
 
 _$ParentFromJson(dynamic json) =>
@@ -74,6 +79,24 @@ _$ParentFromJson(dynamic json) =>
 extension ParentJsonExtension on Parent {
   @pragma('vm:entry-point')
   dynamic toJson() => GetIt.I<JsonAdapter<Parent?>>().toJson(this);
+  void setValue(String field, dynamic value) {
+    switch (field) {}
+  }
+
+  dynamic getValue(String field) {
+    switch (field) {
+      case 'id':
+        return id;
+      case 'name':
+        return name;
+      case 'address':
+        return address;
+      case 'hobbies':
+        return hobbies;
+    }
+    return null;
+  }
+
   Parent copyWith({
     int? id,
     String? name,
@@ -224,12 +247,16 @@ class KidJsonAdapter extends JsonAdapter<Kid?> {
           encode<String>(instance.name, KidMetadata.instance.name)!,
       KidMetadata.instance.father:
           encode<Parent>(instance.father, KidMetadata.instance.father)!,
-      KidMetadata.instance.mother:
-          encode<Parent>(instance.mother, KidMetadata.instance.mother),
+      if (instance.mother != null)
+        KidMetadata.instance.mother:
+            encode<Parent>(instance.mother, KidMetadata.instance.mother),
       KidMetadata.instance.born:
           encode<DateTime>(instance.born, KidMetadata.instance.born)!,
     };
   }
+
+  KidMetadata get metadata => KidMetadata.instance;
+  List<JsonField> get allFields => metadata.allJsonFields;
 }
 
 _$KidFromJson(dynamic json) => GetIt.I<JsonAdapter<Kid?>>().fromJson(json)!;
@@ -237,6 +264,26 @@ _$KidFromJson(dynamic json) => GetIt.I<JsonAdapter<Kid?>>().fromJson(json)!;
 extension KidJsonExtension on Kid {
   @pragma('vm:entry-point')
   dynamic toJson() => GetIt.I<JsonAdapter<Kid?>>().toJson(this);
+  void setValue(String field, dynamic value) {
+    switch (field) {}
+  }
+
+  dynamic getValue(String field) {
+    switch (field) {
+      case 'id':
+        return id;
+      case 'name':
+        return name;
+      case 'father':
+        return father;
+      case 'mother':
+        return mother;
+      case 'born_on':
+        return born;
+    }
+    return null;
+  }
+
   Kid copyWith({
     int? id,
     String? name,

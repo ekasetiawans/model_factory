@@ -3,6 +3,7 @@ import 'package:model_factory/model_factory.dart';
 abstract class JsonAdapter<T> {
   T fromJson(dynamic json);
   dynamic toJson(T instance);
+  List<JsonField> get allFields => [];
 
   dynamic decode<E>(
     dynamic map,

@@ -90,14 +90,18 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
       ),
       ModelWithCustomMetadata.instance.tanggal: encode<DateTime>(
           instance.tanggal, ModelWithCustomMetadata.instance.tanggal)!,
-      ModelWithCustomMetadata.instance.nullable: encode<String>(
-          instance.nullable, ModelWithCustomMetadata.instance.nullable),
+      if (instance.nullable != null)
+        ModelWithCustomMetadata.instance.nullable: encode<String>(
+            instance.nullable, ModelWithCustomMetadata.instance.nullable),
       ModelWithCustomMetadata.instance.converted:
           tryConvertToJson(MyConverterModel(), instance.converted),
       ModelWithCustomMetadata.instance.abc:
           encode<int>(instance.abc, ModelWithCustomMetadata.instance.abc)!,
     };
   }
+
+  ModelWithCustomMetadata get metadata => ModelWithCustomMetadata.instance;
+  List<JsonField> get allFields => metadata.allJsonFields;
 }
 
 _$ModelWithCustomFromJson(dynamic json) =>
@@ -106,6 +110,36 @@ _$ModelWithCustomFromJson(dynamic json) =>
 extension ModelWithCustomJsonExtension on ModelWithCustom {
   @pragma('vm:entry-point')
   dynamic toJson() => GetIt.I<JsonAdapter<ModelWithCustom?>>().toJson(this);
+  void setValue(String field, dynamic value) {
+    switch (field) {}
+  }
+
+  dynamic getValue(String field) {
+    switch (field) {
+      case 'name':
+        return name;
+      case 'dynamic':
+        return dinamic;
+      case 'payment':
+        return payment;
+      case 'shipment':
+        return shipment;
+      case 'customTo':
+        return customTo;
+      case 'tanggal':
+        return tanggal;
+      case 'nullable':
+        return nullable;
+      case 'customAll':
+        return customAll;
+      case 'x_converted':
+        return converted;
+      case 'aaa':
+        return abc;
+    }
+    return null;
+  }
+
   ModelWithCustom copyWith({
     String? name,
     dynamic dinamic,

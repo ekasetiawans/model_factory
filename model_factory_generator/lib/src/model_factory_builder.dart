@@ -42,12 +42,23 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     buffer.writeln(buildRegister(element));
     buffer.writeln(buildFromJson(element));
     buffer.writeln(buildToJson(element));
+    buffer.writeln(buildMetaFields(element));
     buffer.writeln('}');
 
     buffer.writeln(buildCompatibility(element));
 
     buffer.writeln(buildExtension(element));
     buffer.writeln(buildClassFields(element));
+    return buffer.toString();
+  }
+
+  String buildMetaFields(ClassElement element) {
+    final buffer = StringBuffer();
+    final className = element.displayName;
+    buffer.writeln(
+      '${className}Metadata get metadata => ${className}Metadata.instance;',
+    );
+    buffer.writeln('List<JsonField> get allFields => metadata.allJsonFields;');
     return buffer.toString();
   }
 
