@@ -172,22 +172,24 @@ class MapJsonAdapter extends JsonAdapter<Map<String, dynamic>?> {
   dynamic toJson(Map<String, dynamic>? object) => object;
 }
 
+void _registerIfNotRegisterd<T>(JsonAdapter<T> adapter) {
+  if (!GetIt.I.isRegistered<JsonAdapter<T>>()) {
+    GetIt.I.registerSingleton<JsonAdapter<T>>(adapter);
+  }
+}
+
 void _registerDefaultAdapters() {
-  GetIt.I.registerSingleton<JsonAdapter<int?>>(IntJsonAdapter());
-  GetIt.I.registerSingleton<JsonAdapter<List<int>?>>(ListJsonAdapter<int>());
-  GetIt.I.registerSingleton<JsonAdapter<double?>>(DoubleJsonAdapter());
-  GetIt.I
-      .registerSingleton<JsonAdapter<List<double>?>>(ListJsonAdapter<double>());
-  GetIt.I.registerSingleton<JsonAdapter<String?>>(StringJsonAdapter());
-  GetIt.I
-      .registerSingleton<JsonAdapter<List<String>?>>(ListJsonAdapter<String>());
-  GetIt.I.registerSingleton<JsonAdapter<bool?>>(BoolJsonAdapter());
-  GetIt.I.registerSingleton<JsonAdapter<List<bool>?>>(ListJsonAdapter<bool>());
-  GetIt.I.registerSingleton<JsonAdapter<DateTime?>>(DateTimeJsonAdapter());
-  GetIt.I.registerSingleton<JsonAdapter<List<DateTime>?>>(
-      ListJsonAdapter<DateTime>());
-  GetIt.I
-      .registerSingleton<JsonAdapter<Map<String, dynamic>?>>(MapJsonAdapter());
+  _registerIfNotRegisterd(IntJsonAdapter());
+  _registerIfNotRegisterd(DoubleJsonAdapter());
+  _registerIfNotRegisterd(StringJsonAdapter());
+  _registerIfNotRegisterd(BoolJsonAdapter());
+  _registerIfNotRegisterd(DateTimeJsonAdapter());
+  _registerIfNotRegisterd(ListJsonAdapter<int>());
+  _registerIfNotRegisterd(ListJsonAdapter<double>());
+  _registerIfNotRegisterd(ListJsonAdapter<String>());
+  _registerIfNotRegisterd(ListJsonAdapter<bool>());
+  _registerIfNotRegisterd(ListJsonAdapter<DateTime>());
+  _registerIfNotRegisterd(MapJsonAdapter());
 }
 
 abstract class JsonRegistrant {
