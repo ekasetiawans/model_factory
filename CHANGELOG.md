@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-11-29
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v4.8.0`](#model_factory---v480)
+ - [`model_factory_generator` - `v4.5.3`](#model_factory_generator---v453)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `model_factory_generator` - `v4.5.3`
+
+---
+
+#### `model_factory` - `v4.8.0`
+
+ - **FEAT**: simplify adapter registration process.
+
+## 4.8.0
+
+ - **FEAT**: simplify adapter registration process.
+
+
 ## 2024-10-09
 
 ### Changes
