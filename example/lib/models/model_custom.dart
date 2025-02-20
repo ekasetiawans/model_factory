@@ -79,7 +79,7 @@ class MyConverterModel extends JsonConverter<MyConvertedModel> {
   }
 
   @override
-  toJson(MyConvertedModel model) {
+  dynamic toJson(MyConvertedModel model) {
     return {};
   }
 }
