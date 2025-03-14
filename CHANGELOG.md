@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.11.0`](#model_factory---v4110)
+ - [`model_factory_generator` - `v4.8.0`](#model_factory_generator---v480)
+
+---
+
+#### `model_factory` - `v4.11.0`
+
+ - **FEAT**: update DartFormatter to latest language version and add pub_semver dependency.
+
+#### `model_factory_generator` - `v4.8.0`
+
+ - **FEAT**: update DartFormatter to latest language version and add pub_semver dependency.
+
+## 4.11.0
+
+ - **FEAT**: update DartFormatter to latest language version and add pub_semver dependency.
+
+
+## 2025-03-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.10.0`](#model_factory---v4100)
  - [`model_factory_generator` - `v4.7.0`](#model_factory_generator---v470)
 

@@ -1,3 +1,7 @@
+## 4.8.0
+
+ - **FEAT**: update DartFormatter to latest language version and add pub_semver dependency.
+
 ## 4.7.0
 
  - **FEAT**: update dependency constraint.
