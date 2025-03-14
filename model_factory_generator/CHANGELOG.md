@@ -1,3 +1,7 @@
+## 4.7.0
+
+ - **FEAT**: update dependency constraint.
+
 ## 4.6.0
 
  - **FEAT**: updated dependencies.
