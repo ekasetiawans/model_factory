@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.13.0`](#model_factory---v4130)
+ - [`model_factory_generator` - `v4.10.0`](#model_factory_generator---v4100)
+
+---
+
+#### `model_factory` - `v4.13.0`
+
+ - **FEAT**: update dependencies constraint.
+
+#### `model_factory_generator` - `v4.10.0`
+
+ - **FEAT**: update dependencies constraint.
+
+## 4.13.0
+
+ - **FEAT**: update dependencies constraint.
+
+
+## 2025-08-15
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.12.0`](#model_factory---v4120)
  - [`model_factory_generator` - `v4.9.0`](#model_factory_generator---v490)
 

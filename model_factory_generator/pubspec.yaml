@@ -1,13 +1,13 @@
 name: model_factory_generator
 description: Model generator based on model_factory.
-version: 4.9.0
+version: 4.10.0
 repository: https://github.com/ekasetiawans/model_factory/tree/master/model_factory_generator
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  model_factory: ^4.12.0
+  model_factory: ^4.13.0
   meta: ">=1.3.0 <2.0.0"
 
   analyzer: ">=6.0.0 <7.0.0"
