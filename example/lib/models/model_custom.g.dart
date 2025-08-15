@@ -101,6 +101,7 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
   }
 
   ModelWithCustomMetadata get metadata => ModelWithCustomMetadata.instance;
+  @override
   List<JsonField> get allFields => metadata.allJsonFields;
 }
 

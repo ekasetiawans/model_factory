@@ -70,6 +70,7 @@ class ParentJsonAdapter extends JsonAdapter<Parent?> {
   }
 
   ParentMetadata get metadata => ParentMetadata.instance;
+  @override
   List<JsonField> get allFields => metadata.allJsonFields;
 }
 
@@ -256,6 +257,7 @@ class KidJsonAdapter extends JsonAdapter<Kid?> {
   }
 
   KidMetadata get metadata => KidMetadata.instance;
+  @override
   List<JsonField> get allFields => metadata.allJsonFields;
 }
 

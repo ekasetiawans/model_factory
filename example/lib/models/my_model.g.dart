@@ -52,6 +52,7 @@ class MyModelJsonAdapter extends JsonAdapter<MyModel?> {
   }
 
   MyModelMetadata get metadata => MyModelMetadata.instance;
+  @override
   List<JsonField> get allFields => metadata.allJsonFields;
 }
 
@@ -170,6 +171,7 @@ class ModelWithoutConstructorJsonAdapter
 
   ModelWithoutConstructorMetadata get metadata =>
       ModelWithoutConstructorMetadata.instance;
+  @override
   List<JsonField> get allFields => metadata.allJsonFields;
 }
 

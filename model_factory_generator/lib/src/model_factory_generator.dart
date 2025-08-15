@@ -108,7 +108,9 @@ class ModelFactoryGenerator extends Builder {
     // }
     // contentBuffer.write('}');
 
-    final code = DartFormatter().format(contentBuffer.toString());
+    final code =
+        DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
+            .format(contentBuffer.toString());
     final codeId = AssetId(
       buildStep.inputId.package,
       '${dirname(buildStep.inputId.path)}/$codeFile',
