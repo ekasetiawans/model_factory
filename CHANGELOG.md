@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-08-15
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v4.12.0`](#model_factory---v4120)
+ - [`model_factory_generator` - `v4.9.0`](#model_factory_generator---v490)
+
+---
+
+#### `model_factory` - `v4.12.0`
+
+ - **FEAT**: update dependencies.
+
+#### `model_factory_generator` - `v4.9.0`
+
+ - **FEAT**: update dependencies.
+
+## 4.12.0
+
+ - **FEAT**: update dependencies.
+
+
 ## 2025-03-14
 
 ### Changes
