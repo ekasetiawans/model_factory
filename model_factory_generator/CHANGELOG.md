@@ -1,3 +1,7 @@
+## 4.11.0
+
+ - **FEAT**: update analyzer.
+
 ## 4.10.0
 
  - **FEAT**: update dependencies constraint.

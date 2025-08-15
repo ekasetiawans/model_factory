@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.14.0`](#model_factory---v4140)
+ - [`model_factory_generator` - `v4.11.0`](#model_factory_generator---v4110)
+
+---
+
+#### `model_factory` - `v4.14.0`
+
+ - **FEAT**: update analyzer.
+
+#### `model_factory_generator` - `v4.11.0`
+
+ - **FEAT**: update analyzer.
+
+## 4.14.0
+
+ - **FEAT**: update analyzer.
+
+
+## 2025-08-15
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.13.0`](#model_factory---v4130)
  - [`model_factory_generator` - `v4.10.0`](#model_factory_generator---v4100)
 
