@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-10-03
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`model_factory` - `v4.14.1`](#model_factory---v4141)
+ - [`model_factory_generator` - `v4.11.1`](#model_factory_generator---v4111)
+
+---
+
+#### `model_factory` - `v4.14.1`
+
+ - **FIX**: update source_gen dependency constraint to allow version 5.0.0.
+
+#### `model_factory_generator` - `v4.11.1`
+
+ - **FIX**: update source_gen dependency constraint to allow version 5.0.0.
+
+## 4.14.1
+
+ - **FIX**: update source_gen dependency constraint to allow version 5.0.0.
+
+
 ## 2025-08-15
 
 ### Changes

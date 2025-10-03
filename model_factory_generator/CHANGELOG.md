@@ -1,3 +1,7 @@
+## 4.11.1
+
+ - **FIX**: update source_gen dependency constraint to allow version 5.0.0.
+
 ## 4.11.0
 
  - **FEAT**: update analyzer.
