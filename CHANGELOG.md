@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.14.2`](#model_factory---v4142)
+ - [`model_factory_generator` - `v4.11.2`](#model_factory_generator---v4112)
+
+---
+
+#### `model_factory` - `v4.14.2`
+
+ - **FIX**: update generated fromJson methods to include return type.
+
+#### `model_factory_generator` - `v4.11.2`
+
+ - **FIX**: update generated fromJson methods to include return type.
+
+## 4.14.2
+
+ - **FIX**: update generated fromJson methods to include return type.
+
+
+## 2025-10-03
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.14.1`](#model_factory---v4141)
  - [`model_factory_generator` - `v4.11.1`](#model_factory_generator---v4111)
 

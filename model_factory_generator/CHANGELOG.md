@@ -1,3 +1,7 @@
+## 4.11.2
+
+ - **FIX**: update generated fromJson methods to include return type.
+
 ## 4.11.1
 
  - **FIX**: update source_gen dependency constraint to allow version 5.0.0.
