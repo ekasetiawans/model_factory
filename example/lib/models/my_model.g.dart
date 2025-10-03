@@ -56,7 +56,7 @@ class MyModelJsonAdapter extends JsonAdapter<MyModel?> {
   List<JsonField> get allFields => metadata.allJsonFields;
 }
 
-_$MyModelFromJson(dynamic json) =>
+MyModel _$MyModelFromJson(dynamic json) =>
     GetIt.I<JsonAdapter<MyModel?>>().fromJson(json)!;
 
 extension MyModelJsonExtension on MyModel {
@@ -175,7 +175,7 @@ class ModelWithoutConstructorJsonAdapter
   List<JsonField> get allFields => metadata.allJsonFields;
 }
 
-_$ModelWithoutConstructorFromJson(dynamic json) =>
+ModelWithoutConstructor _$ModelWithoutConstructorFromJson(dynamic json) =>
     GetIt.I<JsonAdapter<ModelWithoutConstructor?>>().fromJson(json)!;
 
 extension ModelWithoutConstructorJsonExtension on ModelWithoutConstructor {

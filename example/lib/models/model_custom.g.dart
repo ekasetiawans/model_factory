@@ -105,7 +105,7 @@ class ModelWithCustomJsonAdapter extends JsonAdapter<ModelWithCustom?> {
   List<JsonField> get allFields => metadata.allJsonFields;
 }
 
-_$ModelWithCustomFromJson(dynamic json) =>
+ModelWithCustom _$ModelWithCustomFromJson(dynamic json) =>
     GetIt.I<JsonAdapter<ModelWithCustom?>>().fromJson(json)!;
 
 extension ModelWithCustomJsonExtension on ModelWithCustom {

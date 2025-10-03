@@ -74,7 +74,7 @@ class ParentJsonAdapter extends JsonAdapter<Parent?> {
   List<JsonField> get allFields => metadata.allJsonFields;
 }
 
-_$ParentFromJson(dynamic json) =>
+Parent _$ParentFromJson(dynamic json) =>
     GetIt.I<JsonAdapter<Parent?>>().fromJson(json)!;
 
 extension ParentJsonExtension on Parent {
@@ -261,7 +261,7 @@ class KidJsonAdapter extends JsonAdapter<Kid?> {
   List<JsonField> get allFields => metadata.allJsonFields;
 }
 
-_$KidFromJson(dynamic json) => GetIt.I<JsonAdapter<Kid?>>().fromJson(json)!;
+Kid _$KidFromJson(dynamic json) => GetIt.I<JsonAdapter<Kid?>>().fromJson(json)!;
 
 extension KidJsonExtension on Kid {
   @pragma('vm:entry-point')

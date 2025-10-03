@@ -81,7 +81,7 @@ class ModelFactoryBuilder extends GeneratorForAnnotation<JsonSerializable> {
     final buffer = StringBuffer();
     final className = element.displayName;
     buffer.writeln(
-      '_\$${className}FromJson(dynamic json) => GetIt.I<JsonAdapter<$className?>>().fromJson(json)!;',
+      '$className _\$${className}FromJson(dynamic json) => GetIt.I<JsonAdapter<$className?>>().fromJson(json)!;',
     );
     return buffer.toString();
   }
