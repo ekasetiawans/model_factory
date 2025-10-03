@@ -1,3 +1,7 @@
+## 4.11.3
+
+ - **FIX**: update dependency constraints for analyzer, build, source_gen, and dart_style.
+
 ## 4.11.2
 
  - **FIX**: update generated fromJson methods to include return type.

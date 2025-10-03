@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.14.3`](#model_factory---v4143)
+ - [`model_factory_generator` - `v4.11.3`](#model_factory_generator---v4113)
+
+---
+
+#### `model_factory` - `v4.14.3`
+
+ - **FIX**: update dependency constraints for analyzer, build, source_gen, and dart_style.
+
+#### `model_factory_generator` - `v4.11.3`
+
+ - **FIX**: update dependency constraints for analyzer, build, source_gen, and dart_style.
+
+## 4.14.3
+
+ - **FIX**: update dependency constraints for analyzer, build, source_gen, and dart_style.
+
+
+## 2025-10-03
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.14.2`](#model_factory---v4142)
  - [`model_factory_generator` - `v4.11.2`](#model_factory_generator---v4112)
 
