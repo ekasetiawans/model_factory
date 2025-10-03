@@ -15,6 +15,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^2.4.6
+  build_runner: ^2.9.0
   model_factory_generator:
     path: ../model_factory_generator/
