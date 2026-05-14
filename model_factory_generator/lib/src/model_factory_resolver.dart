@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:model_factory/model_factory.dart';
 import 'package:source_gen/source_gen.dart';
@@ -19,8 +19,8 @@ class ModelFactoryResolver extends Builder {
     final elements = libReader.annotatedWith(_jsonKeyChecker);
     final entities = <Map<String, dynamic>>[];
     for (final c in elements) {
-      if (c.element is ClassElement2) {
-        final classElement = c.element as ClassElement2;
+      if (c.element is ClassElement) {
+        final classElement = c.element as ClassElement;
 
         final serializable =
             _jsonKeyChecker.firstAnnotationOfExact(classElement)!;
