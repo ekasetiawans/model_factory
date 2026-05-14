@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`model_factory` - `v4.16.0`](#model_factory---v4160)
+ - [`model_factory_generator` - `v4.13.0`](#model_factory_generator---v4130)
+
+---
+
+#### `model_factory` - `v4.16.0`
+
+ - **FEAT**: updated dependencies.
+
+#### `model_factory_generator` - `v4.13.0`
+
+ - **FEAT**: updated dependencies.
+
+## 4.16.0
+
+ - **FEAT**: updated dependencies.
+
+
+## 2026-05-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`model_factory` - `v4.15.0`](#model_factory---v4150)
  - [`model_factory_generator` - `v4.12.0`](#model_factory_generator---v4120)
 
