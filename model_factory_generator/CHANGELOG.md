@@ -1,3 +1,7 @@
+## 4.12.0
+
+ - **FEAT**: updated dependencies.
+
 ## 4.11.3
 
  - **FIX**: update dependency constraints for analyzer, build, source_gen, and dart_style.
